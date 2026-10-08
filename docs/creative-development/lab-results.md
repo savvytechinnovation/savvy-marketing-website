@@ -2,7 +2,8 @@
 
 Código en [`labs/`](../../labs/README.md). Ejecutado el 8 de octubre de 2026 en **Chromium 141 headless con SwiftShader (GL por software)**.
 
-- Labs 01–08: `node labs/run-labs.mjs` → `labs/results/results.json`
+- Labs 01–08: `node labs/run-labs.mjs` → `labs/results/results.json`. También están publicados en `/labs/` del sitio desplegado,
+  donde cada lab muestra sus mediciones en un panel, con la GPU real del dispositivo que lo abre.
 - Lab Next.js: `cd labs/next-r3f && npm run build && npm test` → `labs/next-r3f/results.json`
 
 > **Cómo interpretar los números.** Los conteos (frames, renders, draw calls, objetos en GPU, píxeles de error) son
@@ -80,7 +81,7 @@ Shader con curvatura según la velocidad de Lenis, ondas y separación RGB al ha
 
 | Prueba | Resultado |
 | --- | --- |
-| 3000 mallas separadas | **2582 draw calls** (las demás descartadas por frustum culling) |
+| 3000 mallas separadas | **~2580 draw calls** (las demás se descartan por frustum culling; varía entre ejecuciones por las posiciones aleatorias) |
 | 3000 instancias en un `InstancedMesh` | **1 draw call** |
 | Renders en 1 s de reposo: bucle continuo vs bajo demanda | 8 (limitado por el GL por software; en una GPU real serían ~60) vs **1** |
 | Objetos en GPU tras quitar 40 mallas texturizadas **sin** `dispose()` | +40 geometrías, +40 texturas (fuga) |

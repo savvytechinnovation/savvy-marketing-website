@@ -83,5 +83,5 @@ orientada a implementarlas después en **Next.js + React + TypeScript**.
 
 ## Estado
 
-Fase de investigación. **No se ha implementado ningún componente en el sitio**; las pruebas viven en `labs/`
-y no se incluyen en el build. El siguiente paso es revisar [recommendations.md](./recommendations.md) y aprobar qué implementar.
+Fase de investigación. **No se ha implementado ningún componente en el sitio.** Las pruebas viven en `labs/` y se publican
+en `/labs/` como páginas independientes, que muestran sus mediciones en pantalla para comprobarlas en dispositivos reales. El siguiente paso es revisar [recommendations.md](./recommendations.md) y aprobar qué implementar.

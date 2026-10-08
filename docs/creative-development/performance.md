@@ -27,7 +27,7 @@ Leyenda en el [README](./README.md#cómo-leer-las-afirmaciones). Números de [la
 | Práctica | Evidencia |
 | --- | --- |
 | Render bajo demanda | 0 renders en reposo frente a un render por frame [L] |
-| Instancing | 2582 → 1 draw calls para 3000 objetos [L]. Objetivo: unos cientos [V] |
+| Instancing | ~2580 → 1 draw calls para 3000 objetos [L]. Objetivo: unos cientos [V] |
 | `dispose()` | Sin él, +40 geometrías y +40 texturas vivas [L] |
 | DPR limitado | `dpr={[1, 2]}`; móvil ≤ 1.5 [I]; `AdaptiveDpr` [V] |
 | Texturas | ≤ 2048 px; KTX2 para VRAM; WebP/AVIF para descarga [V] |

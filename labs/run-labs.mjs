@@ -36,7 +36,7 @@ const scenarios = [
   { id: '04-flip', path: '04-flip/' },
   { id: '05-webgl-dom-images', path: '05-webgl-dom-images/' },
   { id: '05-webgl-dom-images-mobile', path: '05-webgl-dom-images/', ctx: { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 3 } },
-  { id: '06-three-perf', path: '06-three-perf/' },
+  { id: '06-three-perf', path: '06-three-perf/', timeout: 60000 }, // ~20 s with software GL
   { id: '07-image-sequence', path: '07-image-sequence/', act: (p) => wheelThrough(p, 50), stop: true },
   { id: '08-interactions', path: '08-interactions/' },
   { id: '08-interactions-reduced-mobile', path: '08-interactions/', ctx: { reducedMotion: 'reduce', isMobile: true, hasTouch: true, viewport: { width: 390, height: 844 } } },
@@ -59,7 +59,7 @@ for (const s of scenarios) {
     if (s.stop) await page.evaluate(() => window.__labStop());
     const results = await Promise.race([
       page.evaluate(() => window.__lab.done),
-      new Promise((_, rej) => setTimeout(() => rej(new Error('lab timed out (20s)')), 20000)),
+      new Promise((_, rej) => setTimeout(() => rej(new Error(`lab timed out (${(s.timeout ?? 20000) / 1000}s)`)), s.timeout ?? 20000)),
     ]);
     out.results[s.id] = { ok: true, results, consoleErrors };
   } catch (e) {

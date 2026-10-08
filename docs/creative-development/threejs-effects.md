@@ -63,7 +63,7 @@ Con varias escenas o más estado, usar Zustand leyendo con `useStore.getState()`
 | Práctica | Detalle |
 | --- | --- |
 | `frameloop="demand"` + `invalidate()` | Renderiza solo si algo cambia. 0 renders en reposo [L] |
-| Instancing | 3000 objetos: 2582 draw calls como mallas separadas frente a **1** con `InstancedMesh` [L]. R3F aconseja como máximo ~1000 draw calls, idealmente unos cientos [V]. drei: `<Instances>`, `<Merged>` |
+| Instancing | 3000 objetos: ~2580 draw calls como mallas separadas frente a **1** con `InstancedMesh` [L]. R3F aconseja como máximo ~1000 draw calls, idealmente unos cientos [V]. drei: `<Instances>`, `<Merged>` |
 | Reutilizar geometrías y materiales | `useLoader` y `useGLTF` cachean por URL [V] |
 | DPR | `dpr={[1, 2]}`; en móvil, 1.5 como máximo [I]. `<AdaptiveDpr>` + `performance.regress()` [V] |
 | `PerformanceMonitor` | `onDecline` / `onIncline` / `onFallback` para bajar calidad (partículas, sombras, postprocesado) [V] |

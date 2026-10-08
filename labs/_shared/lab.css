@@ -4,3 +4,21 @@ body { margin: 0; font-family: system-ui, sans-serif; background: var(--navy); c
 .spacer { height: 100vh; display: grid; place-items: center; opacity: .5; }
 .box { width: 160px; height: 160px; border-radius: 24px; background: linear-gradient(135deg, #14173d, var(--cyan)); }
 h1, h2 { margin: 0; }
+
+/* On-page results panel (labs/_shared/lab.js) */
+.lab-panel { position: fixed; right: 16px; bottom: 16px; z-index: 1000; width: min(420px, calc(100vw - 32px)); max-height: 60vh; overflow: auto;
+  background: rgba(11, 13, 36, .92); border: 1px solid #fff3; border-radius: 14px; backdrop-filter: blur(10px);
+  font: 12px/1.45 ui-monospace, SFMono-Regular, Menlo, monospace; color: #f9fafb; box-shadow: 0 20px 60px -20px #000; }
+.lab-panel header { position: sticky; top: 0; display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: inherit; border-bottom: 1px solid #fff2; }
+.lab-panel header strong { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lab-panel header a { color: #5cc8ec; text-decoration: none; }
+.lab-panel header button { background: none; border: 1px solid #fff3; color: inherit; border-radius: 6px; width: 26px; height: 26px; cursor: pointer; }
+.lab-panel.is-collapsed [data-body] { display: none; }
+.lab-panel [data-body] { padding: 10px 12px; }
+.lab-panel table { width: 100%; border-collapse: collapse; }
+.lab-panel th, .lab-panel td { text-align: left; vertical-align: top; padding: 4px 0; border-bottom: 1px solid #fff1; word-break: break-word; }
+.lab-panel th { width: 48%; padding-right: 8px; color: #fff9; font-weight: 400; }
+.lab-panel td { color: #5cc8ec; }
+.lab-panel__btn { margin-top: 8px; padding: 8px 14px; border: 0; border-radius: 999px; background: #0396c7; color: #fff; font: inherit; cursor: pointer; }
+.lab-panel__note { margin: 8px 0 0; color: #fff7; }
+.lab-panel__err { color: #ff8a8a; }

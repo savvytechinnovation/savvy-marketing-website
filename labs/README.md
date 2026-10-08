@@ -1,8 +1,11 @@
 # Labs — pruebas de código de la investigación
 
 Experimentos aislados que verifican las técnicas documentadas en
-[`docs/creative-development/`](../docs/creative-development/README.md). No forman parte del sitio:
-no se incluyen en `vite build` y no modifican la página About.
+[`docs/creative-development/`](../docs/creative-development/README.md). No modifican la página About.
+
+Los labs 01–08 **se incluyen en el build** (`vite.config.js` detecta cada `labs/*/index.html`) y se publican en
+`/labs/`. Cada lab muestra sus mediciones en un panel en pantalla, así que en el sitio desplegado se ven
+cifras reales del navegador y la GPU de quien lo abre. `labs/next-r3f` es un proyecto Next.js aparte y no se despliega.
 
 | Lab | Qué verifica |
 | --- | --- |
