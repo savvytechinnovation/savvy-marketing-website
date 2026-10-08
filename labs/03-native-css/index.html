@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lab 03 — CSS scroll-driven animations + View Transitions</title>
+    <link rel="stylesheet" href="../_shared/lab.css" />
+    <style>
+      /* Zero-JS reveal driven by the element's own visibility in the viewport */
+      @keyframes reveal { from { opacity: 0; transform: translateY(80px) scale(.9); } to { opacity: 1; transform: none; } }
+      .reveal { margin: 0 auto; animation: reveal linear both; animation-timeline: view(); animation-range: entry 0% cover 40%; }
+      /* Reading progress bar driven by root scroll */
+      @keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+      .progress { position: fixed; inset: 0 0 auto; height: 4px; background: var(--cyan); transform-origin: left; animation: grow linear both; animation-timeline: scroll(root); }
+      .card { view-transition-name: hero-card; }
+      .card.big { width: 80vw; height: 60vh; }
+    </style>
+  </head>
+  <body>
+    <div class="progress"></div>
+    <div class="spacer">scroll</div>
+    <div class="spacer"><div class="box reveal" id="reveal"></div></div>
+    <div class="spacer"><div class="box card" id="card"></div></div>
+    <div class="spacer">end</div>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

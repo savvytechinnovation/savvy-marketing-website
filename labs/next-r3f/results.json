@@ -1,0 +1,100 @@
+{
+  "ssr": {
+    "h1InHtml": true,
+    "storyTextInHtml": true,
+    "canvasInHtml": false,
+    "fallbackInHtml": true
+  },
+  "desktop": {
+    "afterLoad": {
+      "lenisCreated": 1,
+      "lenisDestroyed": 0,
+      "renders": 1,
+      "sceneMounts": 1,
+      "sceneUnmounts": 0,
+      "scrollTriggers": 2,
+      "canvases": 1,
+      "masks": 8
+    },
+    "rendersWhileIdle1s": 0,
+    "afterScroll": {
+      "lenisCreated": 1,
+      "lenisDestroyed": 0,
+      "renders": 25,
+      "sceneMounts": 1,
+      "sceneUnmounts": 0,
+      "scrollTriggers": 2,
+      "canvases": 1,
+      "masks": 8
+    },
+    "rendersDuringScroll": 24,
+    "onAbout": {
+      "lenisCreated": 1,
+      "lenisDestroyed": 0,
+      "renders": 26,
+      "sceneMounts": 1,
+      "sceneUnmounts": 1,
+      "scrollTriggers": 0,
+      "canvases": 0,
+      "masks": 0
+    },
+    "backHome": {
+      "lenisCreated": 1,
+      "lenisDestroyed": 0,
+      "renders": 27,
+      "sceneMounts": 2,
+      "sceneUnmounts": 1,
+      "scrollTriggers": 2,
+      "canvases": 1,
+      "masks": 8
+    },
+    "viewTransitionsStarted": 3,
+    "errors": []
+  },
+  "reducedMotionMobile": {
+    "afterLoad": {
+      "lenisCreated": 1,
+      "lenisDestroyed": 0,
+      "renders": 1,
+      "sceneMounts": 1,
+      "sceneUnmounts": 0,
+      "scrollTriggers": 1,
+      "canvases": 1,
+      "masks": 0
+    },
+    "rendersWhileIdle1s": 0,
+    "afterScroll": {
+      "lenisCreated": 1,
+      "lenisDestroyed": 0,
+      "renders": 16,
+      "sceneMounts": 1,
+      "sceneUnmounts": 0,
+      "scrollTriggers": 1,
+      "canvases": 1,
+      "masks": 0
+    },
+    "rendersDuringScroll": 15,
+    "onAbout": {
+      "lenisCreated": 1,
+      "lenisDestroyed": 0,
+      "renders": 17,
+      "sceneMounts": 1,
+      "sceneUnmounts": 1,
+      "scrollTriggers": 0,
+      "canvases": 0,
+      "masks": 0
+    },
+    "backHome": {
+      "lenisCreated": 1,
+      "lenisDestroyed": 0,
+      "renders": 18,
+      "sceneMounts": 2,
+      "sceneUnmounts": 1,
+      "scrollTriggers": 1,
+      "canvases": 1,
+      "masks": 0
+    },
+    "viewTransitionsStarted": 3,
+    "errors": []
+  }
+}

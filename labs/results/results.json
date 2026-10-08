@@ -1,0 +1,154 @@
+{
+  "ranAt": "2026-10-08T22:08:42.569Z",
+  "browser": "chromium 141.0.7390.37 (headless, SwiftShader software GL)",
+  "results": {
+    "01-synced": {
+      "ok": true,
+      "results": {
+        "mode": "synced",
+        "samples": 264,
+        "framesWithScrollMovement": 163,
+        "framesWhereScrubLagsScroll": 0,
+        "maxScrubProgressError": 0,
+        "maxScrubLagPx": 0,
+        "maxPinDriftPx": 0,
+        "lenisPrefersReducedMotion": false,
+        "finalScrollY": 4700
+      },
+      "consoleErrors": []
+    },
+    "01-unsynced": {
+      "ok": true,
+      "results": {
+        "mode": "unsynced",
+        "samples": 265,
+        "framesWithScrollMovement": 165,
+        "framesWhereScrubLagsScroll": 38,
+        "maxScrubProgressError": 0.029,
+        "maxScrubLagPx": 44,
+        "maxPinDriftPx": 0,
+        "lenisPrefersReducedMotion": false,
+        "finalScrollY": 4700
+      },
+      "consoleErrors": []
+    },
+    "01-reduced-motion": {
+      "ok": true,
+      "results": {
+        "mode": "synced",
+        "samples": 263,
+        "framesWithScrollMovement": 121,
+        "framesWhereScrubLagsScroll": 0,
+        "maxScrubProgressError": 0,
+        "maxScrubLagPx": 0,
+        "maxPinDriftPx": 0,
+        "lenisPrefersReducedMotion": true,
+        "finalScrollY": 4700
+      },
+      "consoleErrors": []
+    },
+    "02-splittext": {
+      "ok": true,
+      "results": {
+        "lines": 3,
+        "words": 8,
+        "chars": 43,
+        "masks": 3,
+        "ariaLabelOnParent": "Strategy, creativity and data working as one team.",
+        "charsAriaHidden": true,
+        "maskOverflow": "clip",
+        "splitCallbacks": 2,
+        "linesAfterResize": 7,
+        "autoSplitReflowed": true,
+        "revertRestoresDOM": true
+      },
+      "consoleErrors": []
+    },
+    "03-native-css": {
+      "ok": true,
+      "results": {
+        "supports_animationTimeline_view": true,
+        "supports_animationTimeline_scroll": true,
+        "supports_ScrollTimeline_JS": true,
+        "supports_startViewTransition": true,
+        "supports_viewTransitionTypes": true,
+        "revealOpacity_beforeEntering": 0,
+        "revealOpacity_whenCentered": 1,
+        "progressTransform_atMiddle": "matrix(0.336667, 0, 0, 1, 0, 0)",
+        "viewTransitionFinishedMs": 321
+      },
+      "consoleErrors": []
+    },
+    "04-flip": {
+      "ok": true,
+      "results": {
+        "startsAtOriginalPositionPx": 0,
+        "endsAtTargetErrorPx": 0,
+        "inlineStylesCleanedUp": true
+      },
+      "consoleErrors": []
+    },
+    "05-webgl-dom-images": {
+      "ok": true,
+      "results": {
+        "rendersWhileIdle1s": 0,
+        "maxDomSyncErrorPx": 0,
+        "drawCallsPerFrame": 3,
+        "visiblePlanes": 3,
+        "totalRenders": 2
+      },
+      "consoleErrors": []
+    },
+    "05-webgl-dom-images-mobile": {
+      "ok": true,
+      "results": {
+        "rendersWhileIdle1s": 0,
+        "maxDomSyncErrorPx": 0,
+        "drawCallsPerFrame": 3,
+        "visiblePlanes": 3,
+        "totalRenders": 2
+      },
+      "consoleErrors": []
+    },
+    "06-three-perf": {
+      "ok": false,
+      "error": "lab timed out (20s)",
+      "consoleErrors": []
+    },
+    "07-image-sequence": {
+      "ok": true,
+      "results": {
+        "decodeAllFramesMs": 52,
+        "decodedMemoryMB": 237.3,
+        "framesDrawn": 43,
+        "avgDrawImageMs": 0.049,
+        "lastFrameShown": 119
+      },
+      "consoleErrors": []
+    },
+    "08-interactions": {
+      "ok": true,
+      "results": {
+        "naive_tweensCreated": 200,
+        "naive_activeTweensAfter": 200,
+        "quickTo_activeTweensAdded": 0,
+        "prefersReducedMotion": false,
+        "introAnimationCreated": true,
+        "hoverCapable": true
+      },
+      "consoleErrors": []
+    },
+    "08-interactions-reduced-mobile": {
+      "ok": true,
+      "results": {
+        "naive_tweensCreated": 200,
+        "naive_activeTweensAfter": 200,
+        "quickTo_activeTweensAdded": 0,
+        "prefersReducedMotion": true,
+        "introAnimationCreated": false,
+        "hoverCapable": false
+      },
+      "consoleErrors": []
+    }
+  }
+}

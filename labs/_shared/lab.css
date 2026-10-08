@@ -1,0 +1,6 @@
+:root { color-scheme: dark; --navy: #0b0d24; --cyan: #0396c7; }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, sans-serif; background: var(--navy); color: #f9fafb; }
+.spacer { height: 100vh; display: grid; place-items: center; opacity: .5; }
+.box { width: 160px; height: 160px; border-radius: 24px; background: linear-gradient(135deg, #14173d, var(--cyan)); }
+h1, h2 { margin: 0; }

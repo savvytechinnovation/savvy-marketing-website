@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lab 01 — Lenis + ScrollTrigger sync</title>
+    <link rel="stylesheet" href="../_shared/lab.css" />
+    <style>
+      .pin { height: 100vh; display: grid; place-items: center; background: #14173d; }
+      .nested { height: 200px; width: 300px; overflow: auto; border: 1px solid #fff3; margin: 0 auto; }
+      .nested div { height: 1200px; background: linear-gradient(#0396c7, #14173d); }
+    </style>
+  </head>
+  <body>
+    <div class="spacer">intro</div>
+    <section class="pin"><div class="box"></div></section>
+    <div class="spacer"><div class="nested" data-lenis-prevent><div></div></div></div>
+    <div class="spacer">end</div>
+    <div class="spacer">end</div>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

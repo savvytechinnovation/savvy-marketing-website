@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lab 07 — Scroll-scrubbed image sequence (canvas 2D)</title>
+    <link rel="stylesheet" href="../_shared/lab.css" />
+    <style>
+      .seq { height: 100vh; display: grid; place-items: center; }
+      canvas { width: min(90vw, 960px); aspect-ratio: 16/9; background: #000; border-radius: 16px; }
+    </style>
+  </head>
+  <body>
+    <div class="spacer">scroll</div>
+    <section class="seq"><canvas width="960" height="540"></canvas></section>
+    <div class="spacer">end</div>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
