@@ -3,11 +3,292 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Savvy Marketing Partners</title>
+    <title>Savvy Marketing Partners — Growth marketing that's impossible to ignore</title>
+    <meta name="description" content="Savvy Marketing Partners is a growth marketing agency: strategy, content, performance media, branding and web — one team, measurable results." />
+    <meta property="og:title" content="Savvy Marketing Partners" />
+    <meta property="og:description" content="Growth marketing that's impossible to ignore." />
+    <meta property="og:image" content="/brand/logo-gradient.svg" />
+    <meta name="theme-color" content="#0b0d24" />
     <link rel="icon" type="image/svg+xml" href="/brand/isologo-gradient.svg" />
-    <meta http-equiv="refresh" content="0; url=/about/" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <script>document.documentElement.classList.add('js');</script>
   </head>
-  <body style="background:#0b0d24">
-    <a href="/about/" style="color:#f9fafb;font-family:sans-serif">About Savvy Marketing Partners</a>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- Loader -->
+    <div class="loader" aria-hidden="true">
+      <div class="loader__inner">
+        <img src="/brand/isologo-white.svg" width="178" height="179" alt="" class="loader__icon" />
+        <span class="loader__count"><span data-loader-count>0</span>%</span>
+      </div>
+      <div class="loader__panel loader__panel--top"></div>
+      <div class="loader__panel loader__panel--bottom"></div>
+    </div>
+
+    <canvas class="webgl" aria-hidden="true"></canvas>
+    <div class="cursor" aria-hidden="true"><span class="cursor__label"></span></div>
+    <div class="scroll-progress" aria-hidden="true"></div>
+
+    <!-- Header -->
+    <header class="nav">
+      <a href="/" class="nav__logo" aria-label="Savvy Marketing Partners — Home">
+        <img src="/brand/logo-white.svg" width="636" height="179" alt="Savvy Marketing Partners" />
+      </a>
+      <nav class="nav__links" aria-label="Main">
+        <a href="#work" data-scramble>Work</a>
+        <a href="#services" data-scramble>Services</a>
+        <a href="#process" data-scramble>Process</a>
+        <a href="/about/" data-scramble>About</a>
+      </nav>
+      <a href="#contact" class="btn btn--ghost nav__cta" data-magnetic>Let's talk</a>
+      <button class="nav__burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu">
+        <span></span><span></span>
+      </button>
+    </header>
+
+    <!-- Fullscreen menu (mobile) -->
+    <div class="menu" id="menu" hidden>
+      <nav aria-label="Mobile">
+        <ul>
+          <li><a href="#work">Work</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#process">Process</a></li>
+          <li><a href="/about/">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <p class="menu__foot">Growth marketing · Strategy · Content · Performance · Brand · Web</p>
+    </div>
+
+    <main id="main">
+      <!-- HERO -->
+      <section class="hero" data-theme="dark" aria-labelledby="hero-title">
+        <p class="badge"><span class="badge__dot"></span>Booking new projects for Q1</p>
+        <h1 class="hero__title" id="hero-title">
+          <span class="line"><span>We make brands</span></span>
+          <span class="line"><span>impossible</span></span>
+          <span class="line"><span>to <em class="grad-text" data-rotator data-words="ignore.,forget.,scroll past.,outgrow.">ignore.</em></span></span>
+        </h1>
+        <div class="hero__bottom">
+          <p class="hero__sub">Savvy is a growth marketing partner. Strategy, content, media and design — one team obsessed with your numbers.</p>
+          <div class="hero__actions">
+            <a href="#contact" class="btn btn--primary" data-magnetic>Start a project</a>
+            <a href="#work" class="btn btn--link" data-magnetic>See our work <span aria-hidden="true">↓</span></a>
+          </div>
+        </div>
+        <p class="hero__hint" aria-hidden="true">Move · Click the orb</p>
+      </section>
+
+      <!-- MARQUEE -->
+      <section class="marquee" aria-label="What we do">
+        <div class="marquee__row" aria-hidden="true">
+          <span>Growth strategy</span><i></i><span>Paid media</span><i></i><span>Social content</span><i></i><span>SEO</span><i></i><span>Branding</span><i></i><span>Web &amp; landing pages</span><i></i>
+          <span>Growth strategy</span><i></i><span>Paid media</span><i></i><span>Social content</span><i></i><span>SEO</span><i></i><span>Branding</span><i></i><span>Web &amp; landing pages</span><i></i>
+        </div>
+        <p class="sr-only">Growth strategy, paid media, social content, SEO, branding, web and landing pages.</p>
+      </section>
+
+      <!-- INTRO / MANIFESTO -->
+      <section class="intro" data-theme="dark">
+        <p class="eyebrow">Who we are</p>
+        <p class="intro__text" data-reveal-words>
+          Marketing works best when your agency acts like part of your team. We pair sharp strategy with bold creative and
+          relentless optimisation, so every campaign earns attention — and every dollar earns its place.
+        </p>
+        <div class="stats">
+          <div class="stat"><strong data-count="120" data-suffix="+">120+</strong><span>Brands grown</span></div>
+          <div class="stat"><strong data-count="3.4" data-decimals="1" data-suffix="x">3.4x</strong><span>Average ROAS</span></div>
+          <div class="stat"><strong data-count="98" data-suffix="%">98%</strong><span>Client retention</span></div>
+          <div class="stat"><strong data-count="45" data-suffix="M">45M</strong><span>Impressions / month</span></div>
+        </div>
+      </section>
+
+      <!-- SERVICES -->
+      <section class="services" id="services" data-theme="dark" aria-labelledby="services-title">
+        <div class="section-head">
+          <p class="eyebrow">Services</p>
+          <h2 id="services-title" data-split>Everything you need<br />to grow, under one roof.</h2>
+        </div>
+        <ul class="service-list">
+          <li class="service" data-palette="1">
+            <button class="service__row" type="button" aria-expanded="false">
+              <span class="service__num">01</span><span class="service__name">Strategy &amp; Growth</span><span class="service__tags">Audits · Positioning · Funnels</span><span class="service__icon" aria-hidden="true"></span>
+            </button>
+            <div class="service__body"><p>We map your market, audience and funnel, then build a growth plan with clear KPIs, budgets and a testing roadmap.</p></div>
+          </li>
+          <li class="service" data-palette="2">
+            <button class="service__row" type="button" aria-expanded="false">
+              <span class="service__num">02</span><span class="service__name">Content &amp; Social</span><span class="service__tags">Short-form · Creators · Community</span><span class="service__icon" aria-hidden="true"></span>
+            </button>
+            <div class="service__body"><p>Scroll-stopping content produced at speed: short-form video, design, copy and community management across every platform.</p></div>
+          </li>
+          <li class="service" data-palette="3">
+            <button class="service__row" type="button" aria-expanded="false">
+              <span class="service__num">03</span><span class="service__name">Performance Media</span><span class="service__tags">Meta · Google · TikTok · SEO</span><span class="service__icon" aria-hidden="true"></span>
+            </button>
+            <div class="service__body"><p>Paid campaigns and SEO engineered for return: creative testing, tracking you can trust and weekly optimisation.</p></div>
+          </li>
+          <li class="service" data-palette="4">
+            <button class="service__row" type="button" aria-expanded="false">
+              <span class="service__num">04</span><span class="service__name">Branding</span><span class="service__tags">Identity · Voice · Guidelines</span><span class="service__icon" aria-hidden="true"></span>
+            </button>
+            <div class="service__body"><p>Identities with a point of view: naming, logo systems, visual language and the voice that ties it all together.</p></div>
+          </li>
+          <li class="service" data-palette="5">
+            <button class="service__row" type="button" aria-expanded="false">
+              <span class="service__num">05</span><span class="service__name">Web &amp; Landing Pages</span><span class="service__tags">Design · Dev · CRO</span><span class="service__icon" aria-hidden="true"></span>
+            </button>
+            <div class="service__body"><p>Fast, conversion-focused websites and landing pages — designed, built and continuously A/B tested.</p></div>
+          </li>
+        </ul>
+      </section>
+
+      <!-- WORK (horizontal) -->
+      <section class="work" id="work" data-theme="dark" aria-labelledby="work-title">
+        <div class="work__pin">
+          <div class="section-head work__head">
+            <p class="eyebrow">Selected work</p>
+            <h2 id="work-title" data-split>Results that<br />speak louder.</h2>
+            <p class="work__hint" aria-hidden="true">Scroll →</p>
+          </div>
+          <div class="work__track">
+            <article class="case" data-cursor="View">
+              <div class="case__art art art--1" aria-hidden="true"><span>N</span></div>
+              <div class="case__meta"><p class="case__tag">E-commerce · Paid social</p><h3>Nova Skincare</h3><p class="case__result"><strong>+212%</strong> online revenue in 6 months</p></div>
+            </article>
+            <article class="case" data-cursor="View">
+              <div class="case__art art art--2" aria-hidden="true"><span>P</span></div>
+              <div class="case__meta"><p class="case__tag">B2B SaaS · SEO + content</p><h3>Pulse Analytics</h3><p class="case__result"><strong>4.1x</strong> qualified demo requests</p></div>
+            </article>
+            <article class="case" data-cursor="View">
+              <div class="case__art art art--3" aria-hidden="true"><span>H</span></div>
+              <div class="case__meta"><p class="case__tag">Hospitality · Brand + web</p><h3>Harbor &amp; Co.</h3><p class="case__result"><strong>-38%</strong> cost per booking</p></div>
+            </article>
+            <article class="case" data-cursor="View">
+              <div class="case__art art art--4" aria-hidden="true"><span>V</span></div>
+              <div class="case__meta"><p class="case__tag">Fitness · Creators</p><h3>Volt Studio</h3><p class="case__result"><strong>1.2M</strong> organic views at launch</p></div>
+            </article>
+            <a class="case case--cta" href="#contact" data-cursor="Talk">
+              <span>Your brand<br />could be next</span><span class="case__arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROCESS (light theme, stacked cards) -->
+      <section class="process" id="process" data-theme="light" aria-labelledby="process-title">
+        <div class="section-head">
+          <p class="eyebrow">How we work</p>
+          <h2 id="process-title" data-split>A simple process.<br />Serious results.</h2>
+        </div>
+        <ol class="steps">
+          <li class="step"><span class="step__num">01</span><div><h3>Discover</h3><p>Workshops, audits and data deep-dives to understand where growth will really come from.</p></div></li>
+          <li class="step"><span class="step__num">02</span><div><h3>Strategise</h3><p>A focused plan: audiences, channels, messaging, budget split and the KPIs we'll be judged on.</p></div></li>
+          <li class="step"><span class="step__num">03</span><div><h3>Create &amp; launch</h3><p>Creative, campaigns and pages shipped in weeks, not months — with tracking from day one.</p></div></li>
+          <li class="step"><span class="step__num">04</span><div><h3>Optimise &amp; scale</h3><p>Weekly testing and transparent reporting. What works gets more budget; what doesn't gets cut.</p></div></li>
+        </ol>
+      </section>
+
+      <!-- TESTIMONIAL -->
+      <section class="quote" data-theme="dark">
+        <blockquote>
+          <p data-split-quote>“Savvy feels like an in-house team that happens to be world-class at marketing. Our pipeline has never been healthier.”</p>
+          <footer><strong>Laura Méndez</strong> — Head of Growth, Pulse Analytics</footer>
+        </blockquote>
+      </section>
+
+      <!-- CONTACT -->
+      <section class="contact" id="contact" data-theme="dark" aria-labelledby="contact-title">
+        <div class="contact__intro">
+          <p class="eyebrow">Let's talk</p>
+          <h2 id="contact-title" data-split>Ready to be<br /><span class="grad-text">impossible to ignore?</span></h2>
+          <p class="contact__lead">Tell us about your brand and goals. We reply within one business day with next steps — no sales script.</p>
+          <div class="contact__logo-space" aria-hidden="true"></div>
+        </div>
+
+        <form class="form" id="contact-form" novalidate>
+          <div class="form__grid">
+            <div class="field">
+              <label for="f-name">Name <span aria-hidden="true">*</span></label>
+              <input id="f-name" name="name" type="text" autocomplete="name" required maxlength="100" aria-describedby="e-name" />
+              <p class="field__error" id="e-name" aria-live="polite"></p>
+            </div>
+            <div class="field">
+              <label for="f-email">Work email <span aria-hidden="true">*</span></label>
+              <input id="f-email" name="email" type="email" autocomplete="email" required maxlength="150" aria-describedby="e-email" />
+              <p class="field__error" id="e-email" aria-live="polite"></p>
+            </div>
+            <div class="field">
+              <label for="f-company">Company</label>
+              <input id="f-company" name="company" type="text" autocomplete="organization" maxlength="120" />
+            </div>
+            <div class="field">
+              <label for="f-website">Website</label>
+              <input id="f-website" name="website" type="url" inputmode="url" placeholder="https://" maxlength="200" aria-describedby="e-website" />
+              <p class="field__error" id="e-website" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <fieldset class="chips" aria-describedby="e-services">
+            <legend>What do you need? <span class="legend__hint">Pick any</span></legend>
+            <label class="chip"><input type="checkbox" name="services" value="Strategy & Growth" /><span>Strategy &amp; Growth</span></label>
+            <label class="chip"><input type="checkbox" name="services" value="Content & Social" /><span>Content &amp; Social</span></label>
+            <label class="chip"><input type="checkbox" name="services" value="Performance Media" /><span>Performance Media</span></label>
+            <label class="chip"><input type="checkbox" name="services" value="Branding" /><span>Branding</span></label>
+            <label class="chip"><input type="checkbox" name="services" value="Web & Landing Pages" /><span>Web &amp; Landing Pages</span></label>
+            <p class="field__error" id="e-services" aria-live="polite"></p>
+          </fieldset>
+
+          <fieldset class="chips chips--radio">
+            <legend>Monthly budget</legend>
+            <label class="chip"><input type="radio" name="budget" value="< $5k" /><span>&lt; $5k</span></label>
+            <label class="chip"><input type="radio" name="budget" value="$5k – $15k" /><span>$5k – $15k</span></label>
+            <label class="chip"><input type="radio" name="budget" value="$15k – $50k" /><span>$15k – $50k</span></label>
+            <label class="chip"><input type="radio" name="budget" value="$50k+" /><span>$50k+</span></label>
+          </fieldset>
+
+          <div class="field">
+            <label for="f-message">Tell us about the project <span aria-hidden="true">*</span></label>
+            <textarea id="f-message" name="message" rows="4" required minlength="20" maxlength="3000" aria-describedby="e-message"></textarea>
+            <p class="field__error" id="e-message" aria-live="polite"></p>
+          </div>
+
+          <!-- Honeypot: hidden from people, bots tend to fill it -->
+          <div class="hp" aria-hidden="true">
+            <label for="f-bot">Leave this empty</label>
+            <input id="f-bot" name="botField" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <label class="consent">
+            <input type="checkbox" name="consent" required aria-describedby="e-consent" />
+            <span>I agree to be contacted by Savvy Marketing Partners about this enquiry.</span>
+          </label>
+          <p class="field__error" id="e-consent" aria-live="polite"></p>
+
+          <div class="form__footer">
+            <button class="btn btn--primary form__submit" type="submit" data-magnetic>
+              <span class="form__submit-label">Send message</span><span class="form__spinner" aria-hidden="true"></span>
+            </button>
+            <p class="form__status" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer__top">
+        <img src="/brand/logo-white.svg" width="636" height="179" alt="Savvy Marketing Partners" class="footer__logo" />
+        <nav class="footer__links" aria-label="Footer">
+          <a href="#work">Work</a><a href="#services">Services</a><a href="#process">Process</a><a href="/about/">About</a><a href="#contact">Contact</a>
+        </nav>
+        <button class="footer__top-btn" type="button" data-to-top data-magnetic>Back to top ↑</button>
+      </div>
+      <p class="footer__copy">© <span data-year></span> Savvy Marketing Partners. All rights reserved.</p>
+    </footer>
+
+    <script type="module" src="/src/home/main.js"></script>
   </body>
 </html>
