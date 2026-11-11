@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "build:posts": "node scripts/build-posts.mjs",
     "build:industries": "node scripts/build-industries.mjs",
-    "build:jobs": "node scripts/build-jobs.mjs"
+    "build:jobs": "node scripts/build-jobs.mjs",
+    "build:cases": "node scripts/build-cases.mjs"
   },
   "dependencies": {
     "gsap": "^3.15.0",

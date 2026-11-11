@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- @include head -->
+    <title>Client portal sign in — Savvy Marketing Partners</title>
+    <meta name="description" content="Sign in to the Savvy Marketing Partners client portal to see your reports, leads and results. Access is by invitation only." />
+    <meta name="robots" content="noindex, nofollow" />
+  </head>
+  <body class="page-portal">
+    <!-- @include header -->
+
+    <!-- Figma: Portal Sign In 🟢 · "1 · Sign in (email + password or Google)" desktop 5683:500 / mobile 5683:574 -->
+    <main id="main" class="ps">
+      <div class="ps__form-side">
+        <div class="ps__col">
+          <!-- Sign in -->
+          <section class="ps__panel" data-panel="signin" aria-labelledby="ps-title">
+            <div class="ps__heading">
+              <p class="eyebrow" data-hero-item>Client portal</p>
+              <h1 class="ps__title" id="ps-title" data-split>Welcome back</h1>
+              <p class="ps__sub" data-hero-item>Sign in to see your reports, leads and results.</p>
+            </div>
+
+            <div class="ps-alert" data-alert role="alert" hidden>
+              <img src="/ds/icons/portal-alert.svg" alt="" width="16" height="16" />
+              <div>
+                <p class="ps-alert__title" data-alert-title></p>
+                <p class="ps-alert__desc" data-alert-desc></p>
+              </div>
+            </div>
+
+            <form class="ps__form" data-signin novalidate>
+              <p class="sr-only" aria-hidden="true"><label>Leave this empty <input type="text" name="botField" tabindex="-1" autocomplete="off" /></label></p>
+              <div class="ps__fields">
+                <div class="field ps-field">
+                  <label class="field__label" for="ps-email">Email</label>
+                  <input class="input ps-input" id="ps-email" name="email" type="email" inputmode="email" autocomplete="username" placeholder="name@company.com" aria-describedby="ps-email-err" required />
+                  <p class="field__error" id="ps-email-err"></p>
+                </div>
+                <div class="field ps-field">
+                  <label class="field__label" for="ps-password">Password</label>
+                  <div class="ps-pass">
+                    <input class="input ps-input" id="ps-password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" aria-describedby="ps-password-err ps-caps" required />
+                    <button type="button" class="ps-pass__toggle" data-toggle-pass aria-controls="ps-password" aria-pressed="false" aria-label="Show password">
+                      <img class="ps-pass__show" src="/ds/icons/portal-eye.svg" alt="" width="20" height="20" />
+                      <img class="ps-pass__hide" src="/ds/icons/portal-eye-off.svg" alt="" width="20" height="20" />
+                    </button>
+                  </div>
+                  <p class="ps-caps" id="ps-caps" role="status" aria-live="polite"></p>
+                  <p class="field__error" id="ps-password-err"></p>
+                </div>
+              </div>
+              <div class="ps__options">
+                <label class="check ps-check"><input type="checkbox" name="remember" /> <span>Keep me signed in</span></label>
+                <button type="button" class="ps-link" data-go="forgot">Forgot password?</button>
+              </div>
+              <button type="submit" class="btn btn--l btn--block ps__submit" data-submit>
+                <span class="ps__submit-label">Sign in</span>
+                <span class="spinner ps__spinner" aria-hidden="true"></span>
+                <span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span>
+              </button>
+            </form>
+
+            <div class="ps-divider"><span>or sign in with Google</span></div>
+            <button type="button" class="ps-google" data-google>
+              <img src="/ds/icons/portal-google.svg" alt="" width="24" height="24" />
+              <span>Sign in with Google</span>
+            </button>
+            <hr class="ps__rule" />
+            <div class="ps__help">
+              <p>Trouble signing in? Contact your account manager.</p>
+              <a href="/growth-system/">Not a client yet? See how we work →</a>
+            </div>
+          </section>
+
+          <!-- Forgot password -->
+          <section class="ps__panel" data-panel="forgot" aria-labelledby="ps-forgot-title" hidden>
+            <div class="ps__heading">
+              <p class="eyebrow">Client portal</p>
+              <h2 class="ps__title" id="ps-forgot-title" tabindex="-1">Reset your password</h2>
+              <p class="ps__sub">Enter the email you use for the portal and we’ll help you get back in.</p>
+            </div>
+            <form class="ps__form" data-forgot novalidate>
+              <div class="field ps-field">
+                <label class="field__label" for="ps-reset-email">Email</label>
+                <input class="input ps-input" id="ps-reset-email" name="email" type="email" inputmode="email" autocomplete="username" placeholder="name@company.com" aria-describedby="ps-reset-email-err" required />
+                <p class="field__error" id="ps-reset-email-err"></p>
+              </div>
+              <button type="submit" class="btn btn--l btn--block ps__submit" data-submit>
+                <span class="ps__submit-label">Send reset link</span>
+                <span class="spinner ps__spinner" aria-hidden="true"></span>
+                <span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span>
+              </button>
+            </form>
+            <button type="button" class="ps-link ps-back" data-go="signin">← Back to sign in</button>
+          </section>
+
+          <!-- Reset confirmation -->
+          <section class="ps__panel" data-panel="sent" aria-labelledby="ps-sent-title" hidden>
+            <span class="ps__status" aria-hidden="true"><img src="/ds/icons/portal-check.svg" alt="" width="24" height="24" /></span>
+            <div class="ps__heading">
+              <p class="eyebrow" data-sent-eyebrow>Password reset</p>
+              <h2 class="ps__title" id="ps-sent-title" tabindex="-1" data-sent-title>Check with your account manager</h2>
+              <p class="ps__sub" data-sent-text role="status"></p>
+            </div>
+            <button type="button" class="btn btn--l btn--block" data-go="signin"><span>Back to sign in</span><span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span></button>
+          </section>
+
+          <p class="ps__legal"><span>© <span data-year>2026</span> Savvy Post Marketing</span><a href="/privacy/">Privacy Policy</a><a href="/terms/">Terms of Service</a></p>
+        </div>
+      </div>
+      <div class="ps__image ph" data-ps-3d aria-hidden="true"></div>
+    </main>
+
+    <script type="module" src="/src/pages/portal/portal.js"></script>
+  </body>
+</html>
