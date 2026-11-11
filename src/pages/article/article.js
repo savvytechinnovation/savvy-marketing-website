@@ -1,9 +1,11 @@
 // Article pages (/resources/<slug>/): reading progress, table of contents with scroll-spy
 // (desktop sticky rail + mobile sticky dropdown), share buttons, newsletter, motion and 3D cover.
 import { initSite, gsap, ScrollTrigger, reduceMotion, toast, scrollLock, lenis } from '../../ds/site.js';
-import { mount3D } from '../../ds/fx3d.js';
+import { stage, cover, paintCovers } from '../resources/gl-kit.js';
+import { chars3D, tiltGlare, distortHover, clipReveal, liveClock } from '../resources/fx-dom.js';
+import { SplitText } from 'gsap/SplitText';
 import { initNewsletters } from '../resources/newsletter.js';
-import { splitHeadings, tiltCards, magnetic } from '../resources/motion.js';
+import { splitHeadings, magnetic } from '../resources/motion.js';
 import './article.css';
 
 initSite();
@@ -21,6 +23,11 @@ const panel = $('[data-toc-panel]');
 const scrim = $('[data-toc-scrim]');
 const current = $('[data-toc-current]');
 const progressBars = $$('[data-progress]');
+const ring = $('[data-ring]');
+const ringBar = $('[data-ring-bar]');
+const ringPct = $('[data-ring-pct]');
+const ringLeft = $('[data-ring-left]');
+const minutes = Number(ringLeft?.dataset.minutes || 0);
 const placeholder = Object.assign(document.createElement('div'), { hidden: true, className: 'toc-bar-placeholder' });
 bar?.after(placeholder);
 
@@ -53,6 +60,13 @@ function tick() {
   const offset = scrollOffset();
   const p = gsap.utils.clamp(0, 1, (offset - r.top) / Math.max(1, r.height - vh + offset));
   progressBars.forEach((b) => gsap.set(b, { scaleX: p }));
+  if (ring) {
+    ringBar.style.strokeDashoffset = String(100 - p * 100);
+    ringPct.textContent = `${Math.round(p * 100)}%`;
+    const left = Math.max(0, Math.ceil(minutes * (1 - p)));
+    ringLeft.textContent = p >= 0.995 ? 'Done' : `${left} min left`;
+    ring.classList.toggle('is-on', r.top < vh * 0.6 && r.bottom > vh * 0.2);
+  }
   // scroll-spy: the section whose heading last crossed ~30% of the viewport (first section at rest)
   const line = Math.max(offset + 8, vh * 0.3);
   let id = headings[0]?.id;
@@ -207,23 +221,37 @@ $$('[data-share]').forEach((share) => {
 // ---------------------------------------------------------------------------
 initNewsletters();
 splitHeadings();
-tiltCards();
 magnetic();
 
-// Lighter 3D accent in the cover slot, scrubbed by scroll
-mount3D($('.post-hero__cover'), { scene: 'ribbons', theme: 'light', scrub: true });
+// Live generative cover (seeded by the slug): zooms as the hero scrolls away, bends toward the pointer
+const heroEl = $('.post-hero');
+stage($('[data-cover-live]'), cover($('[data-cover-live]')?.dataset.coverLive), { scrub: true, trigger: heroEl, start: 'top top', end: 'bottom top', eager: true, dpr: 0.5 });
+chars3D($('[data-chars]'), { delay: 0.25, stagger: 0.016 });
+liveClock();
+paintCovers();
+tiltGlare('.related .rcard', { max: 7 });
+distortHover('.rcard__media', '.related .rcard');
+clipReveal('.prose__figure-media');
 
 gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  gsap.from('.post-hero__crumbs, .post-tag, .post-hero__dek, .post-hero__meta', { y: 16, opacity: 0, duration: 0.9, stagger: 0.05, ease: 'expo.out', delay: 0.25, clearProps: 'transform,opacity' });
-  gsap.from('.post-hero__cover', { clipPath: 'inset(8% 6% 0% 6% round 28px)', opacity: 0, duration: 1.4, ease: 'expo.out', delay: 0.2, clearProps: 'clipPath,opacity' });
+  gsap.from('.post-hero__crumbs, .post-tag, .post-hero__dek, .post-hero__meta, .post-hero__rail span', { y: 16, opacity: 0, duration: 0.9, stagger: 0.05, ease: 'expo.out', delay: 0.5, clearProps: 'transform,opacity' });
+  gsap.to('.post-hero__inner', { yPercent: -12, opacity: 0.3, ease: 'none', scrollTrigger: { trigger: heroEl, start: 'top top', end: 'bottom top', scrub: true } });
   gsap.from('.post-rail', { x: -20, opacity: 0, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: '.post-layout', start: 'top 85%' }, clearProps: 'transform,opacity' });
   // body blocks rise in as they are reached
-  ScrollTrigger.batch('.prose > :is(blockquote, aside, figure, .prose__table, .takeaways)', {
+  ScrollTrigger.batch('.prose > :is(aside, .prose__table, .takeaways)', {
     start: 'top 88%',
     once: true,
     onEnter: (els) => gsap.from(els, { y: 28, opacity: 0, duration: 0.9, ease: 'expo.out', stagger: 0.08, clearProps: 'transform,opacity' }),
   });
   gsap.from('.takeaways li', { x: -12, opacity: 0, duration: 0.6, stagger: 0.08, ease: 'power3.out', scrollTrigger: { trigger: '.takeaways', start: 'top 80%' }, clearProps: 'transform,opacity' });
-  // quote rule draws in
-  gsap.utils.toArray('.prose__quote').forEach((q) => gsap.from(q, { borderLeftColor: 'rgba(30,41,59,0)', duration: 1, scrollTrigger: { trigger: q, start: 'top 85%' } }));
+  // kinetic pull quotes: words light up and settle as the quote crosses the viewport; the rule draws down
+  const splits = $$('[data-kinetic] p').map((p) => SplitText.create(p, { type: 'words', aria: 'auto' }));
+  splits.forEach((sp) => {
+    const q = sp.elements[0].closest('[data-kinetic]');
+    gsap
+      .timeline({ scrollTrigger: { trigger: q, start: 'top 85%', end: 'bottom 45%', scrub: 0.6 } })
+      .fromTo(sp.words, { opacity: 0.12, yPercent: 40, rotationX: -50, transformPerspective: 600 }, { opacity: 1, yPercent: 0, rotationX: 0, stagger: 0.06, ease: 'power2.out' }, 0)
+      .fromTo(q, { '--q': 0 }, { '--q': 1, ease: 'none', duration: sp.words.length * 0.06 + 0.5 }, 0);
+  });
+  return () => splits.forEach((sp) => sp.revert());
 });

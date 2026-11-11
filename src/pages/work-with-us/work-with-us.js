@@ -2,6 +2,8 @@ import { initSite, gsap, ScrollTrigger, reduceMotion } from '../../ds/site.js';
 import { autoMount3D } from '../../ds/fx3d.js';
 import { Flip } from 'gsap/Flip';
 import { $, $$, splitHeadings, magnetic, tilt } from '../careers/motion.js';
+import { stage, particles, paintCovers } from '../resources/gl-kit.js';
+import { chars3D, liveClock, toneJourney, tiltGlare } from '../resources/fx-dom.js';
 import './work-with-us.css';
 
 gsap.registerPlugin(Flip);
@@ -215,3 +217,122 @@ if (chips) {
     });
   });
 }
+
+// ===========================================================================
+// Round 2 — colour journey, particle hero, 3D week calendar, orbiting tools
+// ===========================================================================
+toneJourney('[data-tone]');
+chars3D($('[data-chars]'), { delay: 0.3 });
+liveClock();
+paintCovers();
+tiltGlare('.wwu-hero__ph', { max: 10 });
+
+stage(
+  $('[data-particles]'),
+  particles(['scatter', 'logo', 'ring'], {
+    count: 7000,
+    offsetX: 3.4,
+    mobileScale: 0.6,
+    mobileY: 1.6,
+    onUpdate: (t, c, { camera }) => {
+      camera.position.z = 11 + c.progress * 4;
+    },
+  }),
+  {
+    eager: true,
+    scrub: true,
+    trigger: '.wwu-hero',
+    start: 'top top',
+    end: 'bottom top',
+    stillTime: 3,
+    onReady: (api) => {
+      api.set('shape', reduceMotion ? 1 : 0);
+      if (reduceMotion) return api.redraw();
+      setTimeout(() => api.set('shape', 1), 400);
+      ScrollTrigger.create({ trigger: '.wwu-hero', start: 'top -15%', onToggle: (st) => api.set('shape', st.isActive ? 2 : 1) });
+    },
+  },
+);
+
+// week: the schedule card turns like a page of a desk calendar on every day change
+const weekList = $('[data-week] [role="tablist"]');
+const weekCard = $('.wwu-week__card');
+weekList?.addEventListener('tabchange', () => {
+  if (reduceMotion) return;
+  gsap.fromTo(weekCard, { rotationX: 70, y: -30, opacity: 0.2, transformOrigin: '50% 0%', transformPerspective: 1400 }, { rotationX: 0, y: 0, opacity: 1, duration: 0.8, ease: 'expo.out' });
+});
+
+// tools: billboarded tiles on a slowly rotating sphere (projected in JS so text always faces the viewer)
+const orbit = $('[data-orbit]');
+const toolsWrap = $('.wwu-tools');
+if (orbit) {
+  const names = $$('.wwu-tools__list li').map((li) => li.textContent.trim());
+  const items = [...names, ...names];
+  const tiles = items.map((n, i) => {
+    const el = document.createElement('span');
+    el.className = `wwu-orbit__tile${i % 5 === 0 ? ' is-accent' : ''}`;
+    el.textContent = n;
+    orbit.append(el);
+    const y = 1 - (i / (items.length - 1)) * 2;
+    const r = Math.sqrt(1 - y * y);
+    const th = i * 2.399963;
+    return { el, p: [Math.cos(th) * r, y, Math.sin(th) * r] };
+  });
+  const rot = { x: -0.25, y: 0, vx: 0, vy: 0.0035 };
+  let drag = null;
+  const draw = () => {
+    const R = Math.min(orbit.clientWidth * 0.4, 220);
+    const cx = Math.cos(rot.x);
+    const sx = Math.sin(rot.x);
+    const cy = Math.cos(rot.y);
+    const sy = Math.sin(rot.y);
+    for (const t of tiles) {
+      const [x0, y0, z0] = t.p;
+      const x1 = x0 * cy + z0 * sy;
+      const z1 = -x0 * sy + z0 * cy;
+      const y2 = y0 * cx - z1 * sx;
+      const z2 = y0 * sx + z1 * cx;
+      const s = 0.62 + (z2 + 1) * 0.28;
+      t.el.style.transform = `translate(-50%, -50%) translate3d(${(x1 * R * 1.35).toFixed(1)}px, ${(y2 * R * 0.85).toFixed(1)}px, 0) scale(${s.toFixed(3)})`;
+      t.el.style.opacity = (0.25 + (z2 + 1) * 0.375).toFixed(2);
+      t.el.style.zIndex = String(Math.round((z2 + 1) * 50));
+    }
+  };
+  draw();
+  if (!reduceMotion) {
+    gsap.ticker.add(() => {
+      if (!ScrollTrigger.isInViewport(orbit)) return;
+      if (!drag && !toolsWrap.classList.contains('is-paused')) {
+        rot.vy += (0.0035 - rot.vy) * 0.02;
+        rot.vx *= 0.95;
+      }
+      if (!drag) {
+        rot.y += rot.vy;
+        rot.x = gsap.utils.clamp(-0.9, 0.9, rot.x + rot.vx);
+      }
+      if (toolsWrap.classList.contains('is-paused') && !drag) rot.vy *= 0.9;
+      draw();
+    });
+    orbit.addEventListener('pointerdown', (e) => {
+      drag = { x: e.clientX, y: e.clientY };
+      orbit.setPointerCapture(e.pointerId);
+    });
+    orbit.addEventListener('pointermove', (e) => {
+      if (!drag) return;
+      rot.vy = (e.clientX - drag.x) * 0.004;
+      rot.vx = (e.clientY - drag.y) * 0.002;
+      rot.y += rot.vy;
+      rot.x = gsap.utils.clamp(-0.9, 0.9, rot.x + rot.vx);
+      drag = { x: e.clientX, y: e.clientY };
+    });
+    const end = () => (drag = null);
+    orbit.addEventListener('pointerup', end);
+    orbit.addEventListener('pointercancel', end);
+  }
+}
+
+mm.add('(prefers-reduced-motion: no-preference)', () => {
+  gsap.from('.wwu-hero__hud', { opacity: 0, y: -10, duration: 1, delay: 0.6 });
+  gsap.from('.day', { opacity: 0, clipPath: 'inset(0% 100% 0% 0% round 12px)', stagger: 0.07, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: '.wwu-week__row', start: 'top 80%' }, clearProps: 'clipPath,opacity' });
+  gsap.from(orbit, { opacity: 0, scale: 0.6, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: '.wwu-tools', start: 'top 85%' } });
+});

@@ -13,10 +13,12 @@
     <main id="main">
       <!-- 01 · Hero: live search (Figma 5791:221) -->
       <section class="car-hero has-fx" aria-labelledby="careers-title">
-        <div class="fx-layer car-hero__fx" data-3d="field" data-3d-theme="dark" data-3d-scrub aria-hidden="true"></div>
+        <div class="fx-layer car-hero__fx" data-particles aria-hidden="true"></div>
+        <div class="car-hero__hud" aria-hidden="true"><span>Careers · Savvy Post</span><span>Remote-first · US hours</span><span>Local <span data-clock>--:--:--</span></span></div>
+        <div class="car-board" aria-hidden="true" data-board data-cursor="view"></div>
         <div class="car-hero__inner">
           <p class="eyebrow" data-hero-item>Careers</p>
-          <h1 class="t-h1" id="careers-title" data-split="hero">Open roles at Savvy Post</h1>
+          <h1 class="t-h1" id="careers-title" data-chars>Open roles at Savvy Post</h1>
           <p class="t-p-lg car-hero__lead" data-hero-item>Join a small team building growth systems for HVAC, plumbing, electrical, roofing and cleaning companies. Every role works on real client accounts from week one.</p>
           <div class="search" data-hero-item data-search>
             <label class="sr-only" for="role-search">Search open roles</label>
@@ -40,6 +42,9 @@
           </div>
         </div>
       </section>
+
+      <!-- Velocity marquee of the hiring areas (filled from the role list by careers.js) -->
+      <div class="vmq car-marquee" aria-hidden="true" data-roles-marquee><div class="vmq__track"></div></div>
 
       <!-- 02 · Filters + 03 · Positions list (Figma 5791:244) -->
       <section class="car-list co-section" id="open-roles" aria-labelledby="roles-heading">

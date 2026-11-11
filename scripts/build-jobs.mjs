@@ -252,7 +252,8 @@ ${jsonLd(j)}
     <main id="main" data-job="${esc(JSON.stringify({ slug: j.slug, title: j.title, requiresOverlap: j.requiresOverlap, email: CAREERS_EMAIL }))}">
       <!-- 1 · Title + meta -->
       <section class="job-top co-section co-first has-fx" aria-labelledby="job-title" data-job-top>
-        <div class="fx-layer job-top__fx" data-3d="field" aria-hidden="true"></div>
+        <div class="job-top__cover" role="img" aria-label="Generative cover for the ${esc(j.title)} role" data-cover-live="${j.slug}"></div>
+        <div class="job-top__hud" aria-hidden="true"><span>Role ${String(JOBS.indexOf(j) + 1).padStart(2, '0')} / ${String(JOBS.length).padStart(2, '0')}</span><span>${esc(j.area)} · ${esc(j.type)}</span><span>Local <span data-clock>--:--:--</span></span></div>
         <div class="co-wrap job-top__wrap">
           <nav class="breadcrumbs" aria-label="Breadcrumb">
             <ol>
@@ -260,7 +261,7 @@ ${jsonLd(j)}
               <li><a href="/careers/?area=${encodeURIComponent(j.area)}" aria-current="page">${esc(j.area)}</a></li>
             </ol>
           </nav>
-          <h1 class="t-h1" id="job-title" data-split="hero">${esc(j.title)}</h1>
+          <h1 class="t-h1" id="job-title" data-chars>${esc(j.title)}</h1>
           <ul class="job-top__chips" role="list" data-hero-item>
             <li>${esc(j.area)}</li>
             <li>${esc(j.type)}</li>

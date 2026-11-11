@@ -26,11 +26,26 @@
   <body class="page-article">
     <!-- @include header -->
     <div class="read-progress" aria-hidden="true"><span class="read-progress__bar" data-progress></span></div>
+    <div class="read-ring" aria-hidden="true" data-ring>
+      <svg viewBox="0 0 64 64" width="64" height="64"><circle class="read-ring__track" cx="32" cy="32" r="28" /><circle class="read-ring__bar" cx="32" cy="32" r="28" pathLength="100" data-ring-bar /></svg>
+      <span class="read-ring__pct" data-ring-pct>0%</span>
+      <span class="read-ring__left" data-ring-left data-minutes="5">5 min left</span>
+    </div>
 
     <main id="main">
       <article class="post" aria-labelledby="post-title" data-slug="local-seo-checklist-for-service-area-businesses">
         <!-- 01 · Article header -->
-        <header class="post-hero">
+        <header class="post-hero" data-tone="#0b0f2e">
+          <div class="post-hero__cover" role="img" aria-label="Generative cover for “A local SEO checklist for service-area businesses”" data-cover-live="local-seo-checklist-for-service-area-businesses">
+            <span class="post-hero__grid" aria-hidden="true"></span>
+          </div>
+          <div class="post-hero__rail" aria-hidden="true">
+            <span>No. 02 / 11</span>
+            <span>Checklists</span>
+            <span>599 words</span>
+            <span data-clock>--:--:--</span>
+          </div>
+          <div class="post-hero__inner">
           <nav class="breadcrumbs post-hero__crumbs" aria-label="Breadcrumb">
             <ol>
               <li><a href="/resources/">Resources</a></li>
@@ -44,7 +59,7 @@
             <li class="post-tag">Build</li>
             <li class="post-tag post-tag--extra">Generate</li>
           </ul>
-          <h1 class="post-hero__title" id="post-title" data-split>A local SEO checklist for service-area businesses</h1>
+          <h1 class="post-hero__title" id="post-title" data-chars>A local SEO checklist for service-area businesses</h1>
           <p class="post-hero__dek">Local search is where most homeowners start. A checklist of the fundamentals that help established service companies show up for the jobs they want.</p>
           <div class="post-hero__meta">
             <div class="post-author">
@@ -60,7 +75,8 @@
               <span>5 min read</span>
             </p>
           </div>
-          <div class="ph post-hero__cover" role="img" aria-label="Cover image for “A local SEO checklist for service-area businesses”"></div>
+          </div>
+          <a class="post-hero__down" href="#post-body" aria-label="Start reading"><span aria-hidden="true"></span></a>
         </header>
 
         <!-- Mobile: sticky "In this article" dropdown (Figma "Mobile On this page — behavior") -->
@@ -88,7 +104,7 @@
         <div class="toc-scrim" data-toc-scrim hidden></div>
 
         <!-- 03 · Body -->
-        <div class="post-layout">
+        <div class="post-layout" id="post-body">
           <aside class="post-rail" aria-label="Article tools">
             <nav class="toc" aria-labelledby="toc-title-local-seo-checklist-for-service-area-businesses">
               <p class="toc__title" id="toc-title-local-seo-checklist-for-service-area-businesses">In this article</p>
@@ -131,7 +147,7 @@
               <li>Clear calls to action: call, book online, request an estimate.</li>
               <li>Fast loading on mobile.</li>
             </ul>
-            <blockquote class="prose__quote">
+            <blockquote class="prose__quote" data-kinetic>
               <p>&ldquo;Write for the customer in the town, not for the search engine.&rdquo;</p>
             </blockquote>
             <p>Avoid the temptation to target every town within driving distance. A smaller set of well-built pages for the areas where you want more work, and can serve profitably, usually performs better than dozens of thin ones.</p>
@@ -215,8 +231,8 @@
         <ul class="related__list" role="list" data-reveal-stagger="0.08">
           <li class="rcard-item" data-reveal>
             <article class="rcard">
-              <a class="rcard__link" href="/resources/why-shoulder-seasons-are-a-marketing-problem/">
-                <span class="ph rcard__media" aria-hidden="true"></span>
+              <a class="rcard__link" href="/resources/why-shoulder-seasons-are-a-marketing-problem/" data-cursor="view">
+                <span class="ph rcard__media" aria-hidden="true" data-cover="why-shoulder-seasons-are-a-marketing-problem"><span class="rcard__no">No. 10</span><span class="rcard__glare"></span></span>
                 <span class="rcard__body">
                   <span class="rcard__eyebrow">Guide · All industries</span>
                   <h3 class="rcard__title">Why shoulder seasons are a marketing problem</h3>
@@ -227,8 +243,8 @@
           </li>
           <li class="rcard-item" data-reveal>
             <article class="rcard">
-              <a class="rcard__link" href="/resources/storm-season-readiness-checklist-for-roofing-companies/">
-                <span class="ph rcard__media" aria-hidden="true"></span>
+              <a class="rcard__link" href="/resources/storm-season-readiness-checklist-for-roofing-companies/" data-cursor="view">
+                <span class="ph rcard__media" aria-hidden="true" data-cover="storm-season-readiness-checklist-for-roofing-companies"><span class="rcard__no">No. 03</span><span class="rcard__glare"></span></span>
                 <span class="rcard__body">
                   <span class="rcard__eyebrow">Checklist · Roofing</span>
                   <h3 class="rcard__title">Storm season readiness checklist for roofing companies</h3>
@@ -239,8 +255,8 @@
           </li>
           <li class="rcard-item" data-reveal>
             <article class="rcard">
-              <a class="rcard__link" href="/resources/how-to-connect-marketing-to-booked-jobs/">
-                <span class="ph rcard__media" aria-hidden="true"></span>
+              <a class="rcard__link" href="/resources/how-to-connect-marketing-to-booked-jobs/" data-cursor="view">
+                <span class="ph rcard__media" aria-hidden="true" data-cover="how-to-connect-marketing-to-booked-jobs"><span class="rcard__no">No. 11</span><span class="rcard__glare"></span></span>
                 <span class="rcard__body">
                   <span class="rcard__eyebrow">Guide · All industries</span>
                   <h3 class="rcard__title">How to connect your marketing to booked jobs</h3>

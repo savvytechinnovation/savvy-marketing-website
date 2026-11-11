@@ -12,15 +12,17 @@
 
     <main id="main">
       <!-- 01 · Hero: why work at Savvy (Figma 5763:220) -->
-      <section class="wwu-hero co-section co-first" aria-labelledby="wwu-title">
+      <section class="wwu-hero co-section co-first" aria-labelledby="wwu-title" data-tone="#0b0f2e" data-tone-dark>
+        <div class="wwu-hero__gl" aria-hidden="true" data-particles></div>
+        <div class="wwu-hero__hud" aria-hidden="true"><span>Life at Savvy</span><span>5 industries · 1 growth system</span><span>Local <span data-clock>--:--:--</span></span></div>
         <div class="co-wrap wwu-hero__row">
           <div class="wwu-hero__copy">
             <p class="eyebrow" data-hero-item>Work with us · Life at Savvy</p>
-            <h1 class="t-h1" id="wwu-title" data-split="hero">Build the growth systems that keep local businesses running.</h1>
+            <h1 class="t-h1" id="wwu-title" data-chars>Build the growth systems that keep local businesses running.</h1>
             <p class="t-p-lg c-sub" data-hero-item>We're a team of strategists, media buyers, creatives and analysts who go deep on five service industries. If you like understanding how a business really works, you'll fit in here.</p>
             <div class="wwu-hero__actions" data-hero-item>
               <a class="btn btn--l" data-magnetic href="#open-positions"><span>See open positions</span><span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span></a>
-              <a class="link-arrow" href="#how-we-work">How we work <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></a>
+              <a class="link-arrow link-arrow--on-dark" href="#how-we-work">How we work <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></a>
             </div>
             <dl class="wwu-hero__stats" data-hero-item>
               <div><dt class="t-p-sm c-sub">people on the team</dt><dd class="t-h4">[X]</dd></div>
@@ -29,15 +31,15 @@
             </dl>
           </div>
           <div class="wwu-hero__media" aria-hidden="true" data-hero-media>
-            <div class="ph wwu-hero__ph wwu-hero__ph--tall" data-3d="orb"></div>
-            <div class="ph wwu-hero__ph"></div>
-            <div class="ph wwu-hero__ph"></div>
+            <div class="ph wwu-hero__ph wwu-hero__ph--tall" data-cover="wwu-ride-along"><span class="wwu-tile__label">Tue · Ride-along</span></div>
+            <div class="ph wwu-hero__ph" data-cover="wwu-pod-sync"><span class="wwu-tile__label">Pod sync</span></div>
+            <div class="ph wwu-hero__ph" data-cover="wwu-wins"><span class="wwu-tile__label">Fri · Wins &amp; lessons</span></div>
           </div>
         </div>
       </section>
 
       <!-- 02 · Culture & values: value selector (Figma 5763:256) -->
-      <section class="wwu-values co-section bg-weak" aria-labelledby="values-title">
+      <section class="wwu-values co-section bg-weak" aria-labelledby="values-title" data-tone="#f5f7fa">
         <div class="co-wrap">
           <div class="wwu-head">
             <p class="eyebrow">Culture &amp; values</p>
@@ -100,7 +102,7 @@
       </section>
 
       <!-- 03 · How we work: a week at Savvy (Figma 5763:297) -->
-      <section class="wwu-week co-section" id="how-we-work" aria-labelledby="week-title">
+      <section class="wwu-week co-section" id="how-we-work" aria-labelledby="week-title" data-tone="#0b0f2e" data-tone-dark>
         <div class="co-wrap">
           <div class="wwu-head">
             <p class="eyebrow">How we work</p>
@@ -169,23 +171,21 @@
             <li data-reveal>Async first: decisions are written down, meetings are short.</li>
           </ul>
           <div class="wwu-tools">
-            <p class="eyebrow wwu-tools__label" id="tools-label">Tools we use</p>
+            <div class="wwu-tools__copy">
+              <p class="eyebrow wwu-tools__label" id="tools-label">Tools we use</p>
+              <p class="wwu-tools__note">One stack per pod, the same for every client. Drag the cloud to spin it.</p>
+            </div>
             <ul class="wwu-tools__list" role="list" aria-labelledby="tools-label">
               <li>Figma</li><li>Webflow</li><li>Google Ads</li><li>Meta Ads</li><li>[CRM]</li><li>[Call tracking]</li><li>Looker Studio</li><li>Slack</li><li>[Project tool]</li>
             </ul>
-            <div class="wwu-tools__marquee" aria-hidden="true">
-              <div class="wwu-tools__track">
-                <span>Figma</span><span>Webflow</span><span>Google Ads</span><span>Meta Ads</span><span>[CRM]</span><span>[Call tracking]</span><span>Looker Studio</span><span>Slack</span><span>[Project tool]</span>
-                <span>Figma</span><span>Webflow</span><span>Google Ads</span><span>Meta Ads</span><span>[CRM]</span><span>[Call tracking]</span><span>Looker Studio</span><span>Slack</span><span>[Project tool]</span>
-              </div>
-            </div>
+            <div class="wwu-orbit" aria-hidden="true" data-orbit data-cursor="drag"></div>
             <button class="wwu-tools__pause" type="button" aria-pressed="false" data-marquee-toggle>Pause</button>
           </div>
         </div>
       </section>
 
       <!-- 04 · Benefits & growth (Figma 5763:387) -->
-      <section class="wwu-benefits co-section bg-weak" aria-labelledby="benefits-title">
+      <section class="wwu-benefits co-section bg-weak" aria-labelledby="benefits-title" data-tone="#f5f7fa">
         <div class="co-wrap">
           <div class="wwu-head">
             <p class="eyebrow">Benefits &amp; growth</p>
@@ -212,7 +212,7 @@
       </section>
 
       <!-- 05 · Team voices: video cards (Figma 5763:439) -->
-      <section class="wwu-voices co-section" aria-labelledby="voices-title">
+      <section class="wwu-voices co-section" aria-labelledby="voices-title" data-tone="#ffffff">
         <div class="co-wrap">
           <div class="wwu-voices__head">
             <div class="wwu-head">
@@ -281,7 +281,7 @@
       </section>
 
       <!-- 06 · Open positions preview: filter by team (Figma 5763:491) — generated from src/content/jobs.js -->
-      <section class="wwu-roles co-section bg-weak" id="open-positions" aria-labelledby="roles-title">
+      <section class="wwu-roles co-section bg-weak" id="open-positions" aria-labelledby="roles-title" data-tone="#f5f7fa">
         <div class="co-wrap">
           <div class="wwu-head">
             <p class="eyebrow">Open positions</p>
@@ -345,7 +345,7 @@
       </section>
 
       <!-- 07 · CTA (Figma 5763:572) -->
-      <section class="wwu-cta co-section" aria-labelledby="wwu-cta-title">
+      <section class="wwu-cta co-section" aria-labelledby="wwu-cta-title" data-tone="#ffffff">
         <div class="co-wrap wwu-cta__card has-fx">
           <div class="fx-layer wwu-cta__fx" data-3d="ribbons" data-3d-theme="dark" aria-hidden="true"></div>
           <div class="wwu-cta__copy">

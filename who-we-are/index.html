@@ -11,26 +11,53 @@
     <!-- @include header -->
 
     <main id="main">
-      <!-- 01 · Hero: why Savvy exists (Figma 6264:800) -->
-      <section class="wwa-hero" aria-labelledby="wwa-title">
-        <div class="wwa-hero__row">
-          <div class="wwa-hero__copy">
-            <p class="eyebrow" data-hero-item>Who we are</p>
-            <h1 class="t-h1" id="wwa-title" data-split="hero">We built Savvy Post because service businesses deserve a real growth partner.</h1>
-          </div>
-          <div class="wwa-hero__side" data-hero-item>
-            <p class="t-p-lg c-sub">After more than 10 years in marketing, we kept seeing the same thing: established companies paying several vendors and still unable to answer one question. What is actually driving our growth?</p>
-            <div class="wwa-hero__actions">
-              <a class="btn btn--l" data-magnetic href="/explore-partnership/"><span>Explore Partnership</span><span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span></a>
-              <a class="link-arrow" href="/growth-system/">See how the Growth System works <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></a>
+      <!-- 01 · Hero + story: one sticky WebGL stage. Particles form the Savvy isologo, then morph through four chapters as you scroll -->
+      <div class="wwa-stage" data-stage>
+        <div class="wwa-stage__gl" aria-hidden="true"><div class="wwa-stage__canvas" data-particles></div><div class="wwa-stage__hud"><span data-stage-label>00 · Savvy Post</span><span class="wwa-stage__track"><b data-stage-bar></b></span><span>Est. [year] · <span data-clock>--:--:--</span></span></div></div>
+        <section class="wwa-hero" aria-labelledby="wwa-title" data-chapter="1">
+          <div class="wwa-hero__row">
+            <div class="wwa-hero__copy">
+              <p class="eyebrow" data-hero-item><span class="wwa-dot" aria-hidden="true"></span>Who we are</p>
+              <h1 class="t-h1" id="wwa-title" data-chars>We built Savvy Post because service businesses deserve a real growth partner.</h1>
+            </div>
+            <div class="wwa-hero__side" data-hero-item>
+              <p class="t-p-lg">After more than 10 years in marketing, we kept seeing the same thing: established companies paying several vendors and still unable to answer one question. What is actually driving our growth?</p>
+              <div class="wwa-hero__actions">
+                <a class="btn btn--l" data-magnetic href="/explore-partnership/"><span>Explore Partnership</span><span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span></a>
+                <button class="wwa-play" type="button" data-modal-open="story-video" data-cursor="view"><span class="wwa-play__icon" aria-hidden="true">▶</span> Watch why we started (90 s)</button>
+                <a class="link-arrow link-arrow--on-dark" href="/growth-system/">See how the Growth System works <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></a>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="wwa-hero__media ph" data-hero-media data-3d="logo" data-3d-scrub>
-          <button class="wwa-play" type="button" data-modal-open="story-video"><span aria-hidden="true">▶</span> Watch why we started (90 s)</button>
-        </div>
-        <a class="wwa-hero__scroll" href="#mission">Scroll to read our story <span aria-hidden="true">↓</span></a>
-      </section>
+          <a class="wwa-hero__scroll" href="#mission">Scroll to read our story <span aria-hidden="true">↓</span></a>
+        </section>
+
+        <section class="wwa-story" aria-labelledby="story-title">
+          <h2 class="sr-only" id="story-title">What we believe, in four moves</h2>
+          <ol class="wwa-story__list" role="list">
+            <li class="wwa-chapter" data-chapter="2">
+              <p class="wwa-chapter__no" aria-hidden="true">01 / 04</p>
+              <h3 class="wwa-chapter__title"><span>Strategy</span> gives growth direction.</h3>
+              <p class="wwa-chapter__text">In practice: a 90-day plan built from your market, capacity and goals, before any campaign runs.</p>
+            </li>
+            <li class="wwa-chapter" data-chapter="3">
+              <p class="wwa-chapter__no" aria-hidden="true">02 / 04</p>
+              <h3 class="wwa-chapter__title"><span>Systems</span> make growth executable.</h3>
+              <p class="wwa-chapter__text">In practice: tracking, CRM follow-up and reporting connected, so every call and form is followed to a booked job.</p>
+            </li>
+            <li class="wwa-chapter" data-chapter="4">
+              <p class="wwa-chapter__no" aria-hidden="true">03 / 04</p>
+              <h3 class="wwa-chapter__title"><span>Measurement</span> makes growth improvable.</h3>
+              <p class="wwa-chapter__text">In practice: monthly reviews in booked jobs, revenue and cost per job, so we know what to stop, start and scale.</p>
+            </li>
+            <li class="wwa-chapter" data-chapter="5">
+              <p class="wwa-chapter__no" aria-hidden="true">04 / 04</p>
+              <h3 class="wwa-chapter__title"><span>Five</span> service industries.</h3>
+              <p class="wwa-chapter__text">HVAC, plumbing, electrical, roofing and cleaning. We don't market industries we don't understand.</p>
+            </li>
+          </ol>
+        </section>
+      </div>
 
       <!-- 02 · Mission (Figma 6264:813) -->
       <section class="wwa-mission bg-weak" id="mission" aria-labelledby="mission-title">
@@ -156,16 +183,23 @@
           <button class="chip" type="button" aria-pressed="false" data-industry="cleaning">Cleaning</button>
         </div>
         <p class="sr-only" aria-live="polite" data-team-status></p>
+        <div class="wwa-ring" data-ring data-cursor="drag">
+          <div class="wwa-ring__nav" data-ring-nav hidden>
+            <button class="round-btn" type="button" data-ring-prev aria-label="Previous team member">←</button>
+            <span class="wwa-ring__count micro" data-ring-count aria-hidden="true">01 / 08</span>
+            <button class="round-btn round-btn--dark" type="button" data-ring-next aria-label="Next team member">→</button>
+          </div>
         <ul class="wwa-team__grid" role="list" data-team-grid>
-          <li class="member" data-industries="hvac plumbing"><div class="member__photo ph"></div><p class="t-label-lg">[Name]</p><p class="t-p-sm c-sub">Growth strategist</p><span class="member__tag">HVAC · Plumbing</span></li>
-          <li class="member" data-industries="all"><div class="member__photo ph"></div><p class="t-label-lg">[Name]</p><p class="t-p-sm c-sub">Paid media</p><span class="member__tag">All industries</span></li>
-          <li class="member" data-industries="roofing electrical"><div class="member__photo ph"></div><p class="t-label-lg">[Name]</p><p class="t-p-sm c-sub">SEO &amp; local search</p><span class="member__tag">Roofing · Electrical</span></li>
-          <li class="member" data-industries="all"><div class="member__photo ph"></div><p class="t-label-lg">[Name]</p><p class="t-p-sm c-sub">CRM &amp; automation</p><span class="member__tag">All industries</span></li>
-          <li class="member" data-industries="all"><div class="member__photo ph"></div><p class="t-label-lg">[Name]</p><p class="t-p-sm c-sub">Analytics &amp; attribution</p><span class="member__tag">All industries</span></li>
-          <li class="member" data-industries="cleaning"><div class="member__photo ph"></div><p class="t-label-lg">[Name]</p><p class="t-p-sm c-sub">Creative &amp; brand</p><span class="member__tag">Cleaning</span></li>
-          <li class="member" data-industries="all"><div class="member__photo ph"></div><p class="t-label-lg">[Name]</p><p class="t-p-sm c-sub">Web &amp; landing pages</p><span class="member__tag">All industries</span></li>
-          <li class="member" data-industries="all"><div class="member__photo ph"></div><p class="t-label-lg">[Name]</p><p class="t-p-sm c-sub">Partner success</p><span class="member__tag">All industries</span></li>
+          <li class="member" data-industries="hvac plumbing"><div class="member__photo ph" data-cover="team-1"></div><p class="t-label-lg">[Name]</p><p class="t-p-sm c-sub">Growth strategist</p><span class="member__tag">HVAC · Plumbing</span></li>
+          <li class="member" data-industries="all"><div class="member__photo ph" data-cover="team-2"></div><p class="t-label-lg">[Name]</p><p class="t-p-sm c-sub">Paid media</p><span class="member__tag">All industries</span></li>
+          <li class="member" data-industries="roofing electrical"><div class="member__photo ph" data-cover="team-3"></div><p class="t-label-lg">[Name]</p><p class="t-p-sm c-sub">SEO &amp; local search</p><span class="member__tag">Roofing · Electrical</span></li>
+          <li class="member" data-industries="all"><div class="member__photo ph" data-cover="team-4"></div><p class="t-label-lg">[Name]</p><p class="t-p-sm c-sub">CRM &amp; automation</p><span class="member__tag">All industries</span></li>
+          <li class="member" data-industries="all"><div class="member__photo ph" data-cover="team-5"></div><p class="t-label-lg">[Name]</p><p class="t-p-sm c-sub">Analytics &amp; attribution</p><span class="member__tag">All industries</span></li>
+          <li class="member" data-industries="cleaning"><div class="member__photo ph" data-cover="team-6"></div><p class="t-label-lg">[Name]</p><p class="t-p-sm c-sub">Creative &amp; brand</p><span class="member__tag">Cleaning</span></li>
+          <li class="member" data-industries="all"><div class="member__photo ph" data-cover="team-7"></div><p class="t-label-lg">[Name]</p><p class="t-p-sm c-sub">Web &amp; landing pages</p><span class="member__tag">All industries</span></li>
+          <li class="member" data-industries="all"><div class="member__photo ph" data-cover="team-8"></div><p class="t-label-lg">[Name]</p><p class="t-p-sm c-sub">Partner success</p><span class="member__tag">All industries</span></li>
         </ul>
+        </div>
       </section>
 
       <!-- 06 · The future of Savvy (Figma 6264:934) -->

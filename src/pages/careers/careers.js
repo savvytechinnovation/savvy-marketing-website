@@ -5,6 +5,8 @@ import { validateApplication } from '../../lib/application-validation.js';
 import { $, $$, splitHeadings, magnetic, refreshPosted } from './motion.js';
 import { createCvUpload, fileToBase64 } from './cv-upload.js';
 import { setFieldError, formValues, lockForm, postJson, sendErrorText } from './form-utils.js';
+import { stage, particles } from '../resources/gl-kit.js';
+import { chars3D, liveClock, velocityMarquee, finePointer, confetti } from '../resources/fx-dom.js';
 import './careers.css';
 
 gsap.registerPlugin(Flip);
@@ -106,6 +108,7 @@ function apply({ animate = true } = {}) {
   sortEl.value = state.sort;
   renderChips();
   writeUrl();
+  document.dispatchEvent(new CustomEvent('careers:filter', { detail: { slugs: visible.map((j) => j.slug) } }));
   if (flip)
     Flip.from(flip, {
       duration: 0.5,
@@ -327,6 +330,7 @@ form.addEventListener('submit', async (e) => {
     done.hidden = false;
     if (!reduceMotion) gsap.from(done.children, { opacity: 0, y: 14, rotationX: -20, duration: 0.6, stagger: 0.07, ease: 'expo.out' });
     done.focus();
+    confetti(done);
     return;
   }
   if (r.error === 'validation' && r.fields) {
@@ -336,4 +340,109 @@ form.addEventListener('submit', async (e) => {
   $('[data-network-text]', netBanner).textContent = sendErrorText(r);
   netBanner.hidden = false;
   netBanner.focus();
+});
+
+// ===========================================================================
+// Round 2 — particle hero, floating 3D job board synced with the filters, area marquee
+// ===========================================================================
+chars3D($('[data-chars]'), { delay: 0.3 });
+liveClock();
+
+stage(
+  $('[data-particles]'),
+  particles(['scatter', 'logo', 'plane'], {
+    count: 6000,
+    offsetX: 3.2,
+    mobileScale: 0.6,
+    mobileY: 1.4,
+    onUpdate: (t, c, { camera }) => (camera.position.z = 11 + c.progress * 5),
+  }),
+  {
+    eager: true,
+    scrub: true,
+    trigger: '.car-hero',
+    start: 'top top',
+    end: 'bottom top',
+    stillTime: 3,
+    onReady: (api) => {
+      api.set('shape', reduceMotion ? 1 : 0);
+      if (reduceMotion) return api.redraw();
+      setTimeout(() => api.set('shape', 1), 400);
+      // the isologo dissolves into a "board" once the role cards have flown in
+      setTimeout(() => api.set('shape', 2), 3200);
+      document.addEventListener('careers:filter', () => {
+        api.set('burst', 1);
+        setTimeout(() => api.set('burst', 0), 450);
+      });
+      search.addEventListener('input', () => {
+        api.set('burst', 0.5);
+        clearTimeout(search._b);
+        search._b = setTimeout(() => api.set('burst', 0), 300);
+      });
+    },
+  },
+);
+
+// marquee words from the live role list (areas + locations)
+const mq = $('[data-roles-marquee]');
+if (mq) {
+  const words = ['Open roles', ...new Set(JOBS.map((j) => j.area)), 'Remote', ...new Set(JOBS.map((j) => j.type))];
+  $('.vmq__track', mq).innerHTML = words.map((w, i) => `<span class="vmq__word${i % 3 === 0 ? ' is-solid' : ''}">${w.replace(/[&<>]/g, '')}</span><span class="vmq__star">✳</span>`).join('');
+  velocityMarquee(mq, { speed: 60 });
+}
+
+// floating board: one glass card per role; filters bring matches forward and sink the rest
+const board = $('[data-board]');
+if (board) {
+  const stageEl = document.createElement('div');
+  stageEl.className = 'car-board__stage';
+  board.append(stageEl);
+  const cards = JOBS.map((j, i) => {
+    const el = document.createElement('div');
+    el.className = 'board-card';
+    el.innerHTML = `<span class="board-card__top"><span class="board-card__area"></span><span>No. ${String(i + 1).padStart(2, '0')}</span></span><span class="board-card__title"></span><span class="board-card__meta"><span></span><span></span></span>`;
+    $('.board-card__area', el).textContent = j.area;
+    $('.board-card__title', el).textContent = j.title;
+    const [a, b] = $$('.board-card__meta span', el);
+    a.textContent = j.type;
+    b.textContent = j.location;
+    stageEl.append(el);
+    return { el, slug: j.slug };
+  });
+  const layout = (slugs, animate) => {
+    const on = cards.filter((c) => slugs.includes(c.slug));
+    const m = on.length;
+    cards.forEach((c) => {
+      const k = on.indexOf(c);
+      c.el.classList.toggle('is-match', k >= 0 && m < cards.length);
+      const vars =
+        k >= 0
+          ? { x: (k - (m - 1) / 2) * 46, y: (k - (m - 1) / 2) * 92, z: -k * 70 + (m - 1) * 20, rotationY: -24, rotationX: 12, rotationZ: -3, opacity: 1 }
+          : { x: 120, y: 220, z: -700, rotationY: -40, rotationX: 30, rotationZ: 0, opacity: 0.08 };
+      if (animate && !reduceMotion) gsap.to(c.el, { ...vars, duration: 1.1, ease: 'expo.out', delay: Math.max(0, k) * 0.05 });
+      else gsap.set(c.el, vars);
+    });
+  };
+  // fly in from deep space on load
+  if (!reduceMotion) {
+    cards.forEach((c, i) => gsap.set(c.el, { x: 400, y: -300 + i * 120, z: -1400, rotationY: -80, opacity: 0 }));
+    setTimeout(() => layout(JOBS.filter((j) => matches(j, state)).map((j) => j.slug), true), 500);
+  } else layout(JOBS.filter((j) => matches(j, state)).map((j) => j.slug), false);
+  document.addEventListener('careers:filter', (e) => layout(e.detail.slugs, true));
+  if (finePointer()) {
+    const rx = gsap.quickTo(stageEl, 'rotationX', { duration: 1, ease: 'power3' });
+    const ry = gsap.quickTo(stageEl, 'rotationY', { duration: 1, ease: 'power3' });
+    addEventListener('pointermove', (e) => {
+      ry((e.clientX / innerWidth - 0.5) * 16);
+      rx(-(e.clientY / innerHeight - 0.5) * 10);
+    });
+  }
+  mm.add('(prefers-reduced-motion: no-preference)', () => {
+    gsap.to(stageEl, { y: -14, duration: 3, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+    gsap.to(board, { yPercent: -25, opacity: 0, ease: 'none', scrollTrigger: { trigger: '.car-hero', start: 'top top', end: 'bottom top', scrub: true } });
+  });
+}
+
+mm.add('(prefers-reduced-motion: no-preference)', () => {
+  gsap.from('.car-hero__hud', { opacity: 0, y: -10, duration: 1, delay: 0.6 });
 });

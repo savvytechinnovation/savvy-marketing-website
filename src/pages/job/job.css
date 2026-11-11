@@ -624,3 +624,124 @@
     flex: 0 0 auto;
   }
 }
+
+/* =====================================================================
+ * Round 2 — cinematic job hero over a live, slug-seeded shader
+ * ===================================================================== */
+.job-top {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: flex-end;
+  min-height: max(88svh, 680px);
+  padding-bottom: var(--sp-24);
+  overflow: clip;
+  background: #0b0f2e;
+  color: #fff;
+}
+
+.job-top__cover {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.job-top__cover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(90deg, rgba(11, 15, 46, 0.9) 0%, rgba(11, 15, 46, 0.4) 60%, rgba(11, 15, 46, 0.2)), linear-gradient(0deg, rgba(11, 15, 46, 0.8), transparent 50%);
+}
+
+.job-top__hud {
+  position: absolute;
+  top: 180px;
+  left: var(--sp-40);
+  right: var(--sp-40);
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: var(--sp-3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+.job-top .t-h1 {
+  max-width: 16ch;
+  font-size: clamp(44px, 6.4vw, 96px);
+  line-height: 1;
+  letter-spacing: -0.045em;
+  color: #fff;
+}
+
+.job-top .breadcrumbs ol,
+.job-top .c-sub {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.job-top .breadcrumbs a:hover {
+  color: #fff;
+}
+
+.job-top__chips li {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  backdrop-filter: blur(8px);
+}
+
+.job-top__chips li:first-child {
+  border-color: transparent;
+  background: var(--secondary-base);
+}
+
+.job-top .job-share {
+  color: #fff;
+}
+
+.facts--mobile {
+  color: var(--text-strong-950);
+}
+
+/* hiring process: steps light up along a drawn line */
+.process li {
+  transition: opacity 0.4s;
+}
+
+@media (max-width: 1180px) {
+  .job-top__hud {
+    left: var(--sp-10);
+    right: var(--sp-10);
+  }
+}
+
+@media (max-width: 900px) {
+  .job-top {
+    min-height: 0;
+    padding-bottom: var(--sp-12);
+  }
+  .job-top__hud {
+    top: 100px;
+    left: var(--sp-5);
+    right: var(--sp-5);
+  }
+  .job-top__hud > :nth-child(2) {
+    display: none;
+  }
+  .job-top .t-h1 {
+    font-size: clamp(38px, 11vw, 52px);
+  }
+}
+
+.has-fx > .job-top__cover,
+.has-fx > .job-top__hud {
+  position: absolute;
+}
+
+.has-fx > .job-top__cover {
+  z-index: -1;
+}

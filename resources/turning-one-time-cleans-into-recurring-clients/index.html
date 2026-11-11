@@ -26,11 +26,26 @@
   <body class="page-article">
     <!-- @include header -->
     <div class="read-progress" aria-hidden="true"><span class="read-progress__bar" data-progress></span></div>
+    <div class="read-ring" aria-hidden="true" data-ring>
+      <svg viewBox="0 0 64 64" width="64" height="64"><circle class="read-ring__track" cx="32" cy="32" r="28" /><circle class="read-ring__bar" cx="32" cy="32" r="28" pathLength="100" data-ring-bar /></svg>
+      <span class="read-ring__pct" data-ring-pct>0%</span>
+      <span class="read-ring__left" data-ring-left data-minutes="6">6 min left</span>
+    </div>
 
     <main id="main">
       <article class="post" aria-labelledby="post-title" data-slug="turning-one-time-cleans-into-recurring-clients">
         <!-- 01 · Article header -->
-        <header class="post-hero">
+        <header class="post-hero" data-tone="#0b0f2e">
+          <div class="post-hero__cover" role="img" aria-label="Generative cover for “Turning one-time cleans into recurring clients”" data-cover-live="turning-one-time-cleans-into-recurring-clients">
+            <span class="post-hero__grid" aria-hidden="true"></span>
+          </div>
+          <div class="post-hero__rail" aria-hidden="true">
+            <span>No. 01 / 11</span>
+            <span>Guides</span>
+            <span>600 words</span>
+            <span data-clock>--:--:--</span>
+          </div>
+          <div class="post-hero__inner">
           <nav class="breadcrumbs post-hero__crumbs" aria-label="Breadcrumb">
             <ol>
               <li><a href="/resources/">Resources</a></li>
@@ -44,7 +59,7 @@
             <li class="post-tag">Convert</li>
             <li class="post-tag post-tag--extra">Grow</li>
           </ul>
-          <h1 class="post-hero__title" id="post-title" data-split>Turning one-time cleans into recurring clients</h1>
+          <h1 class="post-hero__title" id="post-title" data-chars>Turning one-time cleans into recurring clients</h1>
           <p class="post-hero__dek">A one-time clean is an audition. How established cleaning companies turn more first visits into recurring clients, without heavy discounting.</p>
           <div class="post-hero__meta">
             <div class="post-author">
@@ -60,7 +75,8 @@
               <span>6 min read</span>
             </p>
           </div>
-          <div class="ph post-hero__cover" role="img" aria-label="Cover image for “Turning one-time cleans into recurring clients”"></div>
+          </div>
+          <a class="post-hero__down" href="#post-body" aria-label="Start reading"><span aria-hidden="true"></span></a>
         </header>
 
         <!-- Mobile: sticky "In this article" dropdown (Figma "Mobile On this page — behavior") -->
@@ -89,7 +105,7 @@
         <div class="toc-scrim" data-toc-scrim hidden></div>
 
         <!-- 03 · Body -->
-        <div class="post-layout">
+        <div class="post-layout" id="post-body">
           <aside class="post-rail" aria-label="Article tools">
             <nav class="toc" aria-labelledby="toc-title-turning-one-time-cleans-into-recurring-clients">
               <p class="toc__title" id="toc-title-turning-one-time-cleans-into-recurring-clients">In this article</p>
@@ -133,7 +149,7 @@
               <li>Leave a short note of what was done and anything noticed.</li>
               <li>Take before-and-after photos where appropriate and share them.</li>
             </ul>
-            <blockquote class="prose__quote">
+            <blockquote class="prose__quote" data-kinetic>
               <p>&ldquo;The recurring offer works best while the clean is still visible.&rdquo;</p>
             </blockquote>
             <h2 id="follow-up-quickly">Follow up quickly</h2>
@@ -209,8 +225,8 @@
         <ul class="related__list" role="list" data-reveal-stagger="0.08">
           <li class="rcard-item" data-reveal>
             <article class="rcard">
-              <a class="rcard__link" href="/resources/missed-calls-hidden-cost-of-paid-demand/">
-                <span class="ph rcard__media" aria-hidden="true"></span>
+              <a class="rcard__link" href="/resources/missed-calls-hidden-cost-of-paid-demand/" data-cursor="view">
+                <span class="ph rcard__media" aria-hidden="true" data-cover="missed-calls-hidden-cost-of-paid-demand"><span class="rcard__no">No. 08</span><span class="rcard__glare"></span></span>
                 <span class="rcard__body">
                   <span class="rcard__eyebrow">Findings · Cleaning</span>
                   <h3 class="rcard__title">Missed calls: the hidden cost of paid demand</h3>
@@ -221,8 +237,8 @@
           </li>
           <li class="rcard-item" data-reveal>
             <article class="rcard">
-              <a class="rcard__link" href="/resources/how-to-connect-marketing-to-booked-jobs/">
-                <span class="ph rcard__media" aria-hidden="true"></span>
+              <a class="rcard__link" href="/resources/how-to-connect-marketing-to-booked-jobs/" data-cursor="view">
+                <span class="ph rcard__media" aria-hidden="true" data-cover="how-to-connect-marketing-to-booked-jobs"><span class="rcard__no">No. 11</span><span class="rcard__glare"></span></span>
                 <span class="rcard__body">
                   <span class="rcard__eyebrow">Guide · All industries</span>
                   <h3 class="rcard__title">How to connect your marketing to booked jobs</h3>
@@ -233,8 +249,8 @@
           </li>
           <li class="rcard-item" data-reveal>
             <article class="rcard">
-              <a class="rcard__link" href="/resources/maintenance-plans-as-a-growth-engine/">
-                <span class="ph rcard__media" aria-hidden="true"></span>
+              <a class="rcard__link" href="/resources/maintenance-plans-as-a-growth-engine/" data-cursor="view">
+                <span class="ph rcard__media" aria-hidden="true" data-cover="maintenance-plans-as-a-growth-engine"><span class="rcard__no">No. 07</span><span class="rcard__glare"></span></span>
                 <span class="rcard__body">
                   <span class="rcard__eyebrow">Breakdown · HVAC</span>
                   <h3 class="rcard__title">Maintenance plans as a growth engine</h3>

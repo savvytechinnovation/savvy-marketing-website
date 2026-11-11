@@ -2,10 +2,11 @@
 // Cards are rendered into the HTML by scripts/build-posts.mjs (SEO); this file only filters, sorts,
 // paginates ("Load more") and animates them, and keeps the URL in sync (?type=&industry=&audience=&stage=&q=&sort=).
 import { initSite, gsap, ScrollTrigger, reduceMotion, scrollLock } from '../../ds/site.js';
-import { mount3D } from '../../ds/fx3d.js';
+import { stage, library, paintCovers } from './gl-kit.js';
+import { chars3D, scrambleIn, velocityMarquee, tiltGlare, distortHover, liveClock, magnet } from './fx-dom.js';
 import { Flip } from 'gsap/Flip';
 import { initNewsletters } from './newsletter.js';
-import { splitHeadings, tiltCards, magnetic, cardsEnter } from './motion.js';
+import { splitHeadings, magnetic, cardsEnter } from './motion.js';
 import './resources.css';
 
 gsap.registerPlugin(Flip);
@@ -315,18 +316,66 @@ document.fonts?.ready.then(() => gsap.set(pill, { x: $('[aria-pressed="true"]', 
 render({ animate: false });
 initNewsletters();
 splitHeadings();
-tiltCards();
 magnetic();
 cardsEnter('.rcard-item:not([hidden]) .rcard__link');
 
-// 3D: flowing point field behind the hero, iridescent orb in the featured media slot
-mount3D($('.res-hero__bg'), { scene: 'field', theme: 'light', scrub: true });
-mount3D($('.feat__media'), { scene: 'orb', theme: 'light' });
+// ---------------------------------------------------------------------------
+// Round 2 — immersive library hero, topic marquee, pinned editor's picks, generative covers
+// ---------------------------------------------------------------------------
+const hero = $('[data-res-hero]');
+stage($('[data-library]'), library(), { scrub: true, trigger: hero, start: 'top top', end: 'bottom top', eager: true, stillTime: 6, antialias: false });
+chars3D($('[data-chars]'), { delay: 0.35 });
+scrambleIn();
+liveClock();
+velocityMarquee($('.vmq'), { speed: 70 });
+tiltGlare('.rcard', { max: 7 });
+tiltGlare('.feat__link', { max: 3, scale: 1 });
+distortHover('.rcard__media', '.rcard');
+distortHover('.rail-card__media', '.rail-card');
+magnet('.res-hero__cta', 0.25);
+paintCovers();
 
-// Section choreography: filters bar and featured card ease in as they arrive
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  gsap.from('.feat__link', { y: 60, opacity: 0, duration: 1.1, ease: 'expo.out', scrollTrigger: { trigger: '.res-featured', start: 'top 85%' } });
-  gsap.from('.res-filters__row > *', { y: 16, opacity: 0, duration: 0.7, stagger: 0.04, ease: 'power3.out', clearProps: 'transform,opacity', scrollTrigger: { trigger: '.res-filters', start: 'top 90%' } });
-  // featured media drifts against the scroll for depth
-  gsap.fromTo('.feat__media', { backgroundPosition: '50% 0%' }, { backgroundPosition: '50% 100%', ease: 'none', scrollTrigger: { trigger: '.res-featured', scrub: true } });
-});
+const picks = $('[data-picks]');
+const track = $('[data-picks-track]');
+const picksCount = $('[data-picks-count]');
+const picksBar = $('[data-picks-bar]');
+const railCards = $$('.rail-card', track);
+$('[data-picks-total]').textContent = String(railCards.length).padStart(2, '0');
+
+gsap.matchMedia().add(
+  { desktop: '(min-width: 901px)', motion: '(prefers-reduced-motion: no-preference)' },
+  ({ conditions: { desktop, motion } }) => {
+    if (!motion) return;
+    // hero copy drifts up and fades as the library opens
+    gsap.to('.res-hero__content, .res-hero__side', { yPercent: -18, opacity: 0.15, ease: 'none', scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } });
+    gsap.from('.res-hero__lines span', { scaleY: 0, transformOrigin: 'top', duration: 1.6, ease: 'expo.inOut', stagger: 0.08 });
+    gsap.from('.res-index li', { x: 30, opacity: 0, duration: 1, ease: 'expo.out', stagger: 0.07, delay: 0.6 });
+    if (!desktop) return;
+    const dist = () => Math.max(0, track.scrollWidth - innerWidth);
+    const tween = gsap.to(track, {
+      x: () => -dist(),
+      ease: 'none',
+      scrollTrigger: {
+        trigger: picks,
+        start: 'top top',
+        end: () => `+=${dist()}`,
+        pin: true,
+        pinSpacing: true, // main is a flex column: ScrollTrigger would default to false
+        scrub: 0.5,
+        invalidateOnRefresh: true,
+        onUpdate: (st) => {
+          picksBar.style.transform = `scaleX(${0.16 + st.progress * 0.84})`;
+          picksCount.textContent = String(Math.min(railCards.length, 1 + Math.round(st.progress * (railCards.length - 1)))).padStart(2, '0');
+        },
+      },
+    });
+    // each card swings in from depth as it travels across the viewport
+    railCards.forEach((card) =>
+      gsap.fromTo(
+        card.querySelector('.rail-card__media'),
+        { rotationY: -18, scale: 0.9, transformPerspective: 1200 },
+        { rotationY: 12, scale: 1, ease: 'none', scrollTrigger: { trigger: card, containerAnimation: tween, start: 'left right', end: 'right left', scrub: true } },
+      ),
+    );
+  },
+);

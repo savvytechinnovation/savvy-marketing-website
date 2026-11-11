@@ -1,6 +1,8 @@
 /* Resources — pieces shared by the hub (/resources/) and article pages (/resources/<slug>/).
  * Figma: "Resource Card" (5499:174), "Section / Soft CTA" (5714:14580), filter chips (5714:14504). */
 
+@import './fx.css';
+
 /* ---------- Resource card ---------- */
 .rcard-item {
   display: flex;
@@ -339,4 +341,63 @@
   .rcard__media {
     height: 200px;
   }
+}
+
+/* ---------- Round 2: card details ---------- */
+.rcard__media {
+  height: 236px;
+  transition: scale 0.8s var(--ease-out);
+}
+
+.rcard__link {
+  position: relative;
+}
+
+.rcard__link:hover .rcard__media {
+  scale: 1.02;
+}
+
+.rcard__media::after {
+  display: none;
+}
+
+.rcard__no {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 1;
+  padding: 4px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: var(--r-full);
+  background: rgba(11, 15, 46, 0.35);
+  color: #fff;
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  backdrop-filter: blur(6px);
+}
+
+.rcard__body {
+  position: relative;
+}
+
+.rcard__body::before {
+  /* hairline that draws in on hover */
+  content: '';
+  position: absolute;
+  top: 0;
+  left: var(--sp-6);
+  right: var(--sp-6);
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary-base), var(--secondary-base));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s var(--ease-out);
+}
+
+.rcard__link:hover .rcard__body::before,
+.rcard__link:focus-visible .rcard__body::before {
+  transform: scaleX(1);
 }

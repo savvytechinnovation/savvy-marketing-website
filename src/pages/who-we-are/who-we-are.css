@@ -898,3 +898,285 @@
     animation: none;
   }
 }
+
+/* =====================================================================
+ * Round 2 — sticky particle stage (hero + four chapters), 3D team ring
+ * ===================================================================== */
+.wwa-stage {
+  position: relative;
+  overflow: clip;
+  background: radial-gradient(80% 60% at 70% 20%, #1d2a78 0%, transparent 60%), #0b0f2e;
+  color: #fff;
+}
+
+.wwa-stage__gl {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  margin-bottom: -100svh;
+  overflow: clip;
+  pointer-events: none;
+}
+
+.wwa-stage__canvas {
+  position: absolute;
+  inset: 0;
+}
+
+.wwa-stage__gl::before {
+  /* fine grid + edge fade */
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 80px 80px;
+  -webkit-mask-image: radial-gradient(60% 60% at 60% 50%, #000, transparent);
+  mask-image: radial-gradient(60% 60% at 60% 50%, #000, transparent);
+}
+
+.wwa-stage__hud {
+  position: absolute;
+  z-index: 2;
+  left: var(--sp-40);
+  right: var(--sp-40);
+  bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-6);
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+.wwa-stage__track {
+  position: relative;
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.wwa-stage__track b {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--primary-base), var(--secondary-base));
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.wwa-stage .wwa-hero {
+  position: relative;
+  z-index: 1;
+  justify-content: center;
+  min-height: 100svh;
+  padding-bottom: 120px;
+}
+
+.wwa-stage .wwa-hero .t-h1 {
+  max-width: 15ch;
+  font-size: clamp(44px, 6vw, 88px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.wwa-stage .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #7fd8f5;
+}
+
+.wwa-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--secondary-base);
+}
+
+.wwa-stage .wwa-hero__side p {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.wwa-stage .wwa-play {
+  position: static;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  backdrop-filter: blur(8px);
+}
+
+.wwa-play__icon {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--secondary-base);
+  font-size: 9px;
+}
+
+.wwa-stage .wwa-hero__scroll {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.wwa-story {
+  position: relative;
+  z-index: 1;
+  padding: 0 var(--sp-40);
+}
+
+.wwa-story__list {
+  display: flex;
+  flex-direction: column;
+  max-width: 1312px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.wwa-chapter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--sp-5);
+  min-height: 100svh;
+  max-width: 560px;
+}
+
+.wwa-chapter:nth-child(even) {
+  align-self: flex-end;
+  text-align: right;
+  align-items: flex-end;
+}
+
+.wwa-chapter__no {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  font-variant-numeric: tabular-nums;
+}
+
+.wwa-chapter__title {
+  font-size: clamp(40px, 5.4vw, 80px);
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.wwa-chapter__title span {
+  display: inline-block;
+  background: linear-gradient(90deg, #7fd8f5, var(--primary-base) 50%, var(--secondary-base));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.wwa-chapter__text {
+  max-width: 440px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 18px;
+  line-height: 28px;
+}
+
+/* ---------- Team as a 3D ring (desktop, motion allowed) ---------- */
+.wwa-ring {
+  position: relative;
+  width: 100%;
+  max-width: 1312px;
+}
+
+.wwa-ring__nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-4);
+  margin-top: var(--sp-6);
+}
+
+.wwa-ring__nav[hidden] {
+  display: none;
+}
+
+.wwa-ring__count {
+  min-width: 64px;
+  text-align: center;
+}
+
+.wwa-ring.is-ring {
+  order: 0;
+  height: 560px;
+  perspective: 1800px;
+  perspective-origin: 50% 40%;
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+}
+
+.wwa-ring.is-ring .wwa-team__grid {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  display: block;
+  width: 260px;
+  height: 440px;
+  margin-left: -130px;
+  transform-style: preserve-3d;
+}
+
+.wwa-ring.is-ring .member {
+  position: absolute;
+  inset: 0;
+  padding: 14px;
+  border: 1px solid var(--stroke-soft-200);
+  border-radius: var(--r-24);
+  background: var(--bg-white-0);
+  box-shadow: 0 30px 60px -30px rgba(20, 26, 64, 0.35);
+  backface-visibility: hidden;
+  transition: opacity 0.5s, filter 0.5s;
+}
+
+.wwa-ring.is-ring .member:not(.is-front) {
+  filter: saturate(0.6);
+}
+
+.wwa-ring.is-ring .member__photo {
+  height: 300px;
+}
+
+.wwa-ring.is-ring .wwa-ring__nav {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+@media (max-width: 900px) {
+  .wwa-stage__hud {
+    left: var(--sp-5);
+    right: var(--sp-5);
+  }
+  .wwa-stage__hud > :last-child {
+    display: none;
+  }
+  .wwa-stage .wwa-hero {
+    min-height: 0;
+    padding-bottom: 96px;
+  }
+  .wwa-story {
+    padding: 0 var(--sp-5);
+  }
+  .wwa-chapter {
+    min-height: 80svh;
+  }
+  .wwa-chapter:nth-child(even) {
+    align-self: flex-start;
+    text-align: left;
+    align-items: flex-start;
+  }
+  .wwa-chapter__text {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}

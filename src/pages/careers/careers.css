@@ -680,3 +680,197 @@
     width: 100%;
   }
 }
+
+/* =====================================================================
+ * Round 2 — immersive careers hero with a floating 3D job board
+ * ===================================================================== */
+.car-hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: max(100svh, 780px);
+  padding-top: 220px;
+  overflow: clip;
+  background: radial-gradient(70% 60% at 75% 40%, #1d2a78 0%, transparent 65%), #0b0f2e;
+}
+
+.car-hero__fx {
+  opacity: 1;
+  mask-image: none;
+}
+
+.car-hero__hud {
+  position: absolute;
+  top: 180px;
+  left: var(--sp-40);
+  right: var(--sp-40);
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: var(--sp-3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+.car-hero__inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1312px;
+}
+
+.car-hero__inner > * {
+  max-width: 620px;
+}
+
+.car-hero .t-h1 {
+  font-size: clamp(48px, 6.4vw, 96px);
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+}
+
+.car-board {
+  position: absolute;
+  z-index: 1;
+  top: 220px;
+  right: var(--sp-40);
+  bottom: 120px;
+  width: min(44vw, 600px);
+  perspective: 1400px;
+  pointer-events: none;
+}
+
+.car-board__stage {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+.board-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 300px;
+  margin: -84px 0 0 -150px;
+  padding: 18px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 20px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04));
+  color: #fff;
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  will-change: transform, opacity;
+}
+
+.board-card__top {
+  display: flex;
+  justify-content: space-between;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.board-card__area {
+  color: #7fd8f5;
+}
+
+.board-card__title {
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+.board-card__meta {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.board-card__meta span {
+  padding: 2px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--r-full);
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.board-card.is-match::after {
+  content: '';
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--secondary-base);
+  box-shadow: 0 0 12px var(--secondary-base);
+}
+
+.car-marquee {
+  margin-top: var(--sp-10);
+}
+
+.car-marquee .vmq__word {
+  font-size: clamp(56px, 8vw, 140px);
+}
+
+/* job rows: depth hover */
+.job {
+  translate: 0 0;
+  transition: background-color 0.3s, box-shadow 0.4s, border-color 0.3s, translate 0.4s var(--ease-out);
+}
+
+.job:hover {
+  translate: 0 -3px;
+  border-color: var(--stroke-sub-300);
+  box-shadow: 0 24px 40px -28px rgba(20, 26, 64, 0.45);
+}
+
+.jobs {
+  perspective: 1600px;
+}
+
+@media (max-width: 1180px) {
+  .car-board {
+    display: none;
+  }
+  .car-hero__hud {
+    left: var(--sp-10);
+    right: var(--sp-10);
+  }
+  .car-hero__inner > * {
+    max-width: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .car-hero {
+    min-height: 0;
+    padding-top: 168px;
+  }
+  .car-hero__hud {
+    top: 100px;
+    left: var(--sp-5);
+    right: var(--sp-5);
+  }
+  .car-hero__hud > :nth-child(2) {
+    display: none;
+  }
+  .car-hero .t-h1 {
+    font-size: clamp(40px, 12vw, 56px);
+  }
+}
+
+.has-fx > .car-board,
+.has-fx > .car-hero__hud {
+  position: absolute;
+}

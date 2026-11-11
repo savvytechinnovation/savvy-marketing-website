@@ -1,0 +1,95 @@
+/* Round 2 — shared visual details for Resources, articles and the company pages
+ * (generative covers, glare, micro labels, velocity marquee, grid lines). */
+
+/* Generative covers: JS sets background-image (object URL); the gradient is the no-WebGL / loading state */
+[data-cover] {
+  position: relative;
+  overflow: clip;
+  background-color: #141a40;
+  background-image: radial-gradient(120% 90% at 20% 10%, rgba(7, 146, 194, 0.55), transparent 60%), radial-gradient(90% 80% at 90% 100%, rgba(41, 59, 170, 0.7), transparent 70%), linear-gradient(160deg, #141a40, #0b0f2e);
+  background-size: cover;
+  background-position: 50% 50%;
+}
+
+[data-cover].has-cover {
+  animation: fx-cover-in 0.9s var(--ease-out, ease) both;
+}
+
+@keyframes fx-cover-in {
+  from {
+    filter: saturate(0.2) brightness(1.4);
+  }
+}
+
+/* pointer glare (vars set by tiltGlare) */
+.fx-glare,
+.rcard__glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(420px circle at var(--gx, 50%) var(--gy, 0%), rgba(255, 255, 255, 0.38), transparent 55%);
+  opacity: var(--ga, 0);
+  mix-blend-mode: soft-light;
+  transition: opacity 0.4s;
+}
+
+/* micro labels (uppercase, tabular) */
+.micro {
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Giant outlined marquee that reacts to scroll velocity */
+.vmq {
+  position: relative;
+  display: flex;
+  width: 100%;
+  overflow: clip;
+  padding-block: 8px;
+  user-select: none;
+  pointer-events: none;
+}
+
+.vmq__track {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+.vmq__word {
+  padding-inline: 0.18em;
+  color: transparent;
+  font-size: clamp(64px, 10.5vw, 176px);
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  -webkit-text-stroke: 1.5px var(--text-strong-950);
+}
+
+.vmq__word.is-solid {
+  color: var(--primary-base);
+  -webkit-text-stroke: 0;
+}
+
+.vmq__star {
+  color: var(--secondary-base);
+  font-size: clamp(32px, 4.5vw, 72px);
+  line-height: 1;
+}
+
+/* canvases mounted by gl-kit */
+.gl-canvas {
+  z-index: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-cover].has-cover {
+    animation: none;
+  }
+}

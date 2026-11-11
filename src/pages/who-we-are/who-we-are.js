@@ -2,6 +2,8 @@ import { initSite, gsap, ScrollTrigger, reduceMotion } from '../../ds/site.js';
 import { Flip } from 'gsap/Flip';
 import { autoMount3D } from '../../ds/fx3d.js';
 import { $, $$, SplitText, splitHeadings, magnetic, tilt } from '../careers/motion.js';
+import { stage, particles, paintCovers } from '../resources/gl-kit.js';
+import { chars3D, liveClock } from '../resources/fx-dom.js';
 import './who-we-are.css';
 
 gsap.registerPlugin(Flip);
@@ -71,7 +73,7 @@ if (teamFilter && grid) {
     if (!chip || chip.getAttribute('aria-pressed') === 'true') return;
     $$('[data-industry]', teamFilter).forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
     const key = chip.dataset.industry;
-    const state = reduceMotion ? null : Flip.getState(members);
+    const state = reduceMotion || ringOn ? null : Flip.getState(members);
     let shown = 0;
     members.forEach((m) => {
       const tags = m.dataset.industries.split(' ');
@@ -90,6 +92,7 @@ if (teamFilter && grid) {
         onLeave: (els) => gsap.to(els, { opacity: 0, scale: 0.9, duration: 0.3 }),
         onComplete: () => ScrollTrigger.refresh(),
       });
+    else if (ringOn) layoutRing(true);
     else ScrollTrigger.refresh();
   });
 }
@@ -150,4 +153,159 @@ if (steps.length && !reduceMotion) {
     }, 1600);
   };
   ScrollTrigger.create({ trigger: '[data-steps]', start: 'top 90%', end: 'bottom top', onToggle: (self) => (self.isActive ? cycle() : clearInterval(timer)) });
+}
+
+// ===========================================================================
+// Round 2 — sticky particle stage (hero → 4 chapters) and the 3D team ring
+// ===========================================================================
+const stageEl = $('[data-stage]');
+const stageLabel = $('[data-stage-label]');
+const stageBar = $('[data-stage-bar]');
+const LABELS = ['00 · Savvy Post', '00 · Savvy Post', '01 · Strategy', '02 · Systems', '03 · Measurement', '04 · Five industries'];
+const wide = () => innerWidth > 900;
+// particles sit opposite the copy: hero copy left → shape right; chapters alternate
+const SIDE = [0, 2.6, 2.8, -2.8, 2.8, -2.8];
+
+stage(
+  $('[data-particles]'),
+  particles(['scatter', 'logo', 'sphere', 'grid', 'bars', 'clusters'], {
+    count: 6500,
+    mobileScale: 0.62,
+    mobileY: 1.2,
+    onUpdate: (t, c, { group, camera }) => {
+      const k = Math.round(c.values.shape);
+      const tx = wide() ? SIDE[k] ?? 0 : 0;
+      group.position.x += (tx - group.position.x) * 0.04;
+      camera.position.z = 11 - c.progress * 2.2;
+      c.values.spin = c.progress * Math.PI * 1.5;
+    },
+  }),
+  {
+    eager: true,
+    scrub: true,
+    trigger: stageEl,
+    start: 'top top',
+    end: 'bottom bottom',
+    stillTime: 3,
+    onReady: (api) => {
+      api.set('shape', reduceMotion ? 1 : 0);
+      if (!reduceMotion) setTimeout(() => api.set('shape', 1), 350);
+      else api.redraw();
+      $$('[data-chapter]').forEach((el) =>
+        ScrollTrigger.create({
+          trigger: el,
+          start: 'top 55%',
+          end: 'bottom 55%',
+          onToggle: (st) => {
+            if (!st.isActive) return;
+            const n = Number(el.dataset.chapter);
+            api.set('shape', n);
+            api.set('burst', 0.6);
+            setTimeout(() => api.set('burst', 0), 500);
+            stageLabel.textContent = LABELS[n];
+          },
+        }),
+      );
+    },
+  },
+);
+ScrollTrigger.create({ trigger: stageEl, start: 'top top', end: 'bottom bottom', onUpdate: (st) => (stageBar.style.transform = `scaleX(${st.progress})`) });
+chars3D($('[data-chars]'), { delay: 0.3 });
+liveClock();
+paintCovers();
+
+mm.add('(prefers-reduced-motion: no-preference)', () => {
+  $$('.wwa-chapter').forEach((ch) => {
+    const tl = gsap.timeline({ scrollTrigger: { trigger: ch, start: 'top 80%', end: 'bottom 20%', scrub: 0.5 } });
+    tl.fromTo(ch.children, { y: 80, opacity: 0, rotationX: -25, transformPerspective: 800 }, { y: 0, opacity: 1, rotationX: 0, stagger: 0.08, duration: 0.4 })
+      .to(ch.children, { y: -60, opacity: 0, stagger: 0.05, duration: 0.3 }, 0.75);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// 05 Team: 3D ring carousel (desktop, motion on). Filtering re-lays the ring.
+// ---------------------------------------------------------------------------
+const ringEl = $('[data-ring]');
+const ringNav = $('[data-ring-nav]');
+const ringCount = $('[data-ring-count]');
+let ringOn = false;
+const ringState = { rot: 0 };
+let step = 0;
+const visibleMembers = () => $$('.member', grid).filter((m) => !m.hidden);
+
+function layoutRing(animate = true) {
+  if (!ringOn) return;
+  const ms = visibleMembers();
+  const n = ms.length;
+  const radius = Math.max(340, (260 + 40) / (2 * Math.tan(Math.PI / Math.max(n, 3))));
+  ms.forEach((m, i) => {
+    m.style.transform = `rotateY(${(360 / n) * i}deg) translateZ(${radius}px)`;
+    if (animate) gsap.fromTo(m, { opacity: 0 }, { opacity: 1, duration: 0.6, delay: i * 0.04 });
+  });
+  grid.style.setProperty('--r', `${radius}px`);
+  goTo(Math.min(step, n - 1), animate);
+}
+
+function goTo(i, animate = true) {
+  const ms = visibleMembers();
+  const n = ms.length || 1;
+  step = i;
+  const target = -(360 / n) * i;
+  gsap.to(ringState, {
+    rot: target,
+    duration: animate ? 0.9 : 0,
+    ease: 'expo.out',
+    onUpdate: () => applyRot(),
+  });
+  const front = ((i % n) + n) % n;
+  ms.forEach((m, k) => m.classList.toggle('is-front', k === front));
+  ringCount.textContent = `${String(front + 1).padStart(2, '0')} / ${String(n).padStart(2, '0')}`;
+}
+const applyRot = () => (grid.style.transform = `translateZ(${-parseFloat(grid.style.getPropertyValue('--r') || 0)}px) rotateY(${ringState.rot}deg)`);
+
+function enableRing(on) {
+  ringOn = on;
+  ringEl.classList.toggle('is-ring', on);
+  ringNav.hidden = !on;
+  if (on) layoutRing(false);
+  else {
+    grid.style.transform = '';
+    $$('.member', grid).forEach((m) => ((m.style.transform = ''), m.classList.remove('is-front')));
+  }
+}
+
+if (ringEl && grid) {
+  $('[data-ring-prev]').addEventListener('click', () => goTo(step - 1));
+  $('[data-ring-next]').addEventListener('click', () => goTo(step + 1));
+  ringEl.addEventListener('keydown', (e) => {
+    if (!ringOn) return;
+    if (e.key === 'ArrowLeft') goTo(step - 1);
+    if (e.key === 'ArrowRight') goTo(step + 1);
+  });
+  // drag to spin (snaps to the nearest card)
+  let x0 = null;
+  let r0 = 0;
+  ringEl.addEventListener('pointerdown', (e) => {
+    if (!ringOn || e.target.closest('button')) return;
+    x0 = e.clientX;
+    r0 = ringState.rot;
+    gsap.killTweensOf(ringState);
+  });
+  addEventListener('pointermove', (e) => {
+    if (x0 === null) return;
+    ringState.rot = r0 + (e.clientX - x0) * 0.25;
+    applyRot();
+  });
+  addEventListener('pointerup', () => {
+    if (x0 === null) return;
+    x0 = null;
+    const n = visibleMembers().length || 1;
+    goTo(Math.round(-ringState.rot / (360 / n)));
+  });
+  mm.add('(min-width: 1025px) and (prefers-reduced-motion: no-preference)', () => {
+    enableRing(true);
+    // slow idle drift while the section is on screen
+    const idle = setInterval(() => ringOn && !ringEl.matches(':hover') && document.visibilityState === 'visible' && ScrollTrigger.isInViewport(ringEl) && goTo(step + 1), 3800);
+    return () => (clearInterval(idle), enableRing(false));
+  });
 }

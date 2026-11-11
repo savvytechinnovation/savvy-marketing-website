@@ -25,11 +25,26 @@
   <body class="page-article">
     <!-- @include header -->
     <div class="read-progress" aria-hidden="true"><span class="read-progress__bar" data-progress></span></div>
+    <div class="read-ring" aria-hidden="true" data-ring>
+      <svg viewBox="0 0 64 64" width="64" height="64"><circle class="read-ring__track" cx="32" cy="32" r="28" /><circle class="read-ring__bar" cx="32" cy="32" r="28" pathLength="100" data-ring-bar /></svg>
+      <span class="read-ring__pct" data-ring-pct>0%</span>
+      <span class="read-ring__left" data-ring-left data-minutes="5">5 min left</span>
+    </div>
 
     <main id="main">
       <article class="post" aria-labelledby="post-title" data-slug="the-first-call-wins-response-time-in-emergency-plumbing">
         <!-- 01 · Article header -->
-        <header class="post-hero">
+        <header class="post-hero" data-tone="#0b0f2e">
+          <div class="post-hero__cover" role="img" aria-label="Generative cover for “The first call wins: response time in emergency plumbing”" data-cover-live="the-first-call-wins-response-time-in-emergency-plumbing">
+            <span class="post-hero__grid" aria-hidden="true"></span>
+          </div>
+          <div class="post-hero__rail" aria-hidden="true">
+            <span>No. 06 / 11</span>
+            <span>Findings</span>
+            <span>636 words</span>
+            <span data-clock>--:--:--</span>
+          </div>
+          <div class="post-hero__inner">
           <nav class="breadcrumbs post-hero__crumbs" aria-label="Breadcrumb">
             <ol>
               <li><a href="/resources/">Resources</a></li>
@@ -42,7 +57,7 @@
             <li class="post-tag">Plumbing</li>
             <li class="post-tag">Convert</li>
           </ul>
-          <h1 class="post-hero__title" id="post-title" data-split>The first call wins: response time in emergency plumbing</h1>
+          <h1 class="post-hero__title" id="post-title" data-chars>The first call wins: response time in emergency plumbing</h1>
           <p class="post-hero__dek">When water is on the floor, customers book the first company that answers and gives them a time. What that means for marketing spend and phone coverage.</p>
           <div class="post-hero__meta">
             <div class="post-author">
@@ -58,7 +73,8 @@
               <span>5 min read</span>
             </p>
           </div>
-          <div class="ph post-hero__cover" role="img" aria-label="Cover image for “The first call wins: response time in emergency plumbing”"></div>
+          </div>
+          <a class="post-hero__down" href="#post-body" aria-label="Start reading"><span aria-hidden="true"></span></a>
         </header>
 
         <!-- Mobile: sticky "In this article" dropdown (Figma "Mobile On this page — behavior") -->
@@ -84,7 +100,7 @@
         <div class="toc-scrim" data-toc-scrim hidden></div>
 
         <!-- 03 · Body -->
-        <div class="post-layout">
+        <div class="post-layout" id="post-body">
           <aside class="post-rail" aria-label="Article tools">
             <nav class="toc" aria-labelledby="toc-title-the-first-call-wins-response-time-in-emergency-plumbing">
               <p class="toc__title" id="toc-title-the-first-call-wins-response-time-in-emergency-plumbing">In this article</p>
@@ -118,7 +134,7 @@
               <li><strong>Certainty beats price.</strong> A clear arrival window on the first call often wins over a cheaper quote later.</li>
               <li><strong>Night and weekend calls are worth more.</strong> They are also the most likely to go unanswered.</li>
             </ul>
-            <blockquote class="prose__quote">
+            <blockquote class="prose__quote" data-kinetic>
               <p>&ldquo;In an emergency, the job goes to the first company that answers and gives a time.&rdquo;</p>
             </blockquote>
             <h2 id="what-it-means-for-your-marketing">What it means for your marketing</h2>
@@ -197,8 +213,8 @@
         <ul class="related__list" role="list" data-reveal-stagger="0.08">
           <li class="rcard-item" data-reveal>
             <article class="rcard">
-              <a class="rcard__link" href="/resources/how-to-connect-marketing-to-booked-jobs/">
-                <span class="ph rcard__media" aria-hidden="true"></span>
+              <a class="rcard__link" href="/resources/how-to-connect-marketing-to-booked-jobs/" data-cursor="view">
+                <span class="ph rcard__media" aria-hidden="true" data-cover="how-to-connect-marketing-to-booked-jobs"><span class="rcard__no">No. 11</span><span class="rcard__glare"></span></span>
                 <span class="rcard__body">
                   <span class="rcard__eyebrow">Guide · All industries</span>
                   <h3 class="rcard__title">How to connect your marketing to booked jobs</h3>
@@ -209,8 +225,8 @@
           </li>
           <li class="rcard-item" data-reveal>
             <article class="rcard">
-              <a class="rcard__link" href="/resources/missed-calls-hidden-cost-of-paid-demand/">
-                <span class="ph rcard__media" aria-hidden="true"></span>
+              <a class="rcard__link" href="/resources/missed-calls-hidden-cost-of-paid-demand/" data-cursor="view">
+                <span class="ph rcard__media" aria-hidden="true" data-cover="missed-calls-hidden-cost-of-paid-demand"><span class="rcard__no">No. 08</span><span class="rcard__glare"></span></span>
                 <span class="rcard__body">
                   <span class="rcard__eyebrow">Findings · Cleaning</span>
                   <h3 class="rcard__title">Missed calls: the hidden cost of paid demand</h3>
@@ -221,8 +237,8 @@
           </li>
           <li class="rcard-item" data-reveal>
             <article class="rcard">
-              <a class="rcard__link" href="/resources/winning-high-value-projects-with-better-estimate-follow-up/">
-                <span class="ph rcard__media" aria-hidden="true"></span>
+              <a class="rcard__link" href="/resources/winning-high-value-projects-with-better-estimate-follow-up/" data-cursor="view">
+                <span class="ph rcard__media" aria-hidden="true" data-cover="winning-high-value-projects-with-better-estimate-follow-up"><span class="rcard__no">No. 04</span><span class="rcard__glare"></span></span>
                 <span class="rcard__body">
                   <span class="rcard__eyebrow">Breakdown · Electrical</span>
                   <h3 class="rcard__title">Winning high-value projects with better estimate follow-up</h3>

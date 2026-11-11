@@ -57,6 +57,10 @@ const jsonLd = (data) => `<script type="application/ld+json">${JSON.stringify(da
 const indent = (html, n) => html.replace(/^(?=.)/gm, ' '.repeat(n));
 
 const posts = [...allPosts].sort((a, b) => b.date.localeCompare(a.date));
+// Issue numbers: chronological (oldest = No. 01), shown on covers and cards
+const chron = [...posts].reverse();
+const issueNo = (post) => String(chron.indexOf(post) + 1).padStart(2, '0');
+const TOTAL = String(posts.length).padStart(2, '0');
 
 function validate() {
   const slugs = new Set();
@@ -94,8 +98,8 @@ function card(post, { headingLevel = 3, filterable = true } = {}) {
     : '';
   return `<li class="rcard-item"${data}>
   <article class="rcard">
-    <a class="rcard__link" href="${url(post)}">
-      <span class="ph rcard__media" aria-hidden="true"></span>
+    <a class="rcard__link" href="${url(post)}" data-cursor="view">
+      <span class="ph rcard__media" aria-hidden="true" data-cover="${post.slug}"><span class="rcard__no">No. ${issueNo(post)}</span><span class="rcard__glare"></span></span>
       <span class="rcard__body">
         <span class="rcard__eyebrow">${esc(eyebrow(post))}</span>
         <h${headingLevel} class="rcard__title">${esc(post.title)}</h${headingLevel}>
@@ -169,8 +173,8 @@ function typesBlock() {
 function featuredBlock() {
   const post = posts.find((p) => p.featured) || posts[0];
   return `<article class="feat" data-featured-slug="${post.slug}">
-  <a class="feat__link" href="${url(post)}">
-    <span class="ph feat__media" aria-hidden="true"></span>
+  <a class="feat__link" href="${url(post)}" data-cursor="view">
+    <span class="ph feat__media" aria-hidden="true" data-cover="${post.slug}"><span class="feat__no">No. ${issueNo(post)}<small> / ${TOTAL}</small></span><span class="feat__ring" aria-hidden="true"></span></span>
     <span class="feat__body">
       <span class="feat__badge">Featured</span>
       <span class="feat__eyebrow">${esc(eyebrow(post))}</span>
@@ -181,6 +185,44 @@ function featuredBlock() {
     </span>
   </a>
 </article>`;
+}
+
+/** Hero index: counts per format (links work without JS) + issue line. */
+function heroMetaBlock() {
+  const latest = posts[0];
+  return `<ol class="res-index" role="list" aria-label="Browse by format">
+${TYPES.map((t, i) => `  <li><a class="res-index__link" href="/resources/?type=${slugify(t)}"><span class="res-index__no">0${i + 1}</span><span class="res-index__label">${plural[t]}</span><span class="res-index__count">${String(posts.filter((p) => p.type === t).length).padStart(2, '0')}</span></a></li>`).join('\n')}
+</ol>
+<p class="res-hero__issue"><span>Latest · No. ${issueNo(latest)}</span><time datetime="${latest.date}">${fmtDate(latest.date)}</time></p>`;
+}
+
+/** Giant outlined topic marquee (decorative; the real filters are below). */
+function marqueeBlock() {
+  const words = [...TYPES.map((t) => plural[t]), ...INDUSTRIES, ...STAGES];
+  return `<div class="vmq" aria-hidden="true">
+  <div class="vmq__track">${words.map((w, i) => `<span class="vmq__word${i % 3 === 1 ? ' is-solid' : ''}">${esc(w)}</span><span class="vmq__star">✳</span>`).join('')}</div>
+</div>`;
+}
+
+/** Editor's picks: a horizontal rail (pinned on desktop) of the most recent non-featured posts. */
+function railBlock() {
+  const feat = posts.find((p) => p.featured) || posts[0];
+  const picks = posts.filter((p) => p !== feat).slice(0, 6);
+  return picks
+    .map(
+      (p, i) => `<li class="rail-card">
+  <a class="rail-card__link" href="${url(p)}" data-cursor="view">
+    <span class="ph rail-card__media" aria-hidden="true" data-cover="${p.slug}"><span class="rail-card__no">${String(i + 1).padStart(2, '0')}</span></span>
+    <span class="rail-card__body">
+      <span class="rail-card__eyebrow">No. ${issueNo(p)} · ${esc(eyebrow(p))}</span>
+      <h3 class="rail-card__title">${esc(p.title)}</h3>
+      <span class="rail-card__excerpt">${esc(p.excerpt)}</span>
+      <span class="rail-card__meta">${p.minutes} min read · <time datetime="${p.date}">${fmtDate(p.date)}</time></span>
+    </span>
+  </a>
+</li>`,
+    )
+    .join('\n');
 }
 
 function postsBlock() {
@@ -211,6 +253,7 @@ function renderBody(post) {
     used.add(candidate);
     return candidate;
   };
+  let figN = 0;
   const html = post.body
     .map((b) => {
       switch (b.type) {
@@ -227,13 +270,14 @@ function renderBody(post) {
         case 'ol':
           return `<${b.type}>\n${b.items.map((i) => `  <li>${i}</li>`).join('\n')}\n</${b.type}>`;
         case 'quote':
-          return `<blockquote class="prose__quote">\n  <p>${b.text.startsWith('&ldquo;') ? b.text : `&ldquo;${b.text}&rdquo;`}</p>${b.cite ? `\n  <cite>${b.cite}</cite>` : ''}\n</blockquote>`;
+          return `<blockquote class="prose__quote" data-kinetic>\n  <p>${b.text.startsWith('&ldquo;') ? b.text : `&ldquo;${b.text}&rdquo;`}</p>${b.cite ? `\n  <cite>${b.cite}</cite>` : ''}\n</blockquote>`;
         case 'callout':
           return `<aside class="prose__callout" aria-label="${esc(plain(b.label))}">\n  <p class="prose__callout-label">${b.label}</p>\n  <p>${b.html}</p>\n</aside>`;
         case 'table':
           return `<div class="prose__table" role="region" aria-label="${esc(plain(b.caption))}" tabindex="0">\n  <table>\n    <caption>${b.caption}</caption>\n    <thead><tr>${b.head.map((h) => `<th scope="col">${h}</th>`).join('')}</tr></thead>\n    <tbody>\n${b.rows.map((r) => `      <tr>${r.map((c, i) => (i === 0 ? `<th scope="row">${c}</th>` : `<td>${c}</td>`)).join('')}</tr>`).join('\n')}\n    </tbody>\n  </table>\n</div>`;
         case 'figure':
-          return `<figure class="prose__figure">\n  <div class="ph prose__figure-media" role="img" aria-label="${esc(b.alt)}"></div>\n  <figcaption>${b.caption}</figcaption>\n</figure>`;
+          figN++;
+          return `<figure class="prose__figure">\n  <div class="ph prose__figure-media" role="img" aria-label="${esc(b.alt)}" data-cover="${post.slug}-fig-${figN}"><span class="prose__figure-no" aria-hidden="true">Fig. ${String(figN).padStart(2, '0')}</span></div>\n  <figcaption>${b.caption}</figcaption>\n</figure>`;
         default:
           throw new Error(`post "${post.slug}": unknown block type ${b.type}`);
       }
@@ -337,11 +381,26 @@ ${tags.map((t) => `    <meta property="article:tag" content="${esc(t)}" />`).joi
   <body class="page-article">
     <!-- @include header -->
     <div class="read-progress" aria-hidden="true"><span class="read-progress__bar" data-progress></span></div>
+    <div class="read-ring" aria-hidden="true" data-ring>
+      <svg viewBox="0 0 64 64" width="64" height="64"><circle class="read-ring__track" cx="32" cy="32" r="28" /><circle class="read-ring__bar" cx="32" cy="32" r="28" pathLength="100" data-ring-bar /></svg>
+      <span class="read-ring__pct" data-ring-pct>0%</span>
+      <span class="read-ring__left" data-ring-left data-minutes="${post.minutes}">${post.minutes} min left</span>
+    </div>
 
     <main id="main">
       <article class="post" aria-labelledby="post-title" data-slug="${post.slug}">
         <!-- 01 · Article header -->
-        <header class="post-hero">
+        <header class="post-hero" data-tone="#0b0f2e">
+          <div class="post-hero__cover" role="img" aria-label="Generative cover for “${esc(post.title)}”" data-cover-live="${post.slug}">
+            <span class="post-hero__grid" aria-hidden="true"></span>
+          </div>
+          <div class="post-hero__rail" aria-hidden="true">
+            <span>No. ${issueNo(post)} / ${TOTAL}</span>
+            <span>${plural[post.type]}</span>
+            <span>${words} words</span>
+            <span data-clock>--:--:--</span>
+          </div>
+          <div class="post-hero__inner">
           <nav class="breadcrumbs post-hero__crumbs" aria-label="Breadcrumb">
             <ol>
               <li><a href="/resources/">Resources</a></li>
@@ -352,7 +411,7 @@ ${tags.map((t) => `    <meta property="article:tag" content="${esc(t)}" />`).joi
           <ul class="post-hero__tags" role="list" aria-label="Topics">
 ${tags.map((t, i) => `            <li class="post-tag${i > 2 ? ' post-tag--extra' : ''}">${esc(t)}</li>`).join('\n')}
           </ul>
-          <h1 class="post-hero__title" id="post-title" data-split>${esc(post.title)}</h1>
+          <h1 class="post-hero__title" id="post-title" data-chars>${esc(post.title)}</h1>
           <p class="post-hero__dek">${esc(post.dek)}</p>
           <div class="post-hero__meta">
             <div class="post-author">
@@ -372,7 +431,8 @@ ${tags.map((t, i) => `            <li class="post-tag${i > 2 ? ' post-tag--extra
               }
             </p>
           </div>
-          <div class="ph post-hero__cover" role="img" aria-label="Cover image for “${esc(post.title)}”"></div>
+          </div>
+          <a class="post-hero__down" href="#post-body" aria-label="Start reading"><span aria-hidden="true"></span></a>
         </header>
 
         <!-- Mobile: sticky "In this article" dropdown (Figma "Mobile On this page — behavior") -->
@@ -394,7 +454,7 @@ ${indent(tocItems(true), 14)}
         <div class="toc-scrim" data-toc-scrim hidden></div>
 
         <!-- 03 · Body -->
-        <div class="post-layout">
+        <div class="post-layout" id="post-body">
           <aside class="post-rail" aria-label="Article tools">
             <nav class="toc" aria-labelledby="toc-title-${post.slug}">
               <p class="toc__title" id="toc-title-${post.slug}">In this article</p>
@@ -481,6 +541,9 @@ const hubFile = join(outDir, 'index.html');
 if (!existsSync(hubFile)) throw new Error('resources/index.html not found (it holds the hub layout and the marker blocks).');
 let hub = readFileSync(hubFile, 'utf8');
 hub = replaceBlock(hub, 'types', typesBlock());
+hub = replaceBlock(hub, 'hero-meta', heroMetaBlock());
+hub = replaceBlock(hub, 'marquee', marqueeBlock());
+hub = replaceBlock(hub, 'rail', railBlock());
 hub = replaceBlock(hub, 'featured', featuredBlock());
 hub = replaceBlock(hub, 'posts', postsBlock());
 hub = replaceBlock(hub, 'newsletter', softCta({ key: 'hub', path: '/resources/' }));

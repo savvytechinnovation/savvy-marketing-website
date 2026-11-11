@@ -1,6 +1,8 @@
 /* Shared by the company pages (Who We Are, Work With Us, Careers, Job detail).
  * Page-local variants of DS patterns that the Figma "company" pages reuse. */
 
+@import '../resources/fx.css';
+
 /* Respect the hidden attribute even on elements styled with display:flex/grid */
 main [hidden] {
   display: none !important;
@@ -393,5 +395,139 @@ main [hidden] {
   }
   .co-first {
     padding-top: 136px;
+  }
+}
+
+/* =====================================================================
+ * Round 2 — animated CV drop zone (careers + every job page)
+ * ===================================================================== */
+.dropzone {
+  --ant: var(--stroke-sub-300);
+  overflow: clip;
+  border: 0;
+  background:
+    linear-gradient(90deg, var(--ant) 50%, transparent 0) repeat-x 0 0 / 14px 1.5px,
+    linear-gradient(90deg, var(--ant) 50%, transparent 0) repeat-x 0 100% / 14px 1.5px,
+    linear-gradient(0deg, var(--ant) 50%, transparent 0) repeat-y 0 0 / 1.5px 14px,
+    linear-gradient(0deg, var(--ant) 50%, transparent 0) repeat-y 100% 0 / 1.5px 14px,
+    var(--bg-weak-10);
+  animation: dz-ants 1.2s linear infinite paused;
+  transition: background-color 0.3s, scale 0.4s var(--ease-out), box-shadow 0.4s;
+}
+
+.dropzone:hover,
+.dropzone:focus-within,
+.dropzone.is-over {
+  --ant: var(--primary-base);
+  border: 0;
+  animation-play-state: running;
+}
+
+.dropzone.is-over {
+  scale: 1.02;
+  box-shadow: 0 0 0 6px var(--primary-alpha-16), 0 24px 48px -24px rgba(7, 146, 194, 0.6);
+  animation-duration: 0.5s;
+}
+
+.field.has-error .dropzone {
+  --ant: var(--error-base);
+  border: 0;
+}
+
+@keyframes dz-ants {
+  to {
+    background-position: 14px 0, -14px 100%, 0 -14px, 100% 14px, 0 0;
+  }
+}
+
+/* floating paper sheets behind the icon */
+.dropzone::before,
+.dropzone::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 34px;
+  height: 44px;
+  margin: -46px 0 0 -17px;
+  border: 1px solid var(--stroke-soft-200);
+  border-radius: 6px;
+  background: linear-gradient(var(--stroke-soft-200), var(--stroke-soft-200)) 7px 12px / 18px 2px no-repeat, linear-gradient(var(--stroke-soft-200), var(--stroke-soft-200)) 7px 19px / 14px 2px no-repeat, linear-gradient(var(--stroke-soft-200), var(--stroke-soft-200)) 7px 26px / 20px 2px no-repeat, #fff;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s, translate 0.6s var(--ease-out), rotate 0.6s var(--ease-out);
+}
+
+.dropzone:hover::before,
+.dropzone.is-over::before {
+  opacity: 1;
+  translate: -38px -6px;
+  rotate: -14deg;
+}
+
+.dropzone:hover::after,
+.dropzone.is-over::after {
+  opacity: 1;
+  translate: 38px -2px;
+  rotate: 12deg;
+}
+
+.dropzone > :not(input) {
+  position: relative;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.dropzone__icon {
+  animation: dz-bob 2.4s ease-in-out infinite;
+}
+
+@keyframes dz-bob {
+  50% {
+    translate: 0 -4px;
+  }
+}
+
+.file-chip {
+  position: relative;
+  overflow: clip;
+}
+
+.file-chip::after {
+  /* "upload" fill that confirms the file was read */
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--primary-base), var(--secondary-base));
+  transform-origin: left;
+  animation: dz-fill 1.1s var(--ease-out) both;
+}
+
+@keyframes dz-fill {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+.file-chip__icon {
+  animation: dz-pop 0.6s var(--ease-out) both;
+}
+
+@keyframes dz-pop {
+  from {
+    scale: 0.4;
+    rotate: -20deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dropzone,
+  .dropzone__icon,
+  .file-chip::after,
+  .file-chip__icon {
+    animation: none;
   }
 }

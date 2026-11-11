@@ -14,12 +14,122 @@
     <!-- @include header -->
 
     <main id="main">
-      <!-- Hero (Figma "Section / Hero" 5714:14440) -->
-      <section class="res-hero" aria-labelledby="res-title">
-        <div class="res-hero__bg" aria-hidden="true"></div>
-        <p class="eyebrow" data-hero-item>Resources</p>
-        <h1 class="res-hero__title" id="res-title" data-split>Practical insights for service businesses.</h1>
-        <p class="res-hero__lead" data-hero-item>Guides and breakdowns on marketing systems, follow-up and measurement, written for HVAC, plumbing, electrical, roofing and cleaning companies.</p>
+      <!-- Hero: "The Savvy Library" — WebGL paper sheets fly in and bind into a riffling book; scroll opens it into a helix -->
+      <section class="res-hero" aria-labelledby="res-title" data-res-hero>
+        <div class="res-hero__stage" aria-hidden="true" data-library></div>
+        <div class="res-hero__lines" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+        <div class="res-hero__top" aria-hidden="true" data-hero-item>
+          <span data-scramble>The Savvy Library</span>
+          <span data-scramble>Vol. 01 · Field notes for service businesses</span>
+          <span class="res-hero__clock">Local <span data-clock>--:--:--</span></span>
+        </div>
+        <div class="res-hero__content">
+          <p class="eyebrow res-hero__eyebrow" data-hero-item><span class="res-hero__pulse" aria-hidden="true"></span>Resources</p>
+          <h1 class="res-hero__title" id="res-title" data-chars>Practical insights for service businesses.</h1>
+          <p class="res-hero__lead" data-hero-item>Guides and breakdowns on marketing systems, follow-up and measurement, written for HVAC, plumbing, electrical, roofing and cleaning companies.</p>
+          <div class="res-hero__actions" data-hero-item>
+            <a class="btn btn--l res-hero__cta" href="#results-title" data-magnetic><span>Browse the library</span><span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span></a>
+            <a class="link-arrow link-arrow--on-dark" href="#picks-title">Editor’s picks <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></a>
+          </div>
+        </div>
+        <div class="res-hero__side" data-hero-item>
+          <!-- hero-meta:start -->
+          <ol class="res-index" role="list" aria-label="Browse by format">
+            <li><a class="res-index__link" href="/resources/?type=guide"><span class="res-index__no">01</span><span class="res-index__label">Guides</span><span class="res-index__count">04</span></a></li>
+            <li><a class="res-index__link" href="/resources/?type=breakdown"><span class="res-index__no">02</span><span class="res-index__label">Breakdowns</span><span class="res-index__count">03</span></a></li>
+            <li><a class="res-index__link" href="/resources/?type=findings"><span class="res-index__no">03</span><span class="res-index__label">Findings</span><span class="res-index__count">02</span></a></li>
+            <li><a class="res-index__link" href="/resources/?type=checklist"><span class="res-index__no">04</span><span class="res-index__label">Checklists</span><span class="res-index__count">02</span></a></li>
+          </ol>
+          <p class="res-hero__issue"><span>Latest · No. 11</span><time datetime="2026-10-28">Oct 28, 2026</time></p>
+          <!-- hero-meta:end -->
+        </div>
+        <div class="res-hero__scroll" aria-hidden="true"><span>Scroll to open the library</span><i></i></div>
+      </section>
+
+      <!-- Topics: giant outlined marquee that reacts to scroll velocity -->
+      <!-- marquee:start -->
+      <div class="vmq" aria-hidden="true">
+        <div class="vmq__track"><span class="vmq__word">Guides</span><span class="vmq__star">✳</span><span class="vmq__word is-solid">Breakdowns</span><span class="vmq__star">✳</span><span class="vmq__word">Findings</span><span class="vmq__star">✳</span><span class="vmq__word">Checklists</span><span class="vmq__star">✳</span><span class="vmq__word is-solid">HVAC</span><span class="vmq__star">✳</span><span class="vmq__word">Plumbing</span><span class="vmq__star">✳</span><span class="vmq__word">Electrical</span><span class="vmq__star">✳</span><span class="vmq__word is-solid">Roofing</span><span class="vmq__star">✳</span><span class="vmq__word">Cleaning</span><span class="vmq__star">✳</span><span class="vmq__word">Strategy</span><span class="vmq__star">✳</span><span class="vmq__word is-solid">Build</span><span class="vmq__star">✳</span><span class="vmq__word">Generate</span><span class="vmq__star">✳</span><span class="vmq__word">Convert</span><span class="vmq__star">✳</span><span class="vmq__word is-solid">Measure</span><span class="vmq__star">✳</span><span class="vmq__word">Optimize</span><span class="vmq__star">✳</span><span class="vmq__word">Grow</span><span class="vmq__star">✳</span></div>
+      </div>
+      <!-- marquee:end -->
+
+      <!-- Editor's picks: horizontal rail, pinned while it scrolls sideways on desktop -->
+      <section class="res-picks" aria-labelledby="picks-title" data-picks>
+        <div class="res-picks__head">
+          <p class="eyebrow">Editor’s picks</p>
+          <h2 class="res-picks__title" id="picks-title" data-split>Start with these.</h2>
+          <p class="res-picks__hint" aria-hidden="true"><span data-picks-count>01</span> / <span data-picks-total>06</span> <i class="res-picks__bar"><b data-picks-bar></b></i></p>
+        </div>
+        <ul class="res-picks__track" role="list" data-picks-track>
+          <!-- rail:start -->
+          <li class="rail-card">
+            <a class="rail-card__link" href="/resources/why-shoulder-seasons-are-a-marketing-problem/" data-cursor="view">
+              <span class="ph rail-card__media" aria-hidden="true" data-cover="why-shoulder-seasons-are-a-marketing-problem"><span class="rail-card__no">01</span></span>
+              <span class="rail-card__body">
+                <span class="rail-card__eyebrow">No. 10 · Guide · All industries</span>
+                <h3 class="rail-card__title">Why shoulder seasons are a marketing problem</h3>
+                <span class="rail-card__excerpt">Slow months are predictable. The pipeline that fills them has to be built before they arrive.</span>
+                <span class="rail-card__meta">6 min read · <time datetime="2026-10-14">Oct 14, 2026</time></span>
+              </span>
+            </a>
+          </li>
+          <li class="rail-card">
+            <a class="rail-card__link" href="/resources/what-we-learned-tracking-leads-to-revenue/" data-cursor="view">
+              <span class="ph rail-card__media" aria-hidden="true" data-cover="what-we-learned-tracking-leads-to-revenue"><span class="rail-card__no">02</span></span>
+              <span class="rail-card__body">
+                <span class="rail-card__eyebrow">No. 09 · Breakdown · HVAC</span>
+                <h3 class="rail-card__title">What we learned tracking leads to revenue</h3>
+                <span class="rail-card__excerpt">A breakdown of what changed when an HVAC team started following every lead to the invoice.</span>
+                <span class="rail-card__meta">5 min read · <time datetime="2026-09-30">Sep 30, 2026</time></span>
+              </span>
+            </a>
+          </li>
+          <li class="rail-card">
+            <a class="rail-card__link" href="/resources/missed-calls-hidden-cost-of-paid-demand/" data-cursor="view">
+              <span class="ph rail-card__media" aria-hidden="true" data-cover="missed-calls-hidden-cost-of-paid-demand"><span class="rail-card__no">03</span></span>
+              <span class="rail-card__body">
+                <span class="rail-card__eyebrow">No. 08 · Findings · Cleaning</span>
+                <h3 class="rail-card__title">Missed calls: the hidden cost of paid demand</h3>
+                <span class="rail-card__excerpt">Every unanswered call is paid demand you handed to a competitor. Here is how to find and fix the leak.</span>
+                <span class="rail-card__meta">7 min read · <time datetime="2026-09-16">Sep 16, 2026</time></span>
+              </span>
+            </a>
+          </li>
+          <li class="rail-card">
+            <a class="rail-card__link" href="/resources/maintenance-plans-as-a-growth-engine/" data-cursor="view">
+              <span class="ph rail-card__media" aria-hidden="true" data-cover="maintenance-plans-as-a-growth-engine"><span class="rail-card__no">04</span></span>
+              <span class="rail-card__body">
+                <span class="rail-card__eyebrow">No. 07 · Breakdown · HVAC</span>
+                <h3 class="rail-card__title">Maintenance plans as a growth engine</h3>
+                <span class="rail-card__excerpt">How a well-run maintenance plan smooths demand, keeps techs busy and surfaces replacement work.</span>
+                <span class="rail-card__meta">5 min read · <time datetime="2026-09-02">Sep 2, 2026</time></span>
+              </span>
+            </a>
+          </li>
+          <li class="rail-card">
+            <a class="rail-card__link" href="/resources/the-first-call-wins-response-time-in-emergency-plumbing/" data-cursor="view">
+              <span class="ph rail-card__media" aria-hidden="true" data-cover="the-first-call-wins-response-time-in-emergency-plumbing"><span class="rail-card__no">05</span></span>
+              <span class="rail-card__body">
+                <span class="rail-card__eyebrow">No. 06 · Findings · Plumbing</span>
+                <h3 class="rail-card__title">The first call wins: response time in emergency plumbing</h3>
+                <span class="rail-card__excerpt">In emergency work, the company that answers first usually gets the job. What that means for your marketing.</span>
+                <span class="rail-card__meta">5 min read · <time datetime="2026-08-19">Aug 19, 2026</time></span>
+              </span>
+            </a>
+          </li>
+          <li class="rail-card">
+            <a class="rail-card__link" href="/resources/what-a-marketing-report-should-actually-tell-you/" data-cursor="view">
+              <span class="ph rail-card__media" aria-hidden="true" data-cover="what-a-marketing-report-should-actually-tell-you"><span class="rail-card__no">06</span></span>
+              <span class="rail-card__body">
+                <span class="rail-card__eyebrow">No. 05 · Guide · All industries</span>
+                <h3 class="rail-card__title">What a marketing report should actually tell you</h3>
+                <span class="rail-card__excerpt">Five questions every monthly report should answer, and the vanity metrics that can wait.</span>
+                <span class="rail-card__meta">6 min read · <time datetime="2026-08-05">Aug 5, 2026</time></span>
+              </span>
+            </a>
+          </li>
+          <!-- rail:end -->
+        </ul>
       </section>
 
       <!-- Format tabs (Figma "Section / Format tabs" 5714:14447) -->
@@ -39,8 +149,8 @@
       <section class="res-featured" aria-label="Featured resource" data-featured>
         <!-- featured:start -->
         <article class="feat" data-featured-slug="how-to-connect-marketing-to-booked-jobs">
-          <a class="feat__link" href="/resources/how-to-connect-marketing-to-booked-jobs/">
-            <span class="ph feat__media" aria-hidden="true"></span>
+          <a class="feat__link" href="/resources/how-to-connect-marketing-to-booked-jobs/" data-cursor="view">
+            <span class="ph feat__media" aria-hidden="true" data-cover="how-to-connect-marketing-to-booked-jobs"><span class="feat__no">No. 11<small> / 11</small></span><span class="feat__ring" aria-hidden="true"></span></span>
             <span class="feat__body">
               <span class="feat__badge">Featured</span>
               <span class="feat__eyebrow">Guide · All industries</span>
@@ -127,8 +237,8 @@
           <!-- posts:start -->
           <li class="rcard-item" data-type="guide" data-industry="all" data-audience="residential commercial" data-stages="convert measure" data-date="2026-10-28" data-minutes="6" data-slug="how-to-connect-marketing-to-booked-jobs" data-search="how to connect your marketing to booked jobs a practical look at the systems between a lead and a paid invoice. guide all industries convert measure">
             <article class="rcard">
-              <a class="rcard__link" href="/resources/how-to-connect-marketing-to-booked-jobs/">
-                <span class="ph rcard__media" aria-hidden="true"></span>
+              <a class="rcard__link" href="/resources/how-to-connect-marketing-to-booked-jobs/" data-cursor="view">
+                <span class="ph rcard__media" aria-hidden="true" data-cover="how-to-connect-marketing-to-booked-jobs"><span class="rcard__no">No. 11</span><span class="rcard__glare"></span></span>
                 <span class="rcard__body">
                   <span class="rcard__eyebrow">Guide · All industries</span>
                   <h3 class="rcard__title">How to connect your marketing to booked jobs</h3>
@@ -139,8 +249,8 @@
           </li>
           <li class="rcard-item" data-type="guide" data-industry="all" data-audience="residential" data-stages="strategy generate" data-date="2026-10-14" data-minutes="6" data-slug="why-shoulder-seasons-are-a-marketing-problem" data-search="why shoulder seasons are a marketing problem slow months are predictable. the pipeline that fills them has to be built before they arrive. guide all industries strategy generate">
             <article class="rcard">
-              <a class="rcard__link" href="/resources/why-shoulder-seasons-are-a-marketing-problem/">
-                <span class="ph rcard__media" aria-hidden="true"></span>
+              <a class="rcard__link" href="/resources/why-shoulder-seasons-are-a-marketing-problem/" data-cursor="view">
+                <span class="ph rcard__media" aria-hidden="true" data-cover="why-shoulder-seasons-are-a-marketing-problem"><span class="rcard__no">No. 10</span><span class="rcard__glare"></span></span>
                 <span class="rcard__body">
                   <span class="rcard__eyebrow">Guide · All industries</span>
                   <h3 class="rcard__title">Why shoulder seasons are a marketing problem</h3>
@@ -151,8 +261,8 @@
           </li>
           <li class="rcard-item" data-type="breakdown" data-industry="hvac" data-audience="residential commercial" data-stages="measure optimize" data-date="2026-09-30" data-minutes="5" data-slug="what-we-learned-tracking-leads-to-revenue" data-search="what we learned tracking leads to revenue a breakdown of what changed when an hvac team started following every lead to the invoice. breakdown hvac measure optimize">
             <article class="rcard">
-              <a class="rcard__link" href="/resources/what-we-learned-tracking-leads-to-revenue/">
-                <span class="ph rcard__media" aria-hidden="true"></span>
+              <a class="rcard__link" href="/resources/what-we-learned-tracking-leads-to-revenue/" data-cursor="view">
+                <span class="ph rcard__media" aria-hidden="true" data-cover="what-we-learned-tracking-leads-to-revenue"><span class="rcard__no">No. 09</span><span class="rcard__glare"></span></span>
                 <span class="rcard__body">
                   <span class="rcard__eyebrow">Breakdown · HVAC</span>
                   <h3 class="rcard__title">What we learned tracking leads to revenue</h3>
@@ -163,8 +273,8 @@
           </li>
           <li class="rcard-item" data-type="findings" data-industry="cleaning" data-audience="residential commercial" data-stages="convert" data-date="2026-09-16" data-minutes="7" data-slug="missed-calls-hidden-cost-of-paid-demand" data-search="missed calls: the hidden cost of paid demand every unanswered call is paid demand you handed to a competitor. here is how to find and fix the leak. findings cleaning convert">
             <article class="rcard">
-              <a class="rcard__link" href="/resources/missed-calls-hidden-cost-of-paid-demand/">
-                <span class="ph rcard__media" aria-hidden="true"></span>
+              <a class="rcard__link" href="/resources/missed-calls-hidden-cost-of-paid-demand/" data-cursor="view">
+                <span class="ph rcard__media" aria-hidden="true" data-cover="missed-calls-hidden-cost-of-paid-demand"><span class="rcard__no">No. 08</span><span class="rcard__glare"></span></span>
                 <span class="rcard__body">
                   <span class="rcard__eyebrow">Findings · Cleaning</span>
                   <h3 class="rcard__title">Missed calls: the hidden cost of paid demand</h3>
@@ -175,8 +285,8 @@
           </li>
           <li class="rcard-item" data-type="breakdown" data-industry="hvac" data-audience="residential" data-stages="grow optimize" data-date="2026-09-02" data-minutes="5" data-slug="maintenance-plans-as-a-growth-engine" data-search="maintenance plans as a growth engine how a well-run maintenance plan smooths demand, keeps techs busy and surfaces replacement work. breakdown hvac grow optimize">
             <article class="rcard">
-              <a class="rcard__link" href="/resources/maintenance-plans-as-a-growth-engine/">
-                <span class="ph rcard__media" aria-hidden="true"></span>
+              <a class="rcard__link" href="/resources/maintenance-plans-as-a-growth-engine/" data-cursor="view">
+                <span class="ph rcard__media" aria-hidden="true" data-cover="maintenance-plans-as-a-growth-engine"><span class="rcard__no">No. 07</span><span class="rcard__glare"></span></span>
                 <span class="rcard__body">
                   <span class="rcard__eyebrow">Breakdown · HVAC</span>
                   <h3 class="rcard__title">Maintenance plans as a growth engine</h3>
@@ -187,8 +297,8 @@
           </li>
           <li class="rcard-item" data-type="findings" data-industry="plumbing" data-audience="residential" data-stages="convert" data-date="2026-08-19" data-minutes="5" data-slug="the-first-call-wins-response-time-in-emergency-plumbing" data-search="the first call wins: response time in emergency plumbing in emergency work, the company that answers first usually gets the job. what that means for your marketing. findings plumbing convert">
             <article class="rcard">
-              <a class="rcard__link" href="/resources/the-first-call-wins-response-time-in-emergency-plumbing/">
-                <span class="ph rcard__media" aria-hidden="true"></span>
+              <a class="rcard__link" href="/resources/the-first-call-wins-response-time-in-emergency-plumbing/" data-cursor="view">
+                <span class="ph rcard__media" aria-hidden="true" data-cover="the-first-call-wins-response-time-in-emergency-plumbing"><span class="rcard__no">No. 06</span><span class="rcard__glare"></span></span>
                 <span class="rcard__body">
                   <span class="rcard__eyebrow">Findings · Plumbing</span>
                   <h3 class="rcard__title">The first call wins: response time in emergency plumbing</h3>
@@ -199,8 +309,8 @@
           </li>
           <li class="rcard-item" data-type="guide" data-industry="all" data-audience="residential commercial" data-stages="measure" data-date="2026-08-05" data-minutes="6" data-slug="what-a-marketing-report-should-actually-tell-you" data-search="what a marketing report should actually tell you five questions every monthly report should answer, and the vanity metrics that can wait. guide all industries measure">
             <article class="rcard">
-              <a class="rcard__link" href="/resources/what-a-marketing-report-should-actually-tell-you/">
-                <span class="ph rcard__media" aria-hidden="true"></span>
+              <a class="rcard__link" href="/resources/what-a-marketing-report-should-actually-tell-you/" data-cursor="view">
+                <span class="ph rcard__media" aria-hidden="true" data-cover="what-a-marketing-report-should-actually-tell-you"><span class="rcard__no">No. 05</span><span class="rcard__glare"></span></span>
                 <span class="rcard__body">
                   <span class="rcard__eyebrow">Guide · All industries</span>
                   <h3 class="rcard__title">What a marketing report should actually tell you</h3>
@@ -211,8 +321,8 @@
           </li>
           <li class="rcard-item" data-type="breakdown" data-industry="electrical" data-audience="residential commercial" data-stages="convert optimize" data-date="2026-07-22" data-minutes="5" data-slug="winning-high-value-projects-with-better-estimate-follow-up" data-search="winning high-value projects with better estimate follow-up large electrical projects are won after the estimate, not at it. a breakdown of a follow-up system that works. breakdown electrical convert optimize">
             <article class="rcard">
-              <a class="rcard__link" href="/resources/winning-high-value-projects-with-better-estimate-follow-up/">
-                <span class="ph rcard__media" aria-hidden="true"></span>
+              <a class="rcard__link" href="/resources/winning-high-value-projects-with-better-estimate-follow-up/" data-cursor="view">
+                <span class="ph rcard__media" aria-hidden="true" data-cover="winning-high-value-projects-with-better-estimate-follow-up"><span class="rcard__no">No. 04</span><span class="rcard__glare"></span></span>
                 <span class="rcard__body">
                   <span class="rcard__eyebrow">Breakdown · Electrical</span>
                   <h3 class="rcard__title">Winning high-value projects with better estimate follow-up</h3>
@@ -223,8 +333,8 @@
           </li>
           <li class="rcard-item" data-type="checklist" data-industry="roofing" data-audience="residential" data-stages="build generate" data-date="2026-07-08" data-minutes="4" data-slug="storm-season-readiness-checklist-for-roofing-companies" data-search="storm season readiness checklist for roofing companies what to have in place before the next storm, so demand turns into signed roofs instead of voicemails. checklist roofing build generate">
             <article class="rcard">
-              <a class="rcard__link" href="/resources/storm-season-readiness-checklist-for-roofing-companies/">
-                <span class="ph rcard__media" aria-hidden="true"></span>
+              <a class="rcard__link" href="/resources/storm-season-readiness-checklist-for-roofing-companies/" data-cursor="view">
+                <span class="ph rcard__media" aria-hidden="true" data-cover="storm-season-readiness-checklist-for-roofing-companies"><span class="rcard__no">No. 03</span><span class="rcard__glare"></span></span>
                 <span class="rcard__body">
                   <span class="rcard__eyebrow">Checklist · Roofing</span>
                   <h3 class="rcard__title">Storm season readiness checklist for roofing companies</h3>
@@ -235,8 +345,8 @@
           </li>
           <li class="rcard-item" data-type="checklist" data-industry="all" data-audience="residential commercial" data-stages="build generate" data-date="2026-06-24" data-minutes="5" data-slug="local-seo-checklist-for-service-area-businesses" data-search="a local seo checklist for service-area businesses the fundamentals that help established service companies show up when nearby customers search. checklist all industries build generate">
             <article class="rcard">
-              <a class="rcard__link" href="/resources/local-seo-checklist-for-service-area-businesses/">
-                <span class="ph rcard__media" aria-hidden="true"></span>
+              <a class="rcard__link" href="/resources/local-seo-checklist-for-service-area-businesses/" data-cursor="view">
+                <span class="ph rcard__media" aria-hidden="true" data-cover="local-seo-checklist-for-service-area-businesses"><span class="rcard__no">No. 02</span><span class="rcard__glare"></span></span>
                 <span class="rcard__body">
                   <span class="rcard__eyebrow">Checklist · All industries</span>
                   <h3 class="rcard__title">A local SEO checklist for service-area businesses</h3>
@@ -247,8 +357,8 @@
           </li>
           <li class="rcard-item" data-type="guide" data-industry="cleaning" data-audience="residential commercial" data-stages="convert grow" data-date="2026-06-10" data-minutes="6" data-slug="turning-one-time-cleans-into-recurring-clients" data-search="turning one-time cleans into recurring clients recurring clients are the foundation of a stable cleaning business. how to convert more first-time bookings. guide cleaning convert grow">
             <article class="rcard">
-              <a class="rcard__link" href="/resources/turning-one-time-cleans-into-recurring-clients/">
-                <span class="ph rcard__media" aria-hidden="true"></span>
+              <a class="rcard__link" href="/resources/turning-one-time-cleans-into-recurring-clients/" data-cursor="view">
+                <span class="ph rcard__media" aria-hidden="true" data-cover="turning-one-time-cleans-into-recurring-clients"><span class="rcard__no">No. 01</span><span class="rcard__glare"></span></span>
                 <span class="rcard__body">
                   <span class="rcard__eyebrow">Guide · Cleaning</span>
                   <h3 class="rcard__title">Turning one-time cleans into recurring clients</h3>
