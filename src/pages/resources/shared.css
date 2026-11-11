@@ -1,0 +1,342 @@
+/* Resources — pieces shared by the hub (/resources/) and article pages (/resources/<slug>/).
+ * Figma: "Resource Card" (5499:174), "Section / Soft CTA" (5714:14580), filter chips (5714:14504). */
+
+/* ---------- Resource card ---------- */
+.rcard-item {
+  display: flex;
+  min-width: 0;
+}
+
+.rcard-item[hidden] {
+  display: none;
+}
+
+.rcard {
+  flex: 1;
+  min-width: 0;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.rcard__link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: clip;
+  border: 1px solid var(--stroke-soft-200);
+  border-radius: var(--r-20);
+  background: var(--bg-white-0);
+  translate: 0 0;
+  transition: translate 0.45s var(--ease-out), box-shadow 0.45s var(--ease-out), border-color 0.3s;
+}
+
+.rcard__link:hover,
+.rcard__link:focus-visible {
+  translate: 0 -4px;
+  border-color: var(--stroke-sub-300);
+  box-shadow: var(--shadow-lg);
+}
+
+.rcard__link:focus-visible {
+  outline: 2px solid var(--primary-base);
+  outline-offset: 3px;
+}
+
+.rcard__media {
+  flex: 0 0 auto;
+  height: 220px;
+  border-radius: 0;
+}
+
+.rcard__media::after {
+  /* soft sheen that follows the tilt (set by JS via --mx / --my) */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 0%), rgba(255, 255, 255, 0.55), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.rcard__link:hover .rcard__media::after {
+  opacity: 1;
+}
+
+.rcard__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: var(--sp-6);
+}
+
+.rcard__eyebrow {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: var(--text-sub-400);
+  text-transform: uppercase;
+}
+
+.rcard__title {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--text-strong-950);
+}
+
+.rcard__meta {
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: -0.006em;
+  color: var(--text-sub-600);
+}
+
+/* ---------- Chip (filter pill) ---------- */
+.chip {
+  flex: 0 0 auto;
+  padding: var(--sp-2) var(--sp-4);
+  border: 1px solid var(--stroke-soft-200);
+  border-radius: var(--r-full);
+  background: var(--bg-white-0);
+  color: var(--text-strong-950);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: -0.006em;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.25s, color 0.25s, border-color 0.25s;
+}
+
+.chip:hover {
+  border-color: var(--stroke-sub-300);
+  background: var(--bg-weak-10);
+}
+
+.chip[aria-pressed='true'] {
+  background: var(--bg-strong-800);
+  color: var(--text-white-0);
+}
+
+/* ---------- Soft CTA: newsletter band + next step ---------- */
+.soft-cta {
+  display: flex;
+  gap: var(--sp-10);
+  align-items: stretch;
+  padding: 36px var(--res-pad, 96px);
+}
+
+.soft-cta__card {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--sp-12);
+  min-width: 0;
+  padding: var(--sp-12);
+  border-radius: var(--r-24);
+  background: var(--bg-weak-10);
+}
+
+.soft-cta__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.soft-cta__title {
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+
+.soft-cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-6);
+  padding: 6px 0 6px 6px; /* room for the button ring */
+}
+
+/* Figma uses the large button anatomy here: 18px label, 32px arrow circle */
+.soft-cta .btn {
+  --btn-icon: 32px;
+  padding-left: var(--sp-6);
+  font-size: 18px;
+  letter-spacing: -0.015em;
+}
+
+/* ---------- Newsletter form ---------- */
+.nl-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.nl-form__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: 6px 0 6px 6px; /* room for the button ring */
+  margin-left: -6px;
+}
+
+.nl-form__field {
+  flex: 0 1 320px;
+  min-width: 0;
+}
+
+.nl-form__input {
+  width: 100%;
+  padding: var(--sp-4) var(--sp-5);
+  border: 1px solid var(--stroke-soft-200);
+  border-radius: var(--r-full);
+  background: var(--bg-white-0);
+  color: var(--text-strong-950);
+  font: 400 16px/24px var(--font);
+  letter-spacing: -0.011em;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.nl-form__input::placeholder {
+  color: var(--text-sub-400);
+}
+
+.nl-form__input:hover {
+  border-color: var(--stroke-sub-300);
+}
+
+.nl-form__input:focus {
+  outline: none;
+  border-color: var(--primary-base);
+  box-shadow: 0 0 0 4px var(--primary-alpha-16);
+}
+
+.nl-form__input[aria-invalid='true'] {
+  border-color: var(--error-base);
+  box-shadow: 0 0 0 4px rgba(229, 55, 42, 0.12);
+}
+
+.nl-form__consent {
+  color: var(--text-sub-600);
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.nl-form__consent input[aria-invalid='true'] {
+  outline: 2px solid var(--error-base);
+  outline-offset: 1px;
+}
+
+.nl-form__error {
+  margin-top: -4px;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.nl-form__status:empty {
+  display: none;
+}
+
+.nl-form__status {
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-12);
+  background: rgba(229, 55, 42, 0.08);
+  color: #b4271c;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.nl-form__hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.nl-form__submit .spinner {
+  width: 18px;
+  height: 18px;
+  border-color: rgba(255, 255, 255, 0.35);
+  border-top-color: currentColor;
+}
+
+.nl-form.is-loading .nl-form__submit {
+  pointer-events: none;
+  color: var(--text-white-0);
+}
+
+.nl-form.is-loading .nl-form__submit::before {
+  transform: translate(-17%, -50%);
+}
+
+.nl-success {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  padding: var(--sp-5);
+  border: 1px solid var(--stroke-soft-200);
+  border-radius: var(--r-16);
+  background: var(--bg-white-0);
+}
+
+.nl-success:focus {
+  outline: none;
+}
+
+.nl-success[hidden] {
+  display: none;
+}
+
+.nl-success img {
+  flex: 0 0 auto;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+  .soft-cta {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 600px) {
+  .soft-cta {
+    gap: var(--sp-10);
+    padding: 36px var(--sp-6);
+  }
+  .soft-cta__card {
+    align-items: stretch;
+    padding: var(--sp-12) var(--sp-6);
+    text-align: center;
+  }
+  .soft-cta__text {
+    align-items: center;
+  }
+  .soft-cta__actions {
+    flex-direction: column;
+    justify-content: center;
+    padding: 6px;
+  }
+  .nl-form__row {
+    flex-direction: column;
+    align-items: stretch;
+    margin: 0;
+    padding: 6px;
+  }
+  .nl-form__field {
+    flex: 1 1 auto;
+  }
+  .nl-form__submit {
+    justify-content: center;
+  }
+  .nl-form__consent {
+    text-align: left;
+  }
+  .rcard__media {
+    height: 200px;
+  }
+}
