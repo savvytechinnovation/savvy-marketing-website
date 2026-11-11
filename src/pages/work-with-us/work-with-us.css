@@ -1284,3 +1284,10 @@ body.page-wwu {
     transform: none;
   }
 }
+
+/* Keep 3D-rotated tiles and carousels from widening the page on phones */
+.wwu-week,
+.wwu-voices,
+.wwu-hero {
+  overflow-x: clip;
+}
