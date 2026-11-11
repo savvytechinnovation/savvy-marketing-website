@@ -1,6 +1,7 @@
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative, resolve } from 'node:path';
 import { defineConfig } from 'vite';
+import { pathToFileURL } from 'node:url';
 
 const root = import.meta.dirname;
 
@@ -68,7 +69,7 @@ function vercelApiDev() {
       mount(server, (name) => server.ssrLoadModule(`/api/${name}.js`));
     },
     configurePreviewServer(server) {
-      mount(server, (name) => import(`./api/${name}.js`));
+      mount(server, (name) => import(pathToFileURL(resolve(server.config.root, 'api', name + '.js')).href));
     },
   };
 }
