@@ -1,9 +1,11 @@
 import { initSite, gsap, ScrollTrigger, reduceMotion } from '../../ds/site.js';
 import { SplitText } from 'gsap/SplitText';
+import { autoMount3D } from '../../ds/fx3d.js';
 import './home.css';
 
 gsap.registerPlugin(SplitText);
 initSite();
+autoMount3D();
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -159,5 +161,45 @@ if (timeline) {
       },
     });
     return () => st.kill();
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Hero: floating data chips + scroll-out parallax; stage cards flip in 3D
+// ---------------------------------------------------------------------------
+mm.add('(prefers-reduced-motion: no-preference)', () => {
+  gsap.from('.home-hero__chip', { opacity: 0, y: 16, scale: 0.9, duration: 1, ease: 'back.out(1.6)', stagger: 0.15, delay: 0.9 });
+  gsap.to('.home-hero__chip--a', { y: -10, duration: 2.6, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+  gsap.to('.home-hero__chip--b', { y: 10, duration: 3.1, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+  gsap.to('.home-hero__copy', {
+    yPercent: -12,
+    opacity: 0.35,
+    ease: 'none',
+    scrollTrigger: { trigger: '.home-hero', start: 'top top', end: 'bottom top', scrub: true },
+  });
+  gsap.from('.growth__loop .stage', {
+    rotationY: -35,
+    transformPerspective: 900,
+    transformOrigin: 'left center',
+    duration: 1.1,
+    ease: 'expo.out',
+    stagger: 0.07,
+    scrollTrigger: { trigger: '[data-loop]', start: 'top 85%' },
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Magnetic CTAs (fine pointers only) — uses the CSS translate property
+// ---------------------------------------------------------------------------
+if (matchMedia('(hover: hover) and (pointer: fine)').matches && !reduceMotion) {
+  $$('.btn').forEach((btn) => {
+    btn.dataset.magnetic = '';
+    btn.addEventListener('pointermove', (e) => {
+      const r = btn.getBoundingClientRect();
+      const x = (e.clientX - (r.left + r.width / 2)) * 0.25;
+      const y = (e.clientY - (r.top + r.height / 2)) * 0.35;
+      btn.style.translate = x + 'px ' + y + 'px';
+    });
+    btn.addEventListener('pointerleave', () => (btn.style.translate = '0 0'));
   });
 }
