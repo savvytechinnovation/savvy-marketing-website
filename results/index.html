@@ -16,8 +16,18 @@
     -->
     <main id="main">
       <!-- Hero -->
-      <section class="rh-hero" aria-labelledby="results-title">
-        <div class="rh-hero__3d" data-growth3d aria-hidden="true"></div>
+      <section class="rh-hero rh-hero--r2" data-tone="dark" data-sculpture-host aria-labelledby="results-title">
+        <div class="rh-hero__3d" data-growth3d data-cursor="view" aria-hidden="true"></div>
+        <div class="rh-tags" aria-hidden="true">
+          <!-- cases:tags:start --><span class="rh-tag" data-tag="hvac-booked-jobs"><b>01</b> HVAC<em>[Before] → [After] booked jobs a week</em></span><span class="rh-tag" data-tag="plumbing-cost-per-booked-job"><b>02</b> Plumbing<em>Cost per booked job: [$X] → [$Y]</em></span><span class="rh-tag" data-tag="electrical-commercial-bids"><b>03</b> Electrical<em>[N] qualified bids a quarter, up from [N]</em></span><span class="rh-tag" data-tag="roofing-booked-replacements"><b>04</b> Roofing<em>[$X] in booked roof replacements</em></span><span class="rh-tag" data-tag="cleaning-recurring-clients"><b>05</b> Cleaning<em>Recurring clients: [X] → [Y]</em></span><span class="rh-tag" data-tag="hvac-missed-calls"><b>06</b> HVAC<em>Missed calls down from [X%] to [Y%]</em></span><!-- cases:tags:end -->
+        </div>
+        <div class="hud" aria-hidden="true">
+          <span class="hud__grid"></span>
+          <span class="hud__corner hud__corner--tl"></span><span class="hud__corner hud__corner--tr"></span><span class="hud__corner hud__corner--bl"></span><span class="hud__corner hud__corner--br"></span>
+          <p class="hud__tl"><span class="hud__dot"></span>RESULTS — DATA SCULPTURE<span class="hud__sep"></span>ONE TOWER PER CASE</p>
+          <p class="hud__tr"><span>SOURCE <b>CRM</b> + <b>PLATFORM</b></span><span>NO VANITY METRICS</span></p>
+          <p class="hud__br">X <b data-hud-x>+0.000</b> Y <b data-hud-y>+0.000</b> · HOVER A TOWER</p>
+        </div>
         <div class="rh-hero__text">
           <p class="eyebrow" data-hero-item>Results</p>
           <h1 class="rh-hero__title" id="results-title" data-split>Growth systems we built for service businesses, and what they changed.</h1>
@@ -150,9 +160,15 @@
         </div>
       </section>
 
+      <!-- Scroll-velocity marquee -->
+      <div class="vmarq" aria-hidden="true" data-vmarq>
+        <div class="vmarq__track"><div class="vmarq__set"><span class="vmarq__w">Measured in CRM</span><span class="vmarq__star">✳</span><span class="vmarq__w vmarq__w--o">Platform-reported</span><span class="vmarq__star">✳</span><span class="vmarq__w">Before → After</span><span class="vmarq__star">✳</span><span class="vmarq__w vmarq__w--o">No vanity metrics</span><span class="vmarq__star">✳</span></div><div class="vmarq__set"><span class="vmarq__w">Measured in CRM</span><span class="vmarq__star">✳</span><span class="vmarq__w vmarq__w--o">Platform-reported</span><span class="vmarq__star">✳</span><span class="vmarq__w">Before → After</span><span class="vmarq__star">✳</span><span class="vmarq__w vmarq__w--o">No vanity metrics</span><span class="vmarq__star">✳</span></div></div>
+      </div>
+
       <!-- How we measure (structure map F · "How results are labelled") -->
       <section class="rh-method" id="how-we-measure" aria-labelledby="method-title">
         <div class="rh-method__head">
+          <p class="sec-index" aria-hidden="true"><span class="sec-index__n">02</span><span class="sec-index__t">/ 03</span><span class="sec-index__line"></span><span class="sec-index__k">METHOD</span></p>
           <p class="eyebrow" data-reveal>How we measure</p>
           <h2 class="rh-method__title" id="method-title" data-split>How results are labelled</h2>
           <p class="rh-method__sub" data-reveal>No vanity metrics. Every number says where it came from, for how long, and what it was before.</p>
@@ -196,6 +212,7 @@
 
       <!-- Closing CTA -->
       <section class="rh-cta" aria-labelledby="cta-title">
+        <p class="sec-index sec-index--center" aria-hidden="true"><span class="sec-index__n">03</span><span class="sec-index__t">/ 03</span><span class="sec-index__line"></span><span class="sec-index__k">NEXT STEP</span></p>
         <h2 class="rh-cta__title" id="cta-title" data-split>Could this work for your business?</h2>
         <p class="rh-cta__sub" data-reveal>Tell us where you want to grow. If we’re not the right fit, we’ll say so.</p>
         <div class="rh-cta__actions" data-reveal>

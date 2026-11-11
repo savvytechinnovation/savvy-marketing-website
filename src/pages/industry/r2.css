@@ -1,0 +1,506 @@
+/* Round 2 · Industries hub + industry pages: immersive WebGL hero (sticky stage, two acts), dark tone sections,
+   3D demand calendar, scroll storytelling details. Loaded after industry.css (see industry.js / hub.js). */
+@import '../results/fx.css';
+
+/* ---------- Hero: sticky full-bleed stage + two acts ---------- */
+.ind-hero--r2 {
+  position: relative;
+  padding: 0;
+  color: #fff;
+  background:
+    radial-gradient(80% 70% at 75% 40%, rgba(7, 146, 194, 0.28), transparent 70%),
+    radial-gradient(60% 60% at 10% 100%, rgba(41, 59, 170, 0.45), transparent 70%),
+    var(--tone-dark);
+  isolation: isolate;
+  overflow: clip; /* the sticky stage overhangs by 100svh (negative margin): clip it to the hero */
+}
+
+.ind-hero__stage {
+  position: sticky;
+  top: 0;
+  z-index: 0;
+  height: 100vh;
+  height: 100svh;
+  margin-bottom: -100vh;
+  margin-bottom: -100svh;
+  overflow: hidden;
+}
+
+.ind-hero--r2 .ind-hero__3d {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hub-hero .ind-hero__3d {
+  pointer-events: auto;
+}
+
+/* fallback art when WebGL is unavailable: soft glow rings */
+.ind-hero--r2 .ind-hero__3d::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 68%;
+  width: min(46vw, 560px);
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(7, 146, 194, 0.35), transparent 62%);
+  border: 1px solid rgba(150, 175, 255, 0.2);
+  box-shadow: 0 0 0 40px rgba(150, 175, 255, 0.04), 0 0 0 90px rgba(150, 175, 255, 0.03);
+}
+
+.ind-hero--r2 .ind-hero__3d:has(canvas)::before {
+  display: none;
+}
+
+.ind-hero__act {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  max-width: 1376px;
+  min-height: 100vh;
+  min-height: 100svh;
+  margin-inline: auto;
+  padding: 220px var(--sp-40) 120px;
+  pointer-events: none;
+}
+
+.ind-hero__act > * {
+  pointer-events: auto;
+}
+
+.ind-hero__act--1 {
+  flex-direction: column;
+  justify-content: center;
+  gap: 64px;
+}
+
+.ind-hero--r2 .ind-hero__copy {
+  flex: none;
+  max-width: 620px;
+}
+
+.ind-hero--r2 .t-h1 {
+  color: #fff;
+  font-size: clamp(42px, 5.4vw, 76px);
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.ind-hero__act--1 .c-sub {
+  color: rgba(222, 230, 255, 0.78);
+}
+
+.ind-hero__act--1 .c-muted,
+.ind-hero__act--1 .eyebrow {
+  color: rgba(206, 220, 255, 0.6);
+}
+
+.ind-hero--r2 .ind-hero__visual {
+  color: var(--text-strong-950);
+}
+
+.ind-hero--r2 .breadcrumbs a,
+.ind-hero--r2 .breadcrumbs li {
+  color: rgba(222, 230, 255, 0.78);
+}
+
+.ind-hero--r2 .breadcrumbs [aria-current] {
+  color: #fff;
+}
+
+.ind-hero__act--1 .link-arrow {
+  color: #fff;
+}
+
+.ind-hero__act--1 .link-arrow img {
+  filter: invert(1);
+}
+
+.ind-hero--r2 .ind-hero__note img {
+  filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.6));
+}
+
+/* other-industry switcher */
+.ind-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-self: flex-start;
+  padding: 4px;
+  border: 1px solid rgba(150, 175, 255, 0.2);
+  border-radius: var(--r-full);
+  background: rgba(11, 16, 51, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+.ind-switch__a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: var(--r-full);
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(222, 230, 255, 0.78);
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.ind-switch__n {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  opacity: 0.6;
+}
+
+.ind-switch__a:hover,
+.ind-switch__a:focus-visible {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.ind-switch__a.is-current {
+  background: #fff;
+  color: var(--text-strong-950);
+}
+
+/* act 2: live model (widget) */
+.ind-hero__act--2 {
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: var(--sp-8);
+  padding-top: 140px;
+}
+
+.ind-hero__deck {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  width: min(520px, 100%);
+}
+
+.ind-hero__deck .micro {
+  color: var(--hud);
+}
+
+.ind-hero__deck-title {
+  margin: 0;
+  font-size: clamp(24px, 2.4vw, 34px);
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #fff;
+  text-wrap: balance;
+}
+
+.ind-hero__deck-text {
+  margin: 0;
+  color: rgba(222, 230, 255, 0.72);
+}
+
+.ind-hero--r2 .ind-hero__visual {
+  flex: none;
+  display: block;
+  width: min(520px, 100%);
+  min-height: 0;
+  padding: 0;
+  overflow: visible;
+  border-radius: 0;
+  background: none;
+  isolation: auto;
+}
+
+.ind-hero--r2 .hw {
+  max-width: none;
+  box-shadow: 0 40px 120px -30px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.ind-hero--r2 .hw--media {
+  min-height: 340px;
+}
+
+.ind-hero--r2 .picker {
+  box-shadow: 0 40px 120px -30px rgba(0, 0, 0, 0.6);
+}
+
+/* hub: orbit label + legend */
+.orbit-label {
+  top: auto !important;
+  right: 6% !important;
+  bottom: 9% !important;
+  flex-direction: column;
+  align-items: flex-end !important;
+  gap: 4px !important;
+  text-align: right;
+  opacity: calc(1 - var(--act, 0) * 2);
+}
+
+.orbit-label__n {
+  color: var(--secondary-base);
+  font-size: 12px;
+}
+
+.orbit-label__name {
+  font-family: var(--font);
+  font-size: clamp(36px, 5vw, 72px);
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  text-transform: none;
+  color: #fff;
+}
+
+.orbit-label__tag {
+  color: var(--hud);
+}
+
+.orbit-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hud-dim);
+}
+
+.orbit-legend li {
+  display: flex;
+  gap: 8px;
+  transition: color 0.3s;
+}
+
+.orbit-legend li span {
+  opacity: 0.6;
+}
+
+.orbit-legend li.is-on {
+  color: #fff;
+}
+
+.orbit-legend li.is-on span {
+  color: var(--secondary-base);
+  opacity: 1;
+}
+
+/* ---------- Dark tone sections (backdrop shows through while JS tweens --tone) ---------- */
+.ind-ex[data-tone],
+.hub-cal[data-tone] {
+  background: var(--tone-dark);
+}
+
+.tone-fx .ind-ex[data-tone],
+.tone-fx .ind-proof[data-tone],
+.tone-fx .hub-cal[data-tone] {
+  background: transparent;
+}
+
+.ind-ex > .sec__inner > .sec-head .t-h3,
+.hub-cal > .sec__inner > .sec-head .t-h3 {
+  color: #fff;
+}
+
+.ind-ex > .sec__inner > .sec-head .c-sub,
+.hub-cal > .sec__inner > .sec-head .c-sub,
+.hub-cal .heat__legend {
+  color: rgba(222, 230, 255, 0.75);
+}
+
+.ind-ex > .sec__inner > .sec-head .eyebrow,
+.hub-cal > .sec__inner > .sec-head .eyebrow,
+.ind-ex > .sec__inner > .c-muted {
+  color: rgba(206, 220, 255, 0.6);
+}
+
+[data-tone] .sec-index,
+.ind-proof .sec-index {
+  color: var(--hud);
+}
+
+[data-tone] .sec-index__n {
+  color: var(--secondary-base);
+}
+
+.ind-ex .card,
+.hub-cal .heat-wrap {
+  box-shadow: 0 30px 80px -40px rgba(0, 0, 0, 0.8);
+}
+
+/* ---------- Velocity marquee sits between the dark hero and the first light section ---------- */
+.page-industry .vmarq {
+  border-color: transparent;
+}
+
+/* ---------- Demand calendar: 3D bar landscape ---------- */
+.cal__plot {
+  position: relative;
+}
+
+.cal__3d {
+  position: absolute;
+  inset: 0;
+  visibility: hidden;
+}
+
+.cal__hud {
+  display: none;
+}
+
+.cal.is-3d .cal__plot {
+  height: 460px;
+  overflow: hidden;
+  border-radius: var(--r-20);
+  background:
+    radial-gradient(70% 80% at 50% 110%, rgba(7, 146, 194, 0.3), transparent 70%),
+    var(--tone-dark);
+}
+
+.cal.is-3d .cal__3d {
+  visibility: visible;
+}
+
+.cal.is-3d .cal__svg,
+.cal.is-3d .cal__marks {
+  visibility: hidden;
+  position: absolute;
+  inset: 0;
+}
+
+.cal.is-3d .cal__hud {
+  position: absolute;
+  top: 16px;
+  left: 20px;
+  right: 20px;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--hud);
+  pointer-events: none;
+}
+
+.cal__hud b {
+  color: #fff;
+}
+
+.cal.is-3d .cal__tip {
+  top: 48px;
+  z-index: 3;
+}
+
+.cal.is-3d .cal__month.is-hover {
+  background: var(--bg-strong-800);
+  color: #fff;
+}
+
+/* ---------- Strip: scroll storytelling (stages light in order) ---------- */
+.strip__stage {
+  position: relative;
+  overflow: hidden;
+}
+
+.strip__stage::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary-base), var(--secondary-base));
+  transform: scaleX(var(--fill, 0));
+  transform-origin: 0 50%;
+}
+
+/* ---------- KPI numbers bigger, mono micro index ---------- */
+.kpi__v {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+  .ind-hero__act {
+    padding-inline: var(--sp-10);
+  }
+}
+
+@media (max-width: 900px) {
+  .ind-hero--r2 .ind-hero__3d {
+    opacity: 0.6;
+  }
+  .ind-hero--r2 .t-h1 {
+    text-shadow: 0 2px 24px rgba(11, 16, 51, 0.8);
+  }
+  .ind-hero__act--1::before {
+    content: '';
+    position: absolute;
+    inset: 38% 0 0;
+    z-index: -1;
+    background: linear-gradient(180deg, transparent, rgba(11, 16, 51, 0.82) 30%);
+    pointer-events: none;
+  }
+  .ind-hero__act--2 {
+    background: linear-gradient(180deg, rgba(11, 16, 51, 0.6), rgba(11, 16, 51, 0.85) 40%);
+  }
+  .ind-hero__act {
+    padding: 150px var(--sp-6) 64px;
+  }
+  .ind-hero__act--1 {
+    justify-content: flex-end;
+    gap: var(--sp-8);
+  }
+  .ind-hero__act--2 {
+    min-height: 0;
+    align-items: stretch;
+    padding-top: var(--sp-10);
+    padding-bottom: var(--sp-24);
+  }
+  .ind-hero__deck,
+  .ind-hero--r2 .ind-hero__visual {
+    width: 100%;
+  }
+  .ind-hero--r2 .ind-hero__3d::before {
+    top: 30%;
+    left: 50%;
+    width: 80vw;
+  }
+  .ind-switch {
+    gap: 2px;
+  }
+  .ind-switch__a {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+  .orbit-label {
+    right: 20px !important;
+    bottom: auto !important;
+    top: 150px !important;
+  }
+  .orbit-label__name {
+    font-size: 28px;
+  }
+  .cal.is-3d .cal__plot {
+    height: 320px;
+  }
+  .cal__hud-hint {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .ind-switch__n {
+    display: none;
+  }
+}

@@ -13,7 +13,7 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { INDUSTRIES, TYPES, STAGES, CONFIDENCE, sortedCases, industryOf, clientLabel } from '../src/content/cases.js';
+import { INDUSTRIES, TYPES, STAGES, CONFIDENCE, sortedCases, industryOf, clientLabel, typeLabel } from '../src/content/cases.js';
 import { esc, caseCard, featuredCase, caseUrl, confidence } from '../src/pages/results/render.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -29,6 +29,8 @@ function write(file, html) {
   console.log(`  wrote ${file.replace(root + '/', '')}`);
 }
 
+const SITE = 'https://savvymarketingpartners.com';
+const IND_HEX = { hvac: '#38bdf8', plumbing: '#5b7cff', electrical: '#ffb020', roofing: '#ff5527', cleaning: '#2dd4bf' };
 const arrowUp = '<span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span>';
 const pad = (n) => String(n).padStart(2, '0');
 
@@ -120,7 +122,27 @@ function chartFigure(c) {
 // ---------------------------------------------------------------------------
 // Case page
 // ---------------------------------------------------------------------------
-function casePage(c, prev, next) {
+// Round 2: scroll-driven 3D before → after "theatre" (decorative; the figure + data table below stay the accessible chart)
+function theatre(c) {
+  const ch = c.results.chart;
+  if (!ch) return '';
+  const before = ch.series[0];
+  const after = ch.series[ch.series.length - 1];
+  const unit = ch.kind === 'funnel' ? '%' : '';
+  return `<div class="cs-theatre" data-theatre data-series="${esc(JSON.stringify([before.values, after.values]))}" data-before="${esc(JSON.stringify(before.values))}" data-after="${esc(JSON.stringify(after.values))}" data-unit="${unit}" aria-hidden="true">
+              <div class="cs-theatre__stage">
+                <div class="cs-theatre__3d" data-theatre-3d></div>
+                <div class="cs-theatre__top">
+                  <p class="cs-theatre__state"><span class="cs-theatre__name is-on" data-th-before>${esc(before.name)}</span><span class="cs-theatre__track"><span data-th-bar></span></span><span class="cs-theatre__name" data-th-after>${esc(after.name)}</span></p>
+                  <p class="cs-theatre__title">${esc(ch.title)}${ch.illustrative ? ' <span class="cs-theatre__badge">Illustrative</span>' : ''}</p>
+                </div>
+                <ol class="cs-theatre__vals" role="list">${ch.labels.map((l, i) => `<li><span>${esc(l)}</span><b data-th-v="${i}">${before.values[i]}${unit}</b></li>`).join('')}</ol>
+                <p class="cs-theatre__hint">Scroll to morph ${esc(before.name.toLowerCase())} into ${esc(after.name.toLowerCase())}</p>
+              </div>
+            </div>`;
+}
+
+function casePage(c, prev, next, idx = 0, total = 1) {
   const ind = industryOf(c.industry);
   const client = clientLabel(c);
   const used = STAGES.filter((s) => c.stages.includes(s.id)).length;
@@ -199,12 +221,31 @@ function casePage(c, prev, next) {
     <meta name="description" content="${esc(desc)}" />
     <meta property="og:title" content="${esc(c.headline)} — ${esc(ind.label)} case study" />
     <meta property="og:description" content="${esc(c.intro)}" />
+    <script type="application/ld+json">${JSON.stringify([
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Results', item: `${SITE}/results/` },
+          { '@type': 'ListItem', position: 2, name: ind.label, item: `${SITE}/results/?industry=${c.industry}` },
+          { '@type': 'ListItem', position: 3, name: c.headline, item: `${SITE}${caseUrl(c)}` },
+        ],
+      },
+      { '@context': 'https://schema.org', '@type': 'Article', headline: `${c.headline} — ${ind.label} case study`, description: c.intro, about: `${ind.label} marketing`, publisher: { '@type': 'Organization', name: 'Savvy Marketing Partners', url: SITE }, mainEntityOfPage: `${SITE}${caseUrl(c)}` },
+    ]).replace(/</g, '\\u003c')}</script>
   </head>
   <body class="page-case">
     <!-- @include header -->
 
     <main id="main">
-      <section class="cs-hero" aria-labelledby="case-title">
+      <section class="cs-hero cs-hero--r2" data-tone="dark" aria-labelledby="case-title">
+        <div class="cs-hero__photo" data-case-hero data-color="${esc(IND_HEX[c.industry] || '#0792c2')}" aria-hidden="true"></div>
+        <div class="hud" aria-hidden="true">
+          <span class="hud__grid"></span>
+          <span class="hud__corner hud__corner--tl"></span><span class="hud__corner hud__corner--tr"></span><span class="hud__corner hud__corner--bl"></span><span class="hud__corner hud__corner--br"></span>
+          <p class="hud__tr"><span>CASE <b>${pad(idx + 1)}</b>/${pad(total)}</span><span>${esc(ind.label.toUpperCase())}</span><span>${esc(c.stages.length)} STAGES</span></p>
+          <p class="hud__br">X <b data-hud-x>+0.000</b> Y <b data-hud-y>+0.000</b> · ${esc(CONFIDENCE[c.confidence].label.toUpperCase())}</p>
+        </div>
         <nav class="cs-crumbs" aria-label="Breadcrumb">
           <ol role="list">
             <li><a href="/results/">Results</a></li>
@@ -214,17 +255,29 @@ function casePage(c, prev, next) {
         </nav>
         <div class="cs-hero__row">
           <div class="cs-hero__text">
+            <p class="cs-hero__index" aria-hidden="true"><span class="cs-hero__index-n" data-intro-scramble>Case ${pad(idx + 1)}</span><span class="cs-hero__index-line"></span><span>${esc(ind.label)} · ${c.types.map((t) => esc(typeLabel(t))).join(' + ')}</span></p>
             <h1 class="cs-hero__h1" id="case-title"><span class="cs-hero__kicker" data-split>Case Study</span> <span class="cs-hero__title" data-split>${esc(c.title)}</span></h1>
             <p class="cs-hero__intro" data-hero-item>${esc(c.intro)}</p>
             <p class="cs-hero__conf" data-hero-item><span class="conf__dot conf__dot--${c.confidence}" aria-hidden="true">●</span><span>${esc(CONFIDENCE[c.confidence].label)} · ${esc(c.range)}</span><a href="#results">ⓘ How we measured</a></p>
             <p class="sr-only">Headline result: ${esc(c.headline)}.</p>
           </div>
           <figure class="cs-hero__media" data-hero-item>
-            <div class="cs-hero__photo ph" aria-hidden="true"></div>
             <figcaption><strong>${esc(client)}</strong><span>${esc(c.location)}</span></figcaption>
+            <dl class="cs-hero__facts">
+              <div><dt>Industry</dt><dd>${esc(ind.label)}</dd></div>
+              <div><dt>Period</dt><dd>${esc(c.period)}</dd></div>
+              <div><dt>Stages</dt><dd>${used} of 7</dd></div>
+              <div><dt>Headline</dt><dd>${esc(CONFIDENCE[c.confidence].label)}</dd></div>
+            </dl>
           </figure>
         </div>
       </section>
+
+      <div class="cs-chapter" aria-hidden="true" data-chapter>
+        <span class="cs-chapter__n" data-chapter-n>${sections[0].n}</span>
+        <span class="cs-chapter__meta"><span class="cs-chapter__label" data-chapter-label>${esc(sections[0].label)}</span><span class="cs-chapter__of">/ ${pad(sections.length)}</span></span>
+        <span class="cs-chapter__bars">${sections.map((s) => `<span data-chapter-bar="${s.id}"><span></span></span>`).join('')}</span>
+      </div>
 
       <div class="cs-body">
         <aside class="cs-toc" aria-label="On this page">
@@ -263,6 +316,7 @@ function casePage(c, prev, next) {
           <section class="cs-section" id="results" aria-labelledby="results-h">
             <div id="results-h">${head(S.results)}</div>
             <p class="cs-section__intro">${esc(c.results.intro)}</p>
+            ${theatre(c)}
             <div class="metrics" data-reveal-stagger="0.08">
           ${metrics}
             </div>
@@ -280,6 +334,10 @@ function casePage(c, prev, next) {
 
           ${owner}
         </div>
+      </div>
+
+      <div class="vmarq" aria-hidden="true" data-vmarq>
+        <div class="vmarq__track">${[0, 1].map(() => `<div class="vmarq__set"><span class="vmarq__w">${esc(ind.label)}</span><span class="vmarq__star">✳</span><span class="vmarq__w vmarq__w--o">${esc(CONFIDENCE[c.confidence].label)}</span><span class="vmarq__star">✳</span><span class="vmarq__w">Before → After</span><span class="vmarq__star">✳</span></div>`).join('')}</div>
       </div>
 
       <section class="cs-closing" aria-labelledby="closing-title">
@@ -317,6 +375,7 @@ function hubBlocks(list) {
   const sheetGroup = (name, title, items) =>
     `<fieldset class="rh-sheet__group"><legend class="eyebrow">${title}</legend><div class="rh-sheet__chips">${items.join('')}</div></fieldset>`;
   return {
+    tags: list.map((c, i) => `<span class="rh-tag" data-tag="${esc(c.slug)}"><b>${pad(i + 1)}</b> ${esc(industryOf(c.industry).label)}<em>${esc(c.headline)}</em></span>`).join(''),
     counts: `<p class="rh-legend__count"><span data-count="${list.length}">${list.length}</span> case ${list.length === 1 ? 'study' : 'studies'} · <span data-count="${industries.length}">${industries.length}</span> ${industries.length === 1 ? 'industry' : 'industries'}</p>`,
     'industry-chips': [chip('industry', 'all', 'All', list.length, true), ...INDUSTRIES.map((i) => chip('industry', i.id, i.label, count((c) => c.industry === i.id), false))].join(''),
     'type-chips': [chip('type', 'all', 'All', undefined, true), ...TYPES.map((t) => chip('type', t.id, t.label, undefined, false))].join(''),
@@ -357,7 +416,7 @@ console.log(`Building ${list.length} case pages…`);
 list.forEach((c, i) => {
   const prev = list[(i - 1 + list.length) % list.length];
   const next = list[(i + 1) % list.length];
-  write(join(root, 'results', c.slug, 'index.html'), casePage(c, list.length > 1 ? prev : null, list.length > 1 ? next : null));
+  write(join(root, 'results', c.slug, 'index.html'), casePage(c, list.length > 1 ? prev : null, list.length > 1 ? next : null, i, list.length));
 });
 
 const hubFile = join(root, 'results', 'index.html');

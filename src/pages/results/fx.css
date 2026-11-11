@@ -1,0 +1,274 @@
+/* Round 2 · shared page-local effects for Industries + Results (tone backdrop, velocity marquee, section indices,
+   HUD micro labels, WebGL photo slots, glare). Imported by industry.js / hub.js / results.js / case.js. */
+
+:root {
+  --tone: 0;
+  --tone-light: #ffffff;
+  --tone-dark: #0b1033;
+  --hud: rgba(206, 220, 255, 0.72);
+  --hud-dim: rgba(206, 220, 255, 0.38);
+  --hud-line: rgba(150, 175, 255, 0.18);
+  --mono: ui-monospace, 'SFMono-Regular', 'JetBrains Mono', Menlo, Consolas, monospace;
+}
+
+/* ---------- Section colour transitions: a fixed backdrop tweened light ↔ dark by ScrollTrigger ---------- */
+.tone-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: color-mix(in srgb, var(--tone-dark) calc(var(--tone) * 100%), var(--tone-light));
+  pointer-events: none;
+}
+
+.tone-fx body {
+  background: transparent;
+}
+
+/* light blocks keep an opaque background (zero specificity, so any section colour still wins) */
+:where(.tone-fx) :where(main > section:not([data-tone]), main > div:not([data-tone], .vmarq, .cs-chapter)) {
+  background-color: var(--bg-white-0);
+}
+
+/* ---------- Micro labels ---------- */
+.micro {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-sub-400);
+}
+
+.micro__n {
+  display: inline-grid;
+  place-items: center;
+  min-width: 28px;
+  height: 20px;
+  padding: 0 6px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 10px;
+}
+
+/* ---------- Section index ("§ 03 / 11 ——— HVAC") ---------- */
+.sec-index {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin: 0 0 4px;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.12em;
+  color: var(--text-sub-400);
+}
+
+.sec-index__n {
+  color: var(--primary-base);
+  font-weight: 600;
+}
+
+.sec-index__line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, currentColor, transparent);
+  opacity: 0.5;
+  transform-origin: 0 50%;
+}
+
+.sec-head--center .sec-index {
+  justify-content: center;
+}
+
+.sec-head--center .sec-index__line {
+  flex: 0 0 120px;
+}
+
+/* ---------- Scroll-velocity marquee ---------- */
+.vmarq {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(20px, 3vw, 40px) 0;
+  border-block: 1px solid var(--stroke-soft-200);
+  user-select: none;
+  contain: paint;
+}
+
+.vmarq__track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.vmarq__set {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.vmarq__w {
+  padding: 0 0.35em;
+  font-size: clamp(56px, 10vw, 156px);
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+  color: color-mix(in srgb, #ffffff calc(var(--tone) * 100%), var(--text-strong-950));
+}
+
+.vmarq__w--o {
+  color: transparent;
+  -webkit-text-stroke: 1.5px color-mix(in srgb, #7dd3fc calc(var(--tone) * 100%), var(--primary-base));
+}
+
+.vmarq__star {
+  display: inline-block;
+  font-size: clamp(28px, 4vw, 56px);
+  color: var(--secondary-base);
+}
+
+/* ---------- WebGL photo slots (cardfx.js) ---------- */
+.ph.has-cardfx {
+  background: #0b1033;
+}
+
+.ph > canvas.cardfx {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+
+/* ---------- Glare (cardfx.js tiltGlare) ---------- */
+[data-glare] {
+  position: relative;
+  transition: rotate 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.fx-glare {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: inherit;
+  background: radial-gradient(420px circle at var(--gx, 50%) var(--gy, 50%), rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0) 55%);
+  opacity: var(--go, 0);
+  mix-blend-mode: soft-light;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+/* ---------- HUD frame (heroes) ---------- */
+.hud {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--hud);
+  pointer-events: none;
+}
+
+.hud b {
+  font-weight: 600;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+
+.hud p {
+  position: absolute;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hud__grid {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(var(--hud-line) 1px, transparent 1px), linear-gradient(90deg, var(--hud-line) 1px, transparent 1px);
+  background-size: 96px 96px;
+  background-position: center center;
+  mask-image: radial-gradient(ellipse 70% 60% at 60% 50%, #000 0%, transparent 80%);
+  opacity: 0.55;
+}
+
+.hud__corner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--hud-dim);
+}
+
+.hud__corner--tl { top: 24px; left: 24px; border-width: 1px 0 0 1px; }
+.hud__corner--tr { top: 24px; right: 24px; border-width: 1px 1px 0 0; }
+.hud__corner--bl { bottom: 24px; left: 24px; border-width: 0 0 1px 1px; }
+.hud__corner--br { bottom: 24px; right: 24px; border-width: 0 1px 1px 0; }
+
+.hud__tl { top: 180px; left: 48px; }
+.hud__tr { top: 180px; right: 48px; gap: 20px; }
+.hud__bl { top: 50%; left: 30px; writing-mode: vertical-rl; rotate: 180deg; translate: 0 50%; }
+.hud__br { bottom: 40px; right: 48px; }
+
+.hud__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--secondary-base);
+  box-shadow: 0 0 0 4px rgba(255, 85, 39, 0.2);
+  animation: hud-pulse 1.8s ease-in-out infinite;
+}
+
+.hud__sep {
+  width: 32px;
+  height: 1px;
+  background: var(--hud-dim);
+}
+
+.hud__scroll {
+  position: relative;
+  width: 1px;
+  height: 28px;
+  overflow: hidden;
+  background: var(--hud-dim);
+}
+
+.hud__scroll span {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  animation: hud-scroll 1.8s cubic-bezier(0.7, 0, 0.3, 1) infinite;
+}
+
+@keyframes hud-pulse {
+  50% { box-shadow: 0 0 0 8px rgba(255, 85, 39, 0); }
+}
+
+@keyframes hud-scroll {
+  0% { transform: translateY(-100%); }
+  60%, 100% { transform: translateY(100%); }
+}
+
+@media (max-width: 900px) {
+  .hud .hud__tl { top: 112px; left: 20px; }
+  .hud .hud__tr,
+  .hud .hud__bl,
+  .hud .hud__br,
+  .hud .hud__corner { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hud__dot,
+  .hud__scroll span {
+    animation: none;
+  }
+}

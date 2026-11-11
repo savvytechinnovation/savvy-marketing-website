@@ -1,0 +1,218 @@
+/* Round 2 · Results hub: dark data-sculpture hero, tower labels, WebGL card photos with tilt + glare. */
+
+.rh-hero--r2 {
+  position: relative;
+  max-width: none;
+  min-height: 100vh;
+  min-height: 100svh;
+  margin: 0;
+  padding: 220px max(var(--sp-40), calc((100vw - 1296px) / 2)) 96px;
+  align-items: flex-end;
+  overflow: hidden;
+  color: #fff;
+  background:
+    radial-gradient(70% 70% at 70% 30%, rgba(7, 146, 194, 0.25), transparent 70%),
+    radial-gradient(50% 60% at 0% 100%, rgba(41, 59, 170, 0.5), transparent 70%),
+    var(--tone-dark);
+  isolation: isolate;
+}
+
+.rh-hero--r2.is-tower {
+  cursor: pointer;
+}
+
+.rh-hero--r2 .rh-hero__3d {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: auto;
+  height: auto;
+  pointer-events: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.rh-hero--r2 .hud,
+.rh-tags {
+  z-index: 1;
+}
+
+.rh-hero--r2 .rh-hero__text,
+.rh-hero--r2 .rh-legend {
+  position: relative;
+  z-index: 2;
+}
+
+.rh-hero--r2 .rh-hero__text {
+  max-width: 760px;
+}
+
+.rh-hero--r2 .rh-hero__title {
+  font-size: clamp(42px, 5.6vw, 80px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  color: #fff;
+  text-wrap: balance;
+}
+
+.rh-hero--r2 .rh-hero__sub {
+  max-width: 620px;
+  color: rgba(222, 230, 255, 0.78);
+}
+
+.rh-hero--r2 .eyebrow {
+  color: rgba(206, 220, 255, 0.6);
+}
+
+.rh-hero--r2 .rh-legend {
+  border: 1px solid rgba(150, 175, 255, 0.18);
+  background: rgba(11, 16, 51, 0.55);
+  backdrop-filter: blur(14px);
+}
+
+.rh-hero--r2 .rh-legend__list dt,
+.rh-hero--r2 .rh-legend__count {
+  color: #fff;
+}
+
+.rh-hero--r2 .rh-legend__list dd,
+.rh-hero--r2 .rh-legend .eyebrow {
+  color: rgba(222, 230, 255, 0.65);
+}
+
+.rh-hero--r2 .rh-legend__more {
+  color: #7dd3fc;
+}
+
+.rh-hero--r2 .rh-legend__more img {
+  filter: invert(1);
+}
+
+.rh-hero--r2 .hud__tl {
+  top: 176px;
+}
+
+.rh-hero--r2 .hud__tr {
+  top: 176px;
+}
+
+/* tower labels (positioned every frame by scene-sculpture.js) */
+.rh-tags {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.rh-tag {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  translate: -50% -100%;
+  padding: 6px 10px;
+  border: 1px solid rgba(150, 175, 255, 0.25);
+  border-radius: 10px;
+  background: rgba(11, 16, 51, 0.6);
+  backdrop-filter: blur(6px);
+  font-family: var(--mono);
+  font-size: 10px;
+  line-height: 14px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--hud);
+  opacity: 0;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.rh-tag b {
+  color: var(--secondary-base);
+}
+
+.rh-tag em {
+  display: none;
+  max-width: 260px;
+  font-family: var(--font);
+  font-size: 13px;
+  font-style: normal;
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: normal;
+  color: #fff;
+}
+
+.rh-tag.is-hover {
+  z-index: 2;
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(11, 16, 51, 0.92);
+}
+
+.rh-tag.is-hover em {
+  display: block;
+}
+
+.rh-hero:not(.has-sculpture) .rh-tags {
+  display: none;
+}
+
+/* ---------- Case cards: tilt (CSS rotate) + glare + WebGL photo ---------- */
+.rh-grid,
+.rh-empty__closest {
+  perspective: 1400px;
+}
+
+.case-card {
+  transform-style: preserve-3d;
+}
+
+.case-card__photo.has-cardfx::after {
+  display: none;
+}
+
+.featured__photo.has-cardfx {
+  box-shadow: 0 40px 80px -40px rgba(20, 26, 64, 0.6);
+}
+
+.sec-index--center {
+  justify-content: center;
+  max-width: 420px;
+  margin-inline: auto;
+}
+
+.sec-index--center .sec-index__line {
+  flex: 0 0 80px;
+}
+
+.page-results .vmarq {
+  margin-top: 64px;
+}
+
+@media (max-width: 900px) {
+  .rh-hero--r2 {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-end;
+    padding: 150px var(--sp-6) var(--sp-12);
+  }
+  .rh-hero--r2 .rh-legend {
+    flex: none;
+  }
+  .rh-hero--r2::after {
+    content: '';
+    position: absolute;
+    inset: 35% 0 0;
+    z-index: 1;
+    background: linear-gradient(180deg, transparent, rgba(11, 16, 51, 0.85) 45%);
+    pointer-events: none;
+  }
+  .rh-hero--r2 .hud .hud__tl {
+    top: 108px;
+  }
+  .rh-tag {
+    font-size: 9px;
+    padding: 4px 7px;
+  }
+}

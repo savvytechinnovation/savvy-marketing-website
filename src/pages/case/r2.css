@@ -1,0 +1,427 @@
+/* Round 2 · Case study pages: cinematic full-bleed hero, scroll-driven 3D theatre, giant metric values,
+   chapter HUD. Loaded after results.css + case.css. */
+
+/* ---------- Hero ---------- */
+.cs-hero--r2 {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  justify-content: flex-end;
+  padding-top: 200px;
+  padding-bottom: 72px;
+  overflow: hidden;
+  background:
+    radial-gradient(70% 70% at 75% 35%, rgba(7, 146, 194, 0.25), transparent 70%),
+    radial-gradient(50% 60% at 0% 100%, rgba(41, 59, 170, 0.5), transparent 70%),
+    var(--tone-dark);
+  isolation: isolate;
+}
+
+.cs-hero--r2 .cs-hero__photo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  height: auto;
+  border-radius: 0;
+  background: none;
+}
+
+.cs-hero--r2 .hud {
+  z-index: 1;
+}
+
+.cs-hero--r2 .cs-crumbs,
+.cs-hero--r2 .cs-hero__row {
+  position: relative;
+  z-index: 2;
+}
+
+.cs-hero--r2 .cs-hero__row {
+  align-items: flex-end;
+}
+
+.cs-hero--r2 .cs-hero__text {
+  max-width: 760px;
+}
+
+.cs-hero__index {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--hud);
+}
+
+.cs-hero__index-n {
+  color: var(--secondary-base);
+  font-weight: 600;
+}
+
+.cs-hero__index-line {
+  flex: 0 0 64px;
+  height: 1px;
+  background: var(--hud-dim);
+}
+
+.cs-hero--r2 .cs-hero__kicker {
+  font-size: clamp(56px, 9vw, 132px);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(222, 230, 255, 0.85);
+}
+
+.cs-hero--r2 .cs-hero__title {
+  font-size: clamp(28px, 3.4vw, 46px);
+  line-height: 1.1;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.cs-hero--r2 .cs-hero__intro {
+  max-width: 560px;
+  color: rgba(222, 230, 255, 0.78);
+}
+
+.cs-hero--r2 .cs-hero__media {
+  flex: 0 0 min(340px, 34%);
+  gap: var(--sp-4);
+  padding: var(--sp-5);
+  border: 1px solid rgba(150, 175, 255, 0.18);
+  border-radius: var(--r-20);
+  background: rgba(11, 16, 51, 0.55);
+  backdrop-filter: blur(14px);
+}
+
+.cs-hero__facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-3) var(--sp-4);
+  margin: 0;
+  padding-top: var(--sp-4);
+  border-top: 1px solid rgba(150, 175, 255, 0.18);
+}
+
+.cs-hero__facts dt {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--hud-dim);
+}
+
+.cs-hero__facts dd {
+  margin: 2px 0 0;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+}
+
+/* ---------- Section heads: oversized outlined chapter numbers ---------- */
+.cs-section__num {
+  font-size: clamp(40px, 4.4vw, 64px);
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: transparent;
+  -webkit-text-stroke: 1.2px var(--primary-base);
+}
+
+/* ---------- Theatre ---------- */
+.cs-theatre {
+  position: relative;
+}
+
+.cs-theatre__stage {
+  position: relative;
+  height: min(72vh, 600px);
+  overflow: hidden;
+  border-radius: var(--r-24);
+  background:
+    radial-gradient(70% 80% at 50% 110%, rgba(7, 146, 194, 0.32), transparent 70%),
+    var(--tone-dark);
+  color: #fff;
+}
+
+.cs-theatre__3d {
+  position: absolute;
+  inset: 0;
+}
+
+.cs-theatre__top {
+  position: absolute;
+  top: 20px;
+  left: 24px;
+  right: 24px;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.cs-theatre__state {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.cs-theatre__name {
+  color: var(--hud-dim);
+  transition: color 0.3s;
+}
+
+.cs-theatre__name.is-on {
+  color: #fff;
+}
+
+.cs-theatre__track {
+  position: relative;
+  width: 120px;
+  height: 2px;
+  background: var(--hud-line);
+}
+
+.cs-theatre__track span {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--primary-base), var(--secondary-base));
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+
+.cs-theatre__title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(222, 230, 255, 0.8);
+}
+
+.cs-theatre__badge {
+  margin-left: 8px;
+  padding: 2px 8px;
+  border: 1px solid rgba(255, 176, 32, 0.5);
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #ffb020;
+}
+
+.cs-theatre__vals {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 44px;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  pointer-events: none;
+}
+
+.cs-theatre__vals li {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--hud-dim);
+}
+
+.cs-theatre__vals li span {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cs-theatre__vals b {
+  font-family: var(--font);
+  font-size: clamp(16px, 1.8vw, 24px);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+
+.cs-theatre__hint {
+  position: absolute;
+  bottom: 14px;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--hud-dim);
+}
+
+/* ---------- Giant metric values ---------- */
+.metric__values {
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+
+.metric__before,
+.metric__after {
+  font-size: clamp(36px, 4.6vw, 64px);
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.metric__before {
+  color: transparent;
+  -webkit-text-stroke: 1.2px var(--text-sub-400);
+}
+
+.metric__after {
+  background: linear-gradient(120deg, var(--primary-base), var(--primary-dark) 60%, var(--secondary-base));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---------- Chapter HUD ---------- */
+.cs-chapter {
+  position: fixed;
+  left: 24px;
+  bottom: 24px;
+  z-index: 15;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 16px 10px 12px;
+  border: 1px solid var(--stroke-soft-200);
+  border-radius: var(--r-full);
+  background: color-mix(in srgb, var(--bg-white-0) 82%, transparent);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 16px 40px -24px rgba(20, 26, 64, 0.5);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0;
+  translate: 0 16px;
+  transition: opacity 0.4s, translate 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  pointer-events: none;
+}
+
+.cs-chapter.is-on {
+  opacity: 1;
+  translate: 0 0;
+}
+
+.cs-chapter__n {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--bg-strong-800);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.cs-chapter__meta {
+  display: flex;
+  gap: 6px;
+  color: var(--text-strong-950);
+}
+
+.cs-chapter__of {
+  color: var(--text-sub-400);
+}
+
+.cs-chapter__bars {
+  display: flex;
+  gap: 4px;
+}
+
+.cs-chapter__bars > span {
+  position: relative;
+  width: 22px;
+  height: 3px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--bg-soft-200);
+}
+
+.cs-chapter__bars > span > span {
+  position: absolute;
+  inset: 0;
+  background: var(--primary-base);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+
+.page-case .vmarq {
+  margin-top: 64px;
+}
+
+@media (max-width: 900px) {
+  .cs-hero--r2 {
+    padding-top: 150px;
+    padding-bottom: var(--sp-12);
+  }
+  .cs-hero--r2::after {
+    content: '';
+    position: absolute;
+    inset: 30% 0 0;
+    z-index: 1;
+    background: linear-gradient(180deg, transparent, rgba(11, 16, 51, 0.88) 40%);
+    pointer-events: none;
+  }
+  .cs-hero--r2 .cs-hero__row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .cs-hero--r2 .cs-hero__media {
+    flex: none;
+  }
+  .cs-theatre__stage {
+    height: 420px;
+  }
+  .cs-theatre__vals b {
+    font-size: 14px;
+  }
+  .cs-theatre__vals li {
+    font-size: 9px;
+  }
+  .cs-chapter {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-chapter {
+    transition: none;
+  }
+}

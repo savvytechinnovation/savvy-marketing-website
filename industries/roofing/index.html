@@ -7,15 +7,29 @@
     <meta name="description" content="A growth system for established roofing companies: respond in the first 72 hours after a storm, earn trust on every claim, and follow every roof from first call to paid invoice." />
     <meta property="og:title" content="Roofing marketing — from storm season to signed roofs" />
     <meta property="og:description" content="A growth system for established roofing companies: respond in the first 72 hours after a storm, earn trust on every claim, and follow every roof from first call to paid invoice." />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Industries","item":"https://savvymarketingpartners.com/industries/"},{"@type":"ListItem","position":2,"name":"Roofing","item":"https://savvymarketingpartners.com/industries/roofing/"}]}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","name":"Roofing marketing","serviceType":"Marketing growth system","description":"A growth system for established roofing companies: respond in the first 72 hours after a storm, earn trust on every claim, and follow every roof from first call to paid invoice.","provider":{"@type":"Organization","name":"Savvy Marketing Partners","url":"https://savvymarketingpartners.com"},"url":"https://savvymarketingpartners.com/industries/roofing/"}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Do you handle insurance claims for our customers?","acceptedAnswer":{"@type":"Answer","text":"No. We help you explain the process to homeowners clearly, with pages, emails and checklists your team uses on every claim."}},{"@type":"Question","name":"Can you help us win commercial bids?","acceptedAnswer":{"@type":"Answer","text":"Yes. We help you reach property managers and HOAs, present references and maintenance programs, and follow up during approvals."}},{"@type":"Question","name":"What happens between storms?","acceptedAnswer":{"@type":"Answer","text":"Planned re-roofs, inspections and maintenance programs keep crews busy; we shift spend to them when the weather is quiet."}},{"@type":"Question","name":"How do you measure a 90-day sales cycle?","acceptedAnswer":{"@type":"Answer","text":"We track every roof from first touch to paid invoice, so a lead from March still gets credit when it signs in June."}}]}</script>
   </head>
   <body class="page-industry page-industry--roofing">
     <!-- @include header -->
 
     <main id="main">
 
-      <!-- 01 · Hero -->
-      <section class="ind-hero" aria-labelledby="roofing-hero-title">
-        <div class="ind-hero__row">
+      <!-- 01 · Hero: full-bleed WebGL stage (sticky) + two acts: the pitch, then the live model -->
+      <section class="ind-hero ind-hero--r2" data-tone="dark" data-hero aria-labelledby="roofing-hero-title">
+        <div class="ind-hero__stage">
+          <div class="ind-hero__3d" data-ind-scene="roofing" aria-hidden="true"></div>
+          <div class="hud" aria-hidden="true">
+            <span class="hud__grid"></span>
+            <span class="hud__corner hud__corner--tl"></span><span class="hud__corner hud__corner--tr"></span><span class="hud__corner hud__corner--bl"></span><span class="hud__corner hud__corner--br"></span>
+            <p class="hud__tl"><span class="hud__dot"></span>IND/04 — ROOFING<span class="hud__sep"></span>STORM-DRIVEN</p>
+            <p class="hud__tr"><span>WIND <b data-hud-num="38">38</b> MPH</span><span>HAIL <b data-hud-num="1.2">1.2</b>&quot;</span><span>ALERT <b data-hud-num="3">3</b> ZIP</span></p>
+            <p class="hud__bl"><span class="hud__scroll"><span></span></span>SCROLL · ACT <b data-hud-act>01</b>/02</p>
+            <p class="hud__br">X <b data-hud-x>+0.000</b> Y <b data-hud-y>+0.000</b> · WEEKS, WITH INSURERS</p>
+          </div>
+        </div>
+        <div class="ind-hero__act ind-hero__act--1">
           <div class="ind-hero__copy">
             <nav class="breadcrumbs" aria-label="Breadcrumb" data-hero-item><ol role="list"><li><a href="/industries/">Industries</a></li><li aria-current="page">Roofing</li></ol></nav>
             <p class="eyebrow" data-hero-item>[01] Roofing growth</p>
@@ -27,8 +41,17 @@
             </div>
             <p class="ind-hero__note t-p-sm c-muted" data-hero-item><img src="/ds/icons/industry-roofing.svg" alt="" width="24" height="24" /> Industry: Roofing is pre-filled when you start a partnership conversation.</p>
           </div>
+          <nav class="ind-switch" aria-label="Other industries" data-hero-item>
+            <a class="ind-switch__a" href="/industries/hvac/" data-cursor="link"><span class="ind-switch__n">01</span>HVAC</a><a class="ind-switch__a" href="/industries/plumbing/" data-cursor="link"><span class="ind-switch__n">02</span>Plumbing</a><a class="ind-switch__a" href="/industries/electrical/" data-cursor="link"><span class="ind-switch__n">03</span>Electrical</a><a class="ind-switch__a is-current" href="/industries/roofing/" aria-current="page" data-cursor="link"><span class="ind-switch__n">04</span>Roofing</a><a class="ind-switch__a" href="/industries/cleaning/" data-cursor="link"><span class="ind-switch__n">05</span>Cleaning</a>
+          </nav>
+        </div>
+        <div class="ind-hero__act ind-hero__act--2">
+          <div class="ind-hero__deck">
+            <p class="micro" aria-hidden="true"><span class="micro__n">02</span> Live model · Roofing</p>
+            <p class="ind-hero__deck-title">The money is in being trusted after a storm and on planned replacements.</p>
+            <p class="t-p-md ind-hero__deck-text">A storm alert, the way it lands: rows in sequence, the work it creates.</p>
+          </div>
           <div class="ind-hero__visual" data-hero-visual>
-            <div class="ind-hero__3d" data-3d="field" aria-hidden="true"></div>
             <div class="hw hw--alert card" data-alert data-tilt-card>
                 <p class="t-label-xs hw__alert-label"><span class="hw__pulse hw__pulse--accent" aria-hidden="true"></span>STORM ALERT · EXAMPLE</p>
                 <ol class="hw__alert-rows" role="list">
@@ -46,10 +69,16 @@
         </div>
       </section>
 
+      <!-- Scroll-velocity marquee -->
+      <div class="vmarq" aria-hidden="true" data-vmarq>
+        <div class="vmarq__track"><div class="vmarq__set"><span class="vmarq__w">Roofing</span><span class="vmarq__star">✳</span><span class="vmarq__w vmarq__w--o">Storm response and trust</span><span class="vmarq__star">✳</span><span class="vmarq__w">Storm-driven</span><span class="vmarq__star">✳</span><span class="vmarq__w vmarq__w--o">Decides: Weeks, with insurers</span><span class="vmarq__star">✳</span></div><div class="vmarq__set"><span class="vmarq__w">Roofing</span><span class="vmarq__star">✳</span><span class="vmarq__w vmarq__w--o">Storm response and trust</span><span class="vmarq__star">✳</span><span class="vmarq__w">Storm-driven</span><span class="vmarq__star">✳</span><span class="vmarq__w vmarq__w--o">Decides: Weeks, with insurers</span><span class="vmarq__star">✳</span></div></div>
+      </div>
+
       <!-- 02 · At a glance -->
       <section class="sec sec--weak ind-glance" aria-labelledby="roofing-glance-title">
         <div class="sec__inner">
           <div class="sec-head">
+            <p class="sec-index" aria-hidden="true"><span class="sec-index__n">01</span><span class="sec-index__t">/ 10</span><span class="sec-index__line"></span><span class="sec-index__k">ROOFING</span></p>
             <p class="eyebrow" data-reveal>[02] At a glance</p>
             <h2 class="t-h3" id="roofing-glance-title" data-split>Two kinds of roofing customer. Two clocks.</h2>
             <p class="t-p-lg c-sub" data-reveal>Homeowners decide in days, often after a storm. Commercial buyers decide in months, with approvals.</p>
@@ -73,6 +102,7 @@
       <section class="sec ind-seg" id="residential" aria-labelledby="roofing-residential-title">
         <div class="sec__inner">
           <div class="sec-head">
+            <p class="sec-index" aria-hidden="true"><span class="sec-index__n">02</span><span class="sec-index__t">/ 10</span><span class="sec-index__line"></span><span class="sec-index__k">ROOFING</span></p>
             <p class="eyebrow" data-reveal>[03] Residential</p>
             <h2 class="t-h3" id="roofing-residential-title" data-split>Homeowners hire the roofer they trust first.</h2>
             <p class="t-p-lg c-sub" data-reveal>Re-roofs, storm repairs and insurance claims are big, stressful decisions. Trust is built before the inspection and confirmed after it.</p>
@@ -108,6 +138,7 @@
       <section class="sec ind-seg sec--weak" id="commercial" aria-labelledby="roofing-commercial-title">
         <div class="sec__inner">
           <div class="sec-head">
+            <p class="sec-index" aria-hidden="true"><span class="sec-index__n">03</span><span class="sec-index__t">/ 10</span><span class="sec-index__line"></span><span class="sec-index__k">ROOFING</span></p>
             <p class="eyebrow" data-reveal>[04] Commercial</p>
             <h2 class="t-h3" id="roofing-commercial-title" data-split>Commercial roofs are won over months, not calls.</h2>
             <p class="t-p-lg c-sub" data-reveal>Property managers, HOAs and facility teams buy through bids, approvals and references. We keep you in the process at every step.</p>
@@ -129,9 +160,10 @@
       </section>
 
       <!-- Exclusive module -->
-      <section class="sec sec--dark-soft ind-ex" id="only-in-roofing" aria-labelledby="roofing-ex-title">
+      <section class="sec sec--dark-soft ind-ex" data-tone="dark" id="only-in-roofing" aria-labelledby="roofing-ex-title">
         <div class="sec__inner">
           <div class="sec-head">
+            <p class="sec-index" aria-hidden="true"><span class="sec-index__n">04</span><span class="sec-index__t">/ 10</span><span class="sec-index__line"></span><span class="sec-index__k">ROOFING</span></p>
             <p class="eyebrow" data-reveal>[05] Only in roofing · Storm season</p>
             <h2 class="t-h3" id="roofing-ex-title" data-split>The first 72 hours after a storm decide the season.</h2>
             <p class="t-p-lg c-sub" data-reveal>Insurance-driven demand moves fast. The roofers who are visible, bookable and clear about claims in the first days get most of the inspections.</p>
@@ -159,17 +191,20 @@
       <section class="sec sec--weak ind-cal" id="demand" aria-labelledby="roofing-cal-title">
         <div class="sec__inner">
           <div class="sec-head">
+            <p class="sec-index" aria-hidden="true"><span class="sec-index__n">05</span><span class="sec-index__t">/ 10</span><span class="sec-index__line"></span><span class="sec-index__k">ROOFING</span></p>
             <p class="eyebrow" data-reveal>[06] Demand calendar</p>
             <h2 class="t-h3" id="roofing-cal-title" data-split>Storm spikes on top of a re-roof season.</h2>
             <p class="t-p-lg c-sub" data-reveal>Planned re-roofs build from spring to fall. Hail and wind add spikes on top, and hurricanes in coastal markets.</p>
           </div>
-          <div class="cal" data-calendar data-values="[[6,8,26,36,42,42,40,38,36,30,20,6],[0,2,10,34,46,36,16,26,36,26,6,0]]" data-names="[&quot;Re-roof season (planned)&quot;,&quot;Storm-driven (hail, wind, hurricanes)&quot;]" data-reveal>
+          <div class="cal" data-calendar data-values="[[6,8,26,36,42,42,40,38,36,30,20,6],[0,2,10,34,46,36,16,26,36,26,6,0]]" data-names="[&quot;Re-roof season (planned)&quot;,&quot;Storm-driven (hail, wind, hurricanes)&quot;]">
             <div class="cal__legend" role="group" aria-label="Show a demand type">
               <button type="button" class="cal__key" data-series="0" aria-pressed="false"><span class="cal__swatch cal__swatch--0" aria-hidden="true"></span>Re-roof season (planned)</button>
               <button type="button" class="cal__key" data-series="1" aria-pressed="false"><span class="cal__swatch cal__swatch--1" aria-hidden="true"></span>Storm-driven (hail, wind, hurricanes)</button>
             </div>
             <div class="cal__plot">
               
+              <div class="cal__3d" data-cal3d aria-hidden="true"></div>
+              <p class="cal__hud" aria-hidden="true"><span>DEMAND · 12 MONTHS</span><span>MONTH <b data-cal-hud>--</b>/12</span><span class="cal__hud-hint">Scroll, hover or use the month buttons</span></p>
               <svg class="cal__svg" viewBox="0 0 1200 300" preserveAspectRatio="none" aria-hidden="true" focusable="false"><g class="cal__col" data-month="0"><rect class="cal__bar cal__bar--0" data-series="0" x="22.0" y="281.1" width="56.0" height="18.9" rx="6" /><rect class="cal__hit" x="0" y="0" width="100" height="300" /></g><g class="cal__col" data-month="1"><rect class="cal__bar cal__bar--0" data-series="0" x="122.0" y="274.7" width="56.0" height="25.3" rx="6" /><rect class="cal__bar cal__bar--1" data-series="1" x="122.0" y="268.4" width="56.0" height="6.3" rx="6" /><rect class="cal__hit" x="100" y="0" width="100" height="300" /></g><g class="cal__col" data-month="2"><rect class="cal__bar cal__bar--0" data-series="0" x="222.0" y="217.9" width="56.0" height="82.1" rx="6" /><rect class="cal__bar cal__bar--1" data-series="1" x="222.0" y="186.4" width="56.0" height="31.6" rx="6" /><rect class="cal__hit" x="200" y="0" width="100" height="300" /></g><g class="cal__col" data-month="3"><rect class="cal__bar cal__bar--0" data-series="0" x="322.0" y="186.4" width="56.0" height="113.6" rx="6" /><rect class="cal__bar cal__bar--1" data-series="1" x="322.0" y="79.0" width="56.0" height="107.3" rx="6" /><rect class="cal__hit" x="300" y="0" width="100" height="300" /></g><g class="cal__col" data-month="4"><rect class="cal__bar cal__bar--0" data-series="0" x="422.0" y="167.4" width="56.0" height="132.6" rx="6" /><rect class="cal__bar cal__bar--1" data-series="1" x="422.0" y="22.2" width="56.0" height="145.2" rx="6" /><rect class="cal__hit" x="400" y="0" width="100" height="300" /></g><g class="cal__col" data-month="5"><rect class="cal__bar cal__bar--0" data-series="0" x="522.0" y="167.4" width="56.0" height="132.6" rx="6" /><rect class="cal__bar cal__bar--1" data-series="1" x="522.0" y="53.8" width="56.0" height="113.6" rx="6" /><rect class="cal__hit" x="500" y="0" width="100" height="300" /></g><g class="cal__col" data-month="6"><rect class="cal__bar cal__bar--0" data-series="0" x="622.0" y="173.7" width="56.0" height="126.3" rx="6" /><rect class="cal__bar cal__bar--1" data-series="1" x="622.0" y="123.2" width="56.0" height="50.5" rx="6" /><rect class="cal__hit" x="600" y="0" width="100" height="300" /></g><g class="cal__col" data-month="7"><rect class="cal__bar cal__bar--0" data-series="0" x="722.0" y="180.1" width="56.0" height="119.9" rx="6" /><rect class="cal__bar cal__bar--1" data-series="1" x="722.0" y="98.0" width="56.0" height="82.1" rx="6" /><rect class="cal__hit" x="700" y="0" width="100" height="300" /></g><g class="cal__col" data-month="8"><rect class="cal__bar cal__bar--0" data-series="0" x="822.0" y="186.4" width="56.0" height="113.6" rx="6" /><rect class="cal__bar cal__bar--1" data-series="1" x="822.0" y="72.7" width="56.0" height="113.6" rx="6" /><rect class="cal__hit" x="800" y="0" width="100" height="300" /></g><g class="cal__col" data-month="9"><rect class="cal__bar cal__bar--0" data-series="0" x="922.0" y="205.3" width="56.0" height="94.7" rx="6" /><rect class="cal__bar cal__bar--1" data-series="1" x="922.0" y="123.2" width="56.0" height="82.1" rx="6" /><rect class="cal__hit" x="900" y="0" width="100" height="300" /></g><g class="cal__col" data-month="10"><rect class="cal__bar cal__bar--0" data-series="0" x="1022.0" y="236.9" width="56.0" height="63.1" rx="6" /><rect class="cal__bar cal__bar--1" data-series="1" x="1022.0" y="217.9" width="56.0" height="18.9" rx="6" /><rect class="cal__hit" x="1000" y="0" width="100" height="300" /></g><g class="cal__col" data-month="11"><rect class="cal__bar cal__bar--0" data-series="0" x="1122.0" y="281.1" width="56.0" height="18.9" rx="6" /><rect class="cal__hit" x="1100" y="0" width="100" height="300" /></g></svg>
               <div class="cal__tip" role="status" aria-live="polite" data-cal-tip hidden></div>
             </div>
@@ -191,6 +226,7 @@
       <section class="sec ind-sys" aria-labelledby="roofing-sys-title">
         <div class="sec__inner">
           <div class="sec-head">
+            <p class="sec-index" aria-hidden="true"><span class="sec-index__n">06</span><span class="sec-index__t">/ 10</span><span class="sec-index__line"></span><span class="sec-index__k">ROOFING</span></p>
             <p class="eyebrow" data-reveal>[07] How the Growth System applies</p>
             <h2 class="t-h3" id="roofing-sys-title" data-split>We follow every roof from first call to revenue.</h2>
             <p class="t-p-lg c-sub" data-reveal>A roof can take 3 days or 90 to sign. We track every stage, so you see where roofs stall and what each one is worth.</p>
@@ -217,24 +253,26 @@
       <section class="sec sec--weak ind-kpis" id="numbers" aria-labelledby="roofing-kpi-title">
         <div class="sec__inner">
           <div class="sec-head">
+            <p class="sec-index" aria-hidden="true"><span class="sec-index__n">07</span><span class="sec-index__t">/ 10</span><span class="sec-index__line"></span><span class="sec-index__k">ROOFING</span></p>
             <p class="eyebrow" data-reveal>[08] The numbers we report</p>
             <h2 class="t-h3" id="roofing-kpi-title" data-split>Five numbers that connect storms to revenue.</h2>
           </div>
           <ul class="kpis kpis--5" role="list" data-reveal-stagger="0.07">
-            <li class="kpi card" data-reveal data-tilt-card><p class="kpi__v">[ ] / mo</p><p class="t-label-lg">Inspections booked</p><p class="t-p-sm c-sub">From calls, forms and online booking</p></li>
-            <li class="kpi card" data-reveal data-tilt-card><p class="kpi__v">[ ]</p><p class="t-label-lg">Proposals sent</p><p class="t-p-sm c-sub">Per inspection, by crew and source</p></li>
-            <li class="kpi card" data-reveal data-tilt-card><p class="kpi__v">[ ]%</p><p class="t-label-lg">Close rate</p><p class="t-p-sm c-sub">Signed ÷ proposals, by lead source</p></li>
-            <li class="kpi card" data-reveal data-tilt-card><p class="kpi__v">$[ ]</p><p class="t-label-lg">Revenue per roof</p><p class="t-p-sm c-sub">Residential and commercial apart</p></li>
-            <li class="kpi card" data-reveal data-tilt-card><p class="kpi__v">[ ] days</p><p class="t-label-lg">Time to close</p><p class="t-p-sm c-sub">From first touch to signed</p></li>
+            <li class="kpi card" data-reveal data-tilt-card><p class="kpi__v" data-scramble>[ ] / mo</p><p class="t-label-lg">Inspections booked</p><p class="t-p-sm c-sub">From calls, forms and online booking</p></li>
+            <li class="kpi card" data-reveal data-tilt-card><p class="kpi__v" data-scramble>[ ]</p><p class="t-label-lg">Proposals sent</p><p class="t-p-sm c-sub">Per inspection, by crew and source</p></li>
+            <li class="kpi card" data-reveal data-tilt-card><p class="kpi__v" data-scramble>[ ]%</p><p class="t-label-lg">Close rate</p><p class="t-p-sm c-sub">Signed ÷ proposals, by lead source</p></li>
+            <li class="kpi card" data-reveal data-tilt-card><p class="kpi__v" data-scramble>$[ ]</p><p class="t-label-lg">Revenue per roof</p><p class="t-p-sm c-sub">Residential and commercial apart</p></li>
+            <li class="kpi card" data-reveal data-tilt-card><p class="kpi__v" data-scramble>[ ] days</p><p class="t-label-lg">Time to close</p><p class="t-p-sm c-sub">From first touch to signed</p></li>
           </ul>
           
         </div>
       </section>
 
       <!-- Proof -->
-      <section class="ind-proof" aria-labelledby="roofing-proof-title">
+      <section class="ind-proof" data-tone="dark" aria-labelledby="roofing-proof-title">
         <div class="ind-proof__inner">
           <div class="sec-head">
+            <p class="sec-index" aria-hidden="true"><span class="sec-index__n">08</span><span class="sec-index__t">/ 10</span><span class="sec-index__line"></span><span class="sec-index__k">ROOFING</span></p>
             <p class="eyebrow ind-proof__eyebrow" data-reveal>[09] Roofing proof</p>
             <h2 class="t-h2" id="roofing-proof-title" data-split>Storm seasons, measured.</h2>
           </div>
@@ -258,6 +296,7 @@
       <section class="sec ind-faq" id="faq" aria-labelledby="roofing-faq-title">
         <div class="sec__inner ind-faq__row">
           <div class="sec-head ind-faq__head">
+            <p class="sec-index" aria-hidden="true"><span class="sec-index__n">09</span><span class="sec-index__t">/ 10</span><span class="sec-index__line"></span><span class="sec-index__k">ROOFING</span></p>
             <p class="eyebrow" data-reveal>[10] Roofing FAQ</p>
             <h2 class="t-h3" id="roofing-faq-title" data-split>Questions roofing owners ask.</h2>
             
@@ -274,11 +313,12 @@
       <!-- Insights -->
       <section class="sec sec--weak ind-insights" aria-labelledby="roofing-ins-title">
         <div class="sec__inner">
-          <div class="sec-head sec-head--row"><div><p class="eyebrow" data-reveal>[11] Roofing insights</p><h2 class="t-h3" id="roofing-ins-title" data-split>Plan the next storm season.</h2></div><a class="link-arrow" href="/resources/">See all Roofing insights <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></a></div>
+          <div class="sec-head sec-head--row">
+            <p class="sec-index" aria-hidden="true"><span class="sec-index__n">10</span><span class="sec-index__t">/ 10</span><span class="sec-index__line"></span><span class="sec-index__k">ROOFING</span></p><div><p class="eyebrow" data-reveal>[11] Roofing insights</p><h2 class="t-h3" id="roofing-ins-title" data-split>Plan the next storm season.</h2></div><a class="link-arrow" href="/resources/">See all Roofing insights <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></a></div>
           <ul class="insights" role="list" data-reveal-stagger="0.07">
-            <li data-reveal><a class="insight card" href="/resources/" data-tilt-card><span class="ph insight__media" aria-hidden="true"></span><span class="t-label-xs c-muted">GUIDE · 6 MIN</span><span class="t-label-xl">The 72-hour storm plan: what to prepare before hail season</span><span class="link-arrow">Read <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></span></a></li>
-            <li data-reveal><a class="insight card" href="/resources/" data-tilt-card><span class="ph insight__media" aria-hidden="true"></span><span class="t-label-xs c-muted">DATA · 4 MIN</span><span class="t-label-xl">Why most roofing proposals stall between day 3 and day 10</span><span class="link-arrow">Read <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></span></a></li>
-            <li data-reveal><a class="insight card" href="/resources/" data-tilt-card><span class="ph insight__media" aria-hidden="true"></span><span class="t-label-xs c-muted">COMMERCIAL · 5 MIN</span><span class="t-label-xl">Maintenance programs: turning one commercial roof into many</span><span class="link-arrow">Read <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></span></a></li>
+            <li data-reveal><a class="insight card" href="/resources/" data-tilt-card data-fx-host data-cursor="view"><span class="ph insight__media" aria-hidden="true"></span><span class="t-label-xs c-muted">GUIDE · 6 MIN</span><span class="t-label-xl">The 72-hour storm plan: what to prepare before hail season</span><span class="link-arrow">Read <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></span></a></li>
+            <li data-reveal><a class="insight card" href="/resources/" data-tilt-card data-fx-host data-cursor="view"><span class="ph insight__media" aria-hidden="true"></span><span class="t-label-xs c-muted">DATA · 4 MIN</span><span class="t-label-xl">Why most roofing proposals stall between day 3 and day 10</span><span class="link-arrow">Read <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></span></a></li>
+            <li data-reveal><a class="insight card" href="/resources/" data-tilt-card data-fx-host data-cursor="view"><span class="ph insight__media" aria-hidden="true"></span><span class="t-label-xs c-muted">COMMERCIAL · 5 MIN</span><span class="t-label-xl">Maintenance programs: turning one commercial roof into many</span><span class="link-arrow">Read <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></span></a></li>
           </ul>
         </div>
       </section>

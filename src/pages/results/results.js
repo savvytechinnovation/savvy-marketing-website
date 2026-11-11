@@ -1,12 +1,15 @@
 // Results hub — Figma "Results Hub A" (filter-first grid). Filters live in the URL (?industry=hvac&type=commercial&stage=convert).
 import { initSite, gsap, ScrollTrigger, reduceMotion } from '../../ds/site.js';
-import { mount3D } from '../../ds/fx3d.js';
 import { Flip } from 'gsap/Flip';
 import { INDUSTRIES, TYPES, STAGES, sortedCases, industryOf, typeLabel, stageLabel } from '../../content/cases.js';
 import { featuredCase, caseCard, esc } from './render.js';
 import { $, $$, trackHeaderOffset, revealHeadings, magnetic, tilt } from './shared.js';
-import { mountGrowth3D } from './growth3d.js';
+import { mountSculpture, IND } from './scene-sculpture.js';
+import { cardFX, tiltGlare } from './cardfx.js';
+import { initTone, initVMarquee, initSecIndex } from '../industry/r2.js';
 import './results.css';
+import './fx.css';
+import './r2.css';
 
 gsap.registerPlugin(Flip);
 initSite();
@@ -40,7 +43,9 @@ const params = new URLSearchParams(location.search);
 const state = Object.fromEntries(KEYS.map((k) => [k, valid[k].includes(params.get(k)) ? params.get(k) : 'all']));
 let shown = PAGE;
 let featuredSlug = slot.querySelector('[data-case]')?.dataset.case;
-let featured3D = null;
+let sculpture = null;
+const caseOf = (el) => ALL.find((c) => c.slug === el.closest('[data-case]')?.dataset.case);
+const photoFX = (els) => cardFX(els, { colorOf: (el) => IND[caseOf(el)?.industry] || '#0792c2', seedOf: (el) => ALL.indexOf(caseOf(el)) + 2 });
 
 const matches = (s = state) =>
   ALL.filter((c) => (s.industry === 'all' || c.industry === s.industry) && (s.type === 'all' || c.types.includes(s.type)) && (s.stage === 'all' || c.stages.includes(s.stage)));
@@ -82,8 +87,6 @@ function setFeatured(c, animate) {
   if (c.slug === featuredSlug) return;
   featuredSlug = c.slug;
   const swap = () => {
-    featured3D?.destroy();
-    featured3D = null;
     slot.innerHTML = featuredCase(c);
     enhanceFeatured();
   };
@@ -96,7 +99,8 @@ function setFeatured(c, animate) {
 
 function enhanceFeatured() {
   const photo = $('.featured__photo', slot);
-  mount3D(photo, { scene: 'field', scrub: true }).then((api) => (featured3D = api));
+  photo.dataset.fxHost = '';
+  photoFX([photo]);
   tilt(photo, 4);
   magnetic($$('.btn', slot));
 }
@@ -127,8 +131,11 @@ function render({ animate = true } = {}) {
   featuredSection.hidden = !feat;
   setFeatured(feat, animate);
   empty.hidden = list.length > 0;
-  if (!list.length) empty.innerHTML = emptyState(state);
-  else empty.innerHTML = '';
+  if (!list.length) {
+    empty.innerHTML = emptyState(state);
+    photoFX($$('.case-card__photo', empty));
+  } else empty.innerHTML = '';
+  sculpture?.setVisible(new Set(list.map((c) => c.slug)));
 
   // counts, clear, load more
   const label = `Showing ${list.length} of ${ALL.length}`;
@@ -228,7 +235,31 @@ addEventListener('scroll', onScroll, { passive: true });
 // ---------------------------------------------------------------------------
 // Motion: 3D hero chart, card entrance, magnetic CTAs
 // ---------------------------------------------------------------------------
-mountGrowth3D($('[data-growth3d]'), { scrub: true });
+// Hero: 3D data sculpture — one tower per case (its own chart data), pointer-reactive field, click a tower to open it
+const hero = $('.rh-hero');
+mountSculpture($('[data-growth3d]'), {
+  cases: ALL.map((c) => ({ slug: c.slug, industry: c.industry, values: c.results.chart?.series.at(-1).values || [] })),
+  labels: ALL.map((c) => $(`.rh-tag[data-tag="${c.slug}"]`)),
+  onOpen: (c) => (location.href = `/results/${c.slug}/`),
+}).then((api) => {
+  sculpture = api;
+  if (!api) return;
+  hero.classList.add('has-sculpture');
+  api.setVisible(new Set(matches().map((c) => c.slug)));
+  if (!reduceMotion) ScrollTrigger.create({ trigger: hero, start: 'top top', end: 'bottom top', onUpdate: (self) => api.setScroll(self.progress) });
+});
+const hx = $('[data-hud-x]');
+const hy = $('[data-hud-y]');
+hero.addEventListener('pointermove', (e) => {
+  const f = (v) => `${v >= 0 ? '+' : '−'}${Math.abs(v).toFixed(3)}`;
+  hx.textContent = f((e.clientX / innerWidth) * 2 - 1);
+  hy.textContent = f(-((e.clientY / innerHeight) * 2 - 1));
+});
+initTone();
+initVMarquee();
+initSecIndex();
+photoFX($$('.case-card__photo', grid));
+cards.forEach((c) => tiltGlare(c, { max: 5 }));
 enhanceFeatured();
 magnetic($$('.rh-inside .btn, .rh-cta .btn'));
 

@@ -7,22 +7,43 @@
     <meta name="description" content="Growth partners for established service businesses, built industry by industry. HVAC, plumbing, electrical, roofing and cleaning each make money differently: pick yours and see how we grow it." />
     <meta property="og:title" content="Industries — HVAC, plumbing, electrical, roofing and cleaning" />
     <meta property="og:description" content="Growth partners for established service businesses, built industry by industry. HVAC, plumbing, electrical, roofing and cleaning each make money differently: pick yours and see how we grow it." />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"Industries we serve","itemListElement":[{"@type":"ListItem","position":1,"name":"HVAC","url":"https://savvymarketingpartners.com/industries/hvac/"},{"@type":"ListItem","position":2,"name":"Plumbing","url":"https://savvymarketingpartners.com/industries/plumbing/"},{"@type":"ListItem","position":3,"name":"Electrical","url":"https://savvymarketingpartners.com/industries/electrical/"},{"@type":"ListItem","position":4,"name":"Roofing","url":"https://savvymarketingpartners.com/industries/roofing/"},{"@type":"ListItem","position":5,"name":"Cleaning","url":"https://savvymarketingpartners.com/industries/cleaning/"}]}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What does “specialized by industry” actually mean?","acceptedAnswer":{"@type":"Answer","text":"Each industry gets its own messaging, calendar, sales process and KPIs. HVAC is planned around capacity, electrical around estimate follow-up, cleaning around retention."}},{"@type":"Question","name":"Do you work in my market?","acceptedAnswer":{"@type":"Answer","text":"[Answer from the team about the markets and regions we serve.]"}},{"@type":"Question","name":"Do you work with two competitors in the same area?","acceptedAnswer":{"@type":"Answer","text":"[Answer from the team about exclusivity by market.]"}},{"@type":"Question","name":"We do residential and commercial. Is that a problem?","acceptedAnswer":{"@type":"Answer","text":"No. Most of our partners do both. Each path gets its own plan and its own numbers, inside one Growth System."}},{"@type":"Question","name":"Do you only work with these five industries?","acceptedAnswer":{"@type":"Answer","text":"For now, yes. We only market industries we understand: HVAC, plumbing, electrical, roofing and cleaning."}},{"@type":"Question","name":"What do you need from us to get started?","acceptedAnswer":{"@type":"Answer","text":"A short assessment, access to your current numbers (calls, CRM, ads) and a conversation with the owner about goals and capacity."}}]}</script>
   </head>
   <body class="page-industry page-industries-hub">
     <!-- @include header -->
 
     <main id="main">
 
-      <!-- 01 · Hero + industry selector -->
-      <section class="ind-hero hub-hero" aria-labelledby="hub-hero-title">
-        <div class="ind-hero__row">
+      <!-- 01 · Hero: WebGL orbit of the five industries (click an emblem) + the accessible picker (tabs) -->
+      <section class="ind-hero ind-hero--r2 hub-hero" data-tone="dark" data-hero aria-labelledby="hub-hero-title">
+        <div class="ind-hero__stage">
+          <div class="ind-hero__3d" data-ind-scene="hub" data-cursor="view" aria-hidden="true"></div>
+          <div class="hud" aria-hidden="true">
+            <span class="hud__grid"></span>
+            <span class="hud__corner hud__corner--tl"></span><span class="hud__corner hud__corner--tr"></span><span class="hud__corner hud__corner--bl"></span><span class="hud__corner hud__corner--br"></span>
+            <p class="hud__tl"><span class="hud__dot"></span>INDUSTRIES — 05 TRADES<span class="hud__sep"></span>ONE GROWTH SYSTEM</p>
+            <p class="hud__tr"><span>ORBIT <b data-hud-num="72">72</b>°</span><span>SELECTED <b data-orbit-n>01</b>/05</span></p>
+            <p class="hud__bl"><span class="hud__scroll"><span></span></span>SCROLL · ACT <b data-hud-act>01</b>/02</p>
+            <p class="hud__br">X <b data-hud-x>+0.000</b> Y <b data-hud-y>+0.000</b> · CLICK AN EMBLEM</p>
+            <p class="orbit-label"><span class="orbit-label__n" data-orbit-num>01</span><span class="orbit-label__name" data-orbit-name>HVAC</span><span class="orbit-label__tag" data-orbit-tag>Busy all year</span></p>
+          </div>
+        </div>
+        <div class="ind-hero__act ind-hero__act--1">
           <div class="ind-hero__copy">
             <p class="eyebrow" data-hero-item>Industries</p>
             <h1 class="t-h1" id="hub-hero-title" data-split data-split-hero>Growth partners for established service businesses, built industry by industry.</h1>
             <p class="t-p-lg c-sub" data-hero-item>HVAC, plumbing, electrical, roofing and cleaning each make money differently. Pick yours and see how we grow it.</p>
           </div>
+          <ol class="orbit-legend" aria-hidden="true" data-hero-item><li data-legend="0" class="is-on"><span>01</span>HVAC</li><li data-legend="1"><span>02</span>Plumbing</li><li data-legend="2"><span>03</span>Electrical</li><li data-legend="3"><span>04</span>Roofing</li><li data-legend="4"><span>05</span>Cleaning</li></ol>
+        </div>
+        <div class="ind-hero__act ind-hero__act--2">
+          <div class="ind-hero__deck">
+            <p class="micro" aria-hidden="true"><span class="micro__n">02</span> Pick your industry</p>
+            <p class="ind-hero__deck-title">Same system, different leverage.</p>
+            <p class="t-p-md ind-hero__deck-text">Choose a trade in the orbit or the tabs, then residential or commercial: the card shows where the money is.</p>
+          </div>
           <div class="ind-hero__visual">
-            <div class="ind-hero__3d" data-3d="field" aria-hidden="true"></div>
             <div class="picker card" data-picker data-tilt-card>
               <div class="picker__inds" role="tablist" aria-label="Pick your industry">
                 <button type="button" class="picker__ind" role="tab" id="pick-hvac" aria-controls="pick-panel" aria-selected="true" tabindex="0" data-i="0"><img src="/ds/icons/industry-hvac.svg" alt="" width="33" height="32" /><span>HVAC</span></button><button type="button" class="picker__ind" role="tab" id="pick-plumbing" aria-controls="pick-panel" aria-selected="false" tabindex="-1" data-i="1"><img src="/ds/icons/industry-plumbing.svg" alt="" width="33" height="32" /><span>Plumbing</span></button><button type="button" class="picker__ind" role="tab" id="pick-electrical" aria-controls="pick-panel" aria-selected="false" tabindex="-1" data-i="2"><img src="/ds/icons/industry-electrical.svg" alt="" width="33" height="32" /><span>Electrical</span></button><button type="button" class="picker__ind" role="tab" id="pick-roofing" aria-controls="pick-panel" aria-selected="false" tabindex="-1" data-i="3"><img src="/ds/icons/industry-roofing.svg" alt="" width="33" height="32" /><span>Roofing</span></button><button type="button" class="picker__ind" role="tab" id="pick-cleaning" aria-controls="pick-panel" aria-selected="false" tabindex="-1" data-i="4"><img src="/ds/icons/industry-cleaning.svg" alt="" width="33" height="32" /><span>Cleaning</span></button>
@@ -41,10 +62,16 @@
         </div>
       </section>
 
+      <!-- Scroll-velocity marquee -->
+      <div class="vmarq" aria-hidden="true" data-vmarq>
+        <div class="vmarq__track"><div class="vmarq__set"><span class="vmarq__w">HVAC</span><span class="vmarq__star">✳</span><span class="vmarq__w vmarq__w--o">Plumbing</span><span class="vmarq__star">✳</span><span class="vmarq__w">Electrical</span><span class="vmarq__star">✳</span><span class="vmarq__w vmarq__w--o">Roofing</span><span class="vmarq__star">✳</span><span class="vmarq__w">Cleaning</span><span class="vmarq__star">✳</span></div><div class="vmarq__set"><span class="vmarq__w">HVAC</span><span class="vmarq__star">✳</span><span class="vmarq__w vmarq__w--o">Plumbing</span><span class="vmarq__star">✳</span><span class="vmarq__w">Electrical</span><span class="vmarq__star">✳</span><span class="vmarq__w vmarq__w--o">Roofing</span><span class="vmarq__star">✳</span><span class="vmarq__w">Cleaning</span><span class="vmarq__star">✳</span></div></div>
+      </div>
+
       <!-- 02 · Directory bento -->
       <section class="sec sec--weak hub-dir" aria-labelledby="hub-dir-title">
         <div class="sec__inner">
           <div class="sec-head">
+            <p class="sec-index" aria-hidden="true"><span class="sec-index__n">01</span><span class="sec-index__t">/ 07</span><span class="sec-index__line"></span><span class="sec-index__k">INDUSTRIES</span></p>
             <p class="eyebrow" data-reveal>02 · The industries we serve</p>
             <h2 class="t-h3" id="hub-dir-title" data-split>Everything you need to pick the right page.</h2>
           </div>
@@ -92,6 +119,7 @@
       <section class="sec hub-matrix" aria-labelledby="hub-matrix-title">
         <div class="sec__inner">
           <div class="sec-head">
+            <p class="sec-index" aria-hidden="true"><span class="sec-index__n">02</span><span class="sec-index__t">/ 07</span><span class="sec-index__line"></span><span class="sec-index__k">INDUSTRIES</span></p>
             <p class="eyebrow" data-reveal>03 · What changes by industry</p>
             <h2 class="t-h3" id="hub-matrix-title" data-split>Same goal, five different businesses.</h2>
             <p class="t-p-lg c-sub" data-reveal>How demand moves, how long buyers take, who signs and what we measure: it changes with every trade.</p>
@@ -117,6 +145,7 @@
       <section class="sec sec--weak hub-leans" aria-labelledby="hub-leans-title">
         <div class="sec__inner">
           <div class="sec-head">
+            <p class="sec-index" aria-hidden="true"><span class="sec-index__n">03</span><span class="sec-index__t">/ 07</span><span class="sec-index__line"></span><span class="sec-index__k">INDUSTRIES</span></p>
             <p class="eyebrow" data-reveal>04 · What stays the same</p>
             <h2 class="t-h3" id="hub-leans-title" data-split>One Growth System. Each industry leans on different stages.</h2>
             <p class="t-p-lg c-sub" data-reveal>Strategy → Build → Generate → Convert → Measure → Optimize → Grow, for every client. What changes is where the weight goes.</p>
@@ -140,6 +169,7 @@
       <section class="sec hub-paths" aria-labelledby="hub-paths-title">
         <div class="sec__inner">
           <div class="sec-head">
+            <p class="sec-index" aria-hidden="true"><span class="sec-index__n">04</span><span class="sec-index__t">/ 07</span><span class="sec-index__line"></span><span class="sec-index__k">INDUSTRIES</span></p>
             <p class="eyebrow" data-reveal>05 · Residential &amp; commercial</p>
             <h2 class="t-h3" id="hub-paths-title" data-split>Two paths inside every industry.</h2>
             <p class="t-p-lg c-sub" data-reveal>Homeowners and commercial buyers decide differently, so each industry page has a residential and a commercial path.</p>
@@ -159,9 +189,10 @@
       </section>
 
       <!-- 06 · Demand calendars -->
-      <section class="sec sec--weak hub-cal" aria-labelledby="hub-cal-title">
+      <section class="sec sec--weak hub-cal" data-tone="dark" aria-labelledby="hub-cal-title">
         <div class="sec__inner">
           <div class="sec-head">
+            <p class="sec-index" aria-hidden="true"><span class="sec-index__n">05</span><span class="sec-index__t">/ 07</span><span class="sec-index__line"></span><span class="sec-index__k">INDUSTRIES</span></p>
             <p class="eyebrow" data-reveal>06 · Demand calendars</p>
             <h2 class="t-h3" id="hub-cal-title" data-split>Five trades, five different years.</h2>
             <p class="t-p-lg c-sub" data-reveal>When the phone rings, and when it has to be made to ring. Each industry page goes deeper into its own calendar.</p>
@@ -185,15 +216,16 @@
       <section class="sec hub-proof" aria-labelledby="hub-proof-title">
         <div class="sec__inner">
           <div class="sec-head">
+            <p class="sec-index" aria-hidden="true"><span class="sec-index__n">06</span><span class="sec-index__t">/ 07</span><span class="sec-index__line"></span><span class="sec-index__k">INDUSTRIES</span></p>
             <p class="eyebrow" data-reveal>07 · Proof</p>
             <h2 class="t-h3" id="hub-proof-title" data-split>Results, by industry.</h2>
             <p class="t-p-lg c-sub" data-reveal>Honest counts only. When an industry has no case yet, we show the closest one and say so.</p>
           </div>
           <div class="seg seg--sm" role="radiogroup" aria-label="Filter results by industry" data-proof-filter data-reveal><button type="button" class="seg__btn" role="radio" aria-checked="true" tabindex="0" data-filter="all">All · [ ]</button><button type="button" class="seg__btn" role="radio" aria-checked="false" tabindex="-1" data-filter="hvac">HVAC · [ ]</button><button type="button" class="seg__btn" role="radio" aria-checked="false" tabindex="-1" data-filter="plumbing">Plumbing · [ ]</button><button type="button" class="seg__btn" role="radio" aria-checked="false" tabindex="-1" data-filter="electrical">Electrical · [ ]</button><button type="button" class="seg__btn" role="radio" aria-checked="false" tabindex="-1" data-filter="roofing">Roofing · [ ]</button><button type="button" class="seg__btn" role="radio" aria-checked="false" tabindex="-1" data-filter="cleaning">Cleaning · 1</button></div>
           <ul class="hub-cases" role="list" data-cases>
-            <li class="hub-case card" data-industry="cleaning" data-reveal data-tilt-card><span class="ph hub-case__media" aria-hidden="true"></span><p class="t-label-xs c-muted">CLEANING</p><p class="t-label-xl">[Headline result in business terms]</p><p class="t-p-sm c-sub">[Period] · Measured in CRM</p><a class="link-arrow" href="/results/">Read the case <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></a></li>
-            <li class="hub-case card" data-industry="" data-reveal data-tilt-card><span class="ph hub-case__media" aria-hidden="true"></span><p class="t-label-xs c-muted">[INDUSTRY]</p><p class="t-label-xl">[Headline result]</p><p class="t-p-sm c-sub">[Period] · [Confidence label]</p><a class="link-arrow" href="/results/">Read the case <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></a></li>
-            <li class="hub-case card" data-industry="" data-reveal data-tilt-card><span class="ph hub-case__media" aria-hidden="true"></span><p class="t-label-xs c-muted">[INDUSTRY]</p><p class="t-label-xl">[Headline result]</p><p class="t-p-sm c-sub">[Period] · [Confidence label]</p><a class="link-arrow" href="/results/">Read the case <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></a></li>
+            <li class="hub-case card" data-industry="cleaning" data-reveal data-tilt-card data-fx-host><span class="ph hub-case__media" aria-hidden="true"></span><p class="t-label-xs c-muted">CLEANING</p><p class="t-label-xl">[Headline result in business terms]</p><p class="t-p-sm c-sub">[Period] · Measured in CRM</p><a class="link-arrow" href="/results/">Read the case <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></a></li>
+            <li class="hub-case card" data-industry="" data-reveal data-tilt-card data-fx-host><span class="ph hub-case__media" aria-hidden="true"></span><p class="t-label-xs c-muted">[INDUSTRY]</p><p class="t-label-xl">[Headline result]</p><p class="t-p-sm c-sub">[Period] · [Confidence label]</p><a class="link-arrow" href="/results/">Read the case <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></a></li>
+            <li class="hub-case card" data-industry="" data-reveal data-tilt-card data-fx-host><span class="ph hub-case__media" aria-hidden="true"></span><p class="t-label-xs c-muted">[INDUSTRY]</p><p class="t-label-xl">[Headline result]</p><p class="t-p-sm c-sub">[Period] · [Confidence label]</p><a class="link-arrow" href="/results/">Read the case <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></a></li>
           </ul>
           <p class="t-p-sm c-muted" aria-live="polite" data-cases-note></p>
           <a class="link-arrow" href="/results/">See all results <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></a>
@@ -204,6 +236,7 @@
       <section class="sec sec--weak ind-faq" aria-labelledby="hub-faq-title">
         <div class="sec__inner ind-faq__row">
           <div class="sec-head ind-faq__head">
+            <p class="sec-index" aria-hidden="true"><span class="sec-index__n">07</span><span class="sec-index__t">/ 07</span><span class="sec-index__line"></span><span class="sec-index__k">INDUSTRIES</span></p>
             <p class="eyebrow" data-reveal>09 · FAQ</p>
             <h2 class="t-h3" id="hub-faq-title" data-split>Questions about how we specialize.</h2>
             <p class="t-p-md c-sub" data-reveal>Industry-specific questions live on each industry page.</p>

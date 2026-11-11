@@ -7,15 +7,29 @@
     <meta name="description" content="A growth system for established plumbing companies: answer every call first, day or night, then turn emergencies into water heaters, repipes and service contracts." />
     <meta property="og:title" content="Plumbing marketing — be the first call" />
     <meta property="og:description" content="A growth system for established plumbing companies: answer every call first, day or night, then turn emergencies into water heaters, repipes and service contracts." />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Industries","item":"https://savvymarketingpartners.com/industries/"},{"@type":"ListItem","position":2,"name":"Plumbing","item":"https://savvymarketingpartners.com/industries/plumbing/"}]}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","name":"Plumbing marketing","serviceType":"Marketing growth system","description":"A growth system for established plumbing companies: answer every call first, day or night, then turn emergencies into water heaters, repipes and service contracts.","provider":{"@type":"Organization","name":"Savvy Marketing Partners","url":"https://savvymarketingpartners.com"},"url":"https://savvymarketingpartners.com/industries/plumbing/"}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Do you answer calls for us at night?","acceptedAnswer":{"@type":"Answer","text":"We set up and manage after-hours handling: a live answering line, on-call routing and automatic text-backs, so no emergency goes to voicemail."}},{"@type":"Question","name":"We already have an answering service. What changes?","acceptedAnswer":{"@type":"Answer","text":"We connect it to your booking and tracking, so every after-hours call becomes a booked job with a time window, and we measure which ones slip."}},{"@type":"Question","name":"Can you bring more water heater and repipe jobs, not just emergencies?","acceptedAnswer":{"@type":"Answer","text":"Yes. Emergencies are the door; follow-up, reviews and planned-work campaigns turn them into water heaters, repipes and plans."}},{"@type":"Question","name":"Do you work with commercial service contracts and backflow testing?","acceptedAnswer":{"@type":"Answer","text":"Yes. We help you reach property managers and facilities, and we track renewals and test reminders so contracts come back every year."}}]}</script>
   </head>
   <body class="page-industry page-industry--plumbing">
     <!-- @include header -->
 
     <main id="main">
 
-      <!-- 01 · Hero -->
-      <section class="ind-hero" aria-labelledby="plumbing-hero-title">
-        <div class="ind-hero__row">
+      <!-- 01 · Hero: full-bleed WebGL stage (sticky) + two acts: the pitch, then the live model -->
+      <section class="ind-hero ind-hero--r2" data-tone="dark" data-hero aria-labelledby="plumbing-hero-title">
+        <div class="ind-hero__stage">
+          <div class="ind-hero__3d" data-ind-scene="plumbing" aria-hidden="true"></div>
+          <div class="hud" aria-hidden="true">
+            <span class="hud__grid"></span>
+            <span class="hud__corner hud__corner--tl"></span><span class="hud__corner hud__corner--tr"></span><span class="hud__corner hud__corner--bl"></span><span class="hud__corner hud__corner--br"></span>
+            <p class="hud__tl"><span class="hud__dot"></span>IND/02 — PLUMBING<span class="hud__sep"></span>EMERGENCIES ANY HOUR</p>
+            <p class="hud__tr"><span>PRESSURE <b data-hud-num="62">62</b> PSI</span><span>FLOW <b data-hud-num="4.2">4.2</b> GPM</span><span>ON CALL <b data-hud-num="24">24</b>/7</span></p>
+            <p class="hud__bl"><span class="hud__scroll"><span></span></span>SCROLL · ACT <b data-hud-act>01</b>/02</p>
+            <p class="hud__br">X <b data-hud-x>+0.000</b> Y <b data-hud-y>+0.000</b> · MINUTES</p>
+          </div>
+        </div>
+        <div class="ind-hero__act ind-hero__act--1">
           <div class="ind-hero__copy">
             <nav class="breadcrumbs" aria-label="Breadcrumb" data-hero-item><ol role="list"><li><a href="/industries/">Industries</a></li><li aria-current="page">Plumbing</li></ol></nav>
             <p class="eyebrow" data-hero-item>[01] Plumbing</p>
@@ -27,8 +41,17 @@
             </div>
             <p class="ind-hero__note t-p-sm c-muted" data-hero-item><img src="/ds/icons/industry-plumbing.svg" alt="" width="24" height="24" /> Industry: Plumbing is pre-filled when you start a partnership conversation.</p>
           </div>
+          <nav class="ind-switch" aria-label="Other industries" data-hero-item>
+            <a class="ind-switch__a" href="/industries/hvac/" data-cursor="link"><span class="ind-switch__n">01</span>HVAC</a><a class="ind-switch__a is-current" href="/industries/plumbing/" aria-current="page" data-cursor="link"><span class="ind-switch__n">02</span>Plumbing</a><a class="ind-switch__a" href="/industries/electrical/" data-cursor="link"><span class="ind-switch__n">03</span>Electrical</a><a class="ind-switch__a" href="/industries/roofing/" data-cursor="link"><span class="ind-switch__n">04</span>Roofing</a><a class="ind-switch__a" href="/industries/cleaning/" data-cursor="link"><span class="ind-switch__n">05</span>Cleaning</a>
+          </nav>
+        </div>
+        <div class="ind-hero__act ind-hero__act--2">
+          <div class="ind-hero__deck">
+            <p class="micro" aria-hidden="true"><span class="micro__n">02</span> Live model · Plumbing</p>
+            <p class="ind-hero__deck-title">The money is in being the first call in an emergency, then keeping the customer.</p>
+            <p class="t-p-md ind-hero__deck-text">A real after-hours call: answer it or let it ring, and see where the job goes.</p>
+          </div>
           <div class="ind-hero__visual" data-hero-visual>
-            <div class="ind-hero__3d" data-3d="field" aria-hidden="true"></div>
             <div class="hw hw--call" data-call data-tilt-card>
                 <p class="t-label-xs hw__call-label"><span class="hw__pulse" aria-hidden="true"></span>Incoming call · 2:14 AM</p>
                 <p class="hw__call-number">(512) •••-••48</p>
@@ -46,10 +69,16 @@
         </div>
       </section>
 
+      <!-- Scroll-velocity marquee -->
+      <div class="vmarq" aria-hidden="true" data-vmarq>
+        <div class="vmarq__track"><div class="vmarq__set"><span class="vmarq__w">Plumbing</span><span class="vmarq__star">✳</span><span class="vmarq__w vmarq__w--o">First call when water is on the floor</span><span class="vmarq__star">✳</span><span class="vmarq__w">Emergencies any hour</span><span class="vmarq__star">✳</span><span class="vmarq__w vmarq__w--o">Decides: Minutes</span><span class="vmarq__star">✳</span></div><div class="vmarq__set"><span class="vmarq__w">Plumbing</span><span class="vmarq__star">✳</span><span class="vmarq__w vmarq__w--o">First call when water is on the floor</span><span class="vmarq__star">✳</span><span class="vmarq__w">Emergencies any hour</span><span class="vmarq__star">✳</span><span class="vmarq__w vmarq__w--o">Decides: Minutes</span><span class="vmarq__star">✳</span></div></div>
+      </div>
+
       <!-- 02 · At a glance -->
       <section class="sec sec--weak ind-glance" aria-labelledby="plumbing-glance-title">
         <div class="sec__inner">
           <div class="sec-head">
+            <p class="sec-index" aria-hidden="true"><span class="sec-index__n">01</span><span class="sec-index__t">/ 09</span><span class="sec-index__line"></span><span class="sec-index__k">PLUMBING</span></p>
             <p class="eyebrow" data-reveal>[02] At a glance</p>
             <h2 class="t-h3" id="plumbing-glance-title" data-split>Two kinds of callers. Both want it fixed now.</h2>
           </div>
@@ -71,6 +100,7 @@
       <section class="sec ind-seg" id="calls" aria-labelledby="plumbing-calls-title">
         <div class="sec__inner">
           <div class="sec-head">
+            <p class="sec-index" aria-hidden="true"><span class="sec-index__n">02</span><span class="sec-index__t">/ 09</span><span class="sec-index__line"></span><span class="sec-index__k">PLUMBING</span></p>
             <p class="eyebrow" data-reveal>[03–04] A day of calls</p>
             <h2 class="t-h3" id="plumbing-calls-title" data-split>Two kinds of callers. Pick a call to see who's on the line.</h2>
             <p class="t-p-lg c-sub" data-reveal>Every plumbing company gets both. They search differently, decide differently and are won differently.</p>
@@ -103,9 +133,10 @@
       </section>
 
       <!-- Exclusive module -->
-      <section class="sec sec--dark-soft ind-ex" id="only-in-plumbing" aria-labelledby="plumbing-ex-title">
+      <section class="sec sec--dark-soft ind-ex" data-tone="dark" id="only-in-plumbing" aria-labelledby="plumbing-ex-title">
         <div class="sec__inner">
           <div class="sec-head">
+            <p class="sec-index" aria-hidden="true"><span class="sec-index__n">03</span><span class="sec-index__t">/ 09</span><span class="sec-index__line"></span><span class="sec-index__k">PLUMBING</span></p>
             <p class="eyebrow" data-reveal>[05] Only in plumbing</p>
             <h2 class="t-h3" id="plumbing-ex-title" data-split>2:14 AM. A pipe bursts. Two plumbing companies get the call.</h2>
             <p class="t-p-lg c-sub" data-reveal>Drag the clock to see what happens next. Same call, same homeowner, two different outcomes.</p>
@@ -134,11 +165,12 @@
       <section class="sec sec--weak ind-cal" id="demand" aria-labelledby="plumbing-cal-title">
         <div class="sec__inner">
           <div class="sec-head">
+            <p class="sec-index" aria-hidden="true"><span class="sec-index__n">04</span><span class="sec-index__t">/ 09</span><span class="sec-index__line"></span><span class="sec-index__k">PLUMBING</span></p>
             <p class="eyebrow" data-reveal>[06] Demand calendar</p>
             <h2 class="t-h3" id="plumbing-cal-title" data-split>A steady base, and spikes you can see coming.</h2>
             <p class="t-p-lg c-sub" data-reveal>Freezes, holiday guests and the spring thaw bring emergency spikes on top of a steady base. We plan for them before they arrive.</p>
           </div>
-          <div class="cal" data-calendar data-values="[[40,40,40,40,40,40,40,40,40,40,40,40],[12,14,20,24,22,16,14,16,20,20,14,10],[38,26,18,8,4,4,6,4,4,8,24,36]]" data-names="[&quot;Steady base&quot;,&quot;Planned work&quot;,&quot;Emergency spikes&quot;]" data-reveal>
+          <div class="cal" data-calendar data-values="[[40,40,40,40,40,40,40,40,40,40,40,40],[12,14,20,24,22,16,14,16,20,20,14,10],[38,26,18,8,4,4,6,4,4,8,24,36]]" data-names="[&quot;Steady base&quot;,&quot;Planned work&quot;,&quot;Emergency spikes&quot;]">
             <div class="cal__legend" role="group" aria-label="Show a demand type">
               <button type="button" class="cal__key" data-series="0" aria-pressed="false"><span class="cal__swatch cal__swatch--0" aria-hidden="true"></span>Steady base</button>
               <button type="button" class="cal__key" data-series="1" aria-pressed="false"><span class="cal__swatch cal__swatch--1" aria-hidden="true"></span>Planned work</button>
@@ -146,6 +178,8 @@
             </div>
             <div class="cal__plot">
               <div class="cal__marks" aria-hidden="true"><span class="cal__mark" style="--m: 0">❄ Freeze</span><span class="cal__mark" style="--m: 2">Thaw</span><span class="cal__mark" style="--m: 10">Holiday guests</span><span class="cal__mark" style="--m: 11">❄ Freeze</span></div>
+              <div class="cal__3d" data-cal3d aria-hidden="true"></div>
+              <p class="cal__hud" aria-hidden="true"><span>DEMAND · 12 MONTHS</span><span>MONTH <b data-cal-hud>--</b>/12</span><span class="cal__hud-hint">Scroll, hover or use the month buttons</span></p>
               <svg class="cal__svg" viewBox="0 0 1200 300" preserveAspectRatio="none" aria-hidden="true" focusable="false"><g class="cal__col" data-month="0"><rect class="cal__bar cal__bar--0" data-series="0" x="22.0" y="176.5" width="56.0" height="123.5" rx="6" /><rect class="cal__bar cal__bar--1" data-series="1" x="22.0" y="139.5" width="56.0" height="37.0" rx="6" /><rect class="cal__bar cal__bar--2" data-series="2" x="22.0" y="22.2" width="56.0" height="117.3" rx="6" /><rect class="cal__hit" x="0" y="0" width="100" height="300" /></g><g class="cal__col" data-month="1"><rect class="cal__bar cal__bar--0" data-series="0" x="122.0" y="176.5" width="56.0" height="123.5" rx="6" /><rect class="cal__bar cal__bar--1" data-series="1" x="122.0" y="133.3" width="56.0" height="43.2" rx="6" /><rect class="cal__bar cal__bar--2" data-series="2" x="122.0" y="53.1" width="56.0" height="80.2" rx="6" /><rect class="cal__hit" x="100" y="0" width="100" height="300" /></g><g class="cal__col" data-month="2"><rect class="cal__bar cal__bar--0" data-series="0" x="222.0" y="176.5" width="56.0" height="123.5" rx="6" /><rect class="cal__bar cal__bar--1" data-series="1" x="222.0" y="114.8" width="56.0" height="61.7" rx="6" /><rect class="cal__bar cal__bar--2" data-series="2" x="222.0" y="59.3" width="56.0" height="55.6" rx="6" /><rect class="cal__hit" x="200" y="0" width="100" height="300" /></g><g class="cal__col" data-month="3"><rect class="cal__bar cal__bar--0" data-series="0" x="322.0" y="176.5" width="56.0" height="123.5" rx="6" /><rect class="cal__bar cal__bar--1" data-series="1" x="322.0" y="102.5" width="56.0" height="74.1" rx="6" /><rect class="cal__bar cal__bar--2" data-series="2" x="322.0" y="77.8" width="56.0" height="24.7" rx="6" /><rect class="cal__hit" x="300" y="0" width="100" height="300" /></g><g class="cal__col" data-month="4"><rect class="cal__bar cal__bar--0" data-series="0" x="422.0" y="176.5" width="56.0" height="123.5" rx="6" /><rect class="cal__bar cal__bar--1" data-series="1" x="422.0" y="108.6" width="56.0" height="67.9" rx="6" /><rect class="cal__bar cal__bar--2" data-series="2" x="422.0" y="96.3" width="56.0" height="12.3" rx="6" /><rect class="cal__hit" x="400" y="0" width="100" height="300" /></g><g class="cal__col" data-month="5"><rect class="cal__bar cal__bar--0" data-series="0" x="522.0" y="176.5" width="56.0" height="123.5" rx="6" /><rect class="cal__bar cal__bar--1" data-series="1" x="522.0" y="127.2" width="56.0" height="49.4" rx="6" /><rect class="cal__bar cal__bar--2" data-series="2" x="522.0" y="114.8" width="56.0" height="12.3" rx="6" /><rect class="cal__hit" x="500" y="0" width="100" height="300" /></g><g class="cal__col" data-month="6"><rect class="cal__bar cal__bar--0" data-series="0" x="622.0" y="176.5" width="56.0" height="123.5" rx="6" /><rect class="cal__bar cal__bar--1" data-series="1" x="622.0" y="133.3" width="56.0" height="43.2" rx="6" /><rect class="cal__bar cal__bar--2" data-series="2" x="622.0" y="114.8" width="56.0" height="18.5" rx="6" /><rect class="cal__hit" x="600" y="0" width="100" height="300" /></g><g class="cal__col" data-month="7"><rect class="cal__bar cal__bar--0" data-series="0" x="722.0" y="176.5" width="56.0" height="123.5" rx="6" /><rect class="cal__bar cal__bar--1" data-series="1" x="722.0" y="127.2" width="56.0" height="49.4" rx="6" /><rect class="cal__bar cal__bar--2" data-series="2" x="722.0" y="114.8" width="56.0" height="12.3" rx="6" /><rect class="cal__hit" x="700" y="0" width="100" height="300" /></g><g class="cal__col" data-month="8"><rect class="cal__bar cal__bar--0" data-series="0" x="822.0" y="176.5" width="56.0" height="123.5" rx="6" /><rect class="cal__bar cal__bar--1" data-series="1" x="822.0" y="114.8" width="56.0" height="61.7" rx="6" /><rect class="cal__bar cal__bar--2" data-series="2" x="822.0" y="102.5" width="56.0" height="12.3" rx="6" /><rect class="cal__hit" x="800" y="0" width="100" height="300" /></g><g class="cal__col" data-month="9"><rect class="cal__bar cal__bar--0" data-series="0" x="922.0" y="176.5" width="56.0" height="123.5" rx="6" /><rect class="cal__bar cal__bar--1" data-series="1" x="922.0" y="114.8" width="56.0" height="61.7" rx="6" /><rect class="cal__bar cal__bar--2" data-series="2" x="922.0" y="90.1" width="56.0" height="24.7" rx="6" /><rect class="cal__hit" x="900" y="0" width="100" height="300" /></g><g class="cal__col" data-month="10"><rect class="cal__bar cal__bar--0" data-series="0" x="1022.0" y="176.5" width="56.0" height="123.5" rx="6" /><rect class="cal__bar cal__bar--1" data-series="1" x="1022.0" y="133.3" width="56.0" height="43.2" rx="6" /><rect class="cal__bar cal__bar--2" data-series="2" x="1022.0" y="59.3" width="56.0" height="74.1" rx="6" /><rect class="cal__hit" x="1000" y="0" width="100" height="300" /></g><g class="cal__col" data-month="11"><rect class="cal__bar cal__bar--0" data-series="0" x="1122.0" y="176.5" width="56.0" height="123.5" rx="6" /><rect class="cal__bar cal__bar--1" data-series="1" x="1122.0" y="145.7" width="56.0" height="30.9" rx="6" /><rect class="cal__bar cal__bar--2" data-series="2" x="1122.0" y="34.6" width="56.0" height="111.1" rx="6" /><rect class="cal__hit" x="1100" y="0" width="100" height="300" /></g></svg>
               <div class="cal__tip" role="status" aria-live="polite" data-cal-tip hidden></div>
             </div>
@@ -167,6 +201,7 @@
       <section class="sec ind-sys" aria-labelledby="plumbing-sys-title">
         <div class="sec__inner">
           <div class="sec-head">
+            <p class="sec-index" aria-hidden="true"><span class="sec-index__n">05</span><span class="sec-index__t">/ 09</span><span class="sec-index__line"></span><span class="sec-index__k">PLUMBING</span></p>
             <p class="eyebrow" data-reveal>[07] How we grow it</p>
             <h2 class="t-h3" id="plumbing-sys-title" data-split>We fix the leaks in your calls before buying more.</h2>
             <p class="t-p-lg c-sub" data-reveal>Most plumbing companies don't need more calls first. They need to answer and book the calls they already get. Convert comes first in plumbing.</p>
@@ -190,23 +225,25 @@
       <section class="sec sec--weak ind-kpis" id="numbers" aria-labelledby="plumbing-kpi-title">
         <div class="sec__inner">
           <div class="sec-head">
+            <p class="sec-index" aria-hidden="true"><span class="sec-index__n">06</span><span class="sec-index__t">/ 09</span><span class="sec-index__line"></span><span class="sec-index__k">PLUMBING</span></p>
             <p class="eyebrow" data-reveal>[08] The numbers we watch</p>
             <h2 class="t-h3" id="plumbing-kpi-title" data-split>Four numbers on your plumbing dashboard.</h2>
           </div>
           <ul class="kpis kpis--4" role="list" data-reveal-stagger="0.07">
-            <li class="kpi card" data-reveal data-tilt-card><p class="kpi__v">95%+</p><p class="t-label-lg">Answered-call rate</p><p class="t-p-sm c-sub">Calls answered live or called back in 60 s.</p><p class="t-label-sm kpi__note">Goal: 95%+</p></li>
-            <li class="kpi card" data-reveal data-tilt-card><p class="kpi__v">&lt; 60 s</p><p class="t-label-lg">Response time</p><p class="t-p-sm c-sub">From first ring or form to a real reply.</p><p class="t-label-sm kpi__note">Goal: under 60 s</p></li>
-            <li class="kpi card" data-reveal data-tilt-card><p class="kpi__v">60 / 40</p><p class="t-label-lg">Emergency vs planned jobs</p><p class="t-p-sm c-sub">The mix that keeps trucks busy all year.</p><p class="t-label-sm kpi__note">Example: 60 / 40</p></li>
-            <li class="kpi card" data-reveal data-tilt-card><p class="kpi__v">[ value ]</p><p class="t-label-lg">Average ticket</p><p class="t-p-sm c-sub">Revenue per job, by job type.</p></li>
+            <li class="kpi card" data-reveal data-tilt-card><p class="kpi__v" data-scramble>95%+</p><p class="t-label-lg">Answered-call rate</p><p class="t-p-sm c-sub">Calls answered live or called back in 60 s.</p><p class="t-label-sm kpi__note">Goal: 95%+</p></li>
+            <li class="kpi card" data-reveal data-tilt-card><p class="kpi__v" data-scramble>&lt; 60 s</p><p class="t-label-lg">Response time</p><p class="t-p-sm c-sub">From first ring or form to a real reply.</p><p class="t-label-sm kpi__note">Goal: under 60 s</p></li>
+            <li class="kpi card" data-reveal data-tilt-card><p class="kpi__v" data-scramble>60 / 40</p><p class="t-label-lg">Emergency vs planned jobs</p><p class="t-p-sm c-sub">The mix that keeps trucks busy all year.</p><p class="t-label-sm kpi__note">Example: 60 / 40</p></li>
+            <li class="kpi card" data-reveal data-tilt-card><p class="kpi__v" data-scramble>[ value ]</p><p class="t-label-lg">Average ticket</p><p class="t-p-sm c-sub">Revenue per job, by job type.</p></li>
           </ul>
           
         </div>
       </section>
 
       <!-- Proof -->
-      <section class="ind-proof" aria-labelledby="plumbing-proof-title">
+      <section class="ind-proof" data-tone="dark" aria-labelledby="plumbing-proof-title">
         <div class="ind-proof__inner">
           <div class="sec-head">
+            <p class="sec-index" aria-hidden="true"><span class="sec-index__n">07</span><span class="sec-index__t">/ 09</span><span class="sec-index__line"></span><span class="sec-index__k">PLUMBING</span></p>
             <p class="eyebrow ind-proof__eyebrow" data-reveal>[09] Plumbing proof</p>
             <h2 class="t-h2" id="plumbing-proof-title" data-split>What happened when the phones got answered.</h2>
           </div>
@@ -230,6 +267,7 @@
       <section class="sec ind-faq" id="faq" aria-labelledby="plumbing-faq-title">
         <div class="sec__inner ind-faq__row">
           <div class="sec-head ind-faq__head">
+            <p class="sec-index" aria-hidden="true"><span class="sec-index__n">08</span><span class="sec-index__t">/ 09</span><span class="sec-index__line"></span><span class="sec-index__k">PLUMBING</span></p>
             <p class="eyebrow" data-reveal>[10] Questions from plumbing owners</p>
             <h2 class="t-h3" id="plumbing-faq-title" data-split>Questions plumbing owners ask us.</h2>
             
@@ -246,11 +284,12 @@
       <!-- Insights -->
       <section class="sec sec--weak ind-insights" aria-labelledby="plumbing-ins-title">
         <div class="sec__inner">
-          <div class="sec-head sec-head--row"><div><p class="eyebrow" data-reveal>[11] Plumbing insights</p><h2 class="t-h3" id="plumbing-ins-title" data-split>Read before the next freeze.</h2></div><a class="link-arrow" href="/resources/">See all Plumbing insights <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></a></div>
+          <div class="sec-head sec-head--row">
+            <p class="sec-index" aria-hidden="true"><span class="sec-index__n">09</span><span class="sec-index__t">/ 09</span><span class="sec-index__line"></span><span class="sec-index__k">PLUMBING</span></p><div><p class="eyebrow" data-reveal>[11] Plumbing insights</p><h2 class="t-h3" id="plumbing-ins-title" data-split>Read before the next freeze.</h2></div><a class="link-arrow" href="/resources/">See all Plumbing insights <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></a></div>
           <ul class="insights" role="list" data-reveal-stagger="0.07">
-            <li data-reveal><a class="insight card" href="/resources/" data-tilt-card><span class="ph insight__media" aria-hidden="true"></span><span class="t-label-xs c-muted">GUIDE · 6 MIN</span><span class="t-label-xl">The freeze playbook: be ready before the first cold night</span><span class="link-arrow">Read <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></span></a></li>
-            <li data-reveal><a class="insight card" href="/resources/" data-tilt-card><span class="ph insight__media" aria-hidden="true"></span><span class="t-label-xs c-muted">DATA · 4 MIN</span><span class="t-label-xl">Missed calls are the most expensive leak in plumbing</span><span class="link-arrow">Read <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></span></a></li>
-            <li data-reveal><a class="insight card" href="/resources/" data-tilt-card><span class="ph insight__media" aria-hidden="true"></span><span class="t-label-xs c-muted">COMMERCIAL · 5 MIN</span><span class="t-label-xl">Backflow testing: from compliance chore to recurring revenue</span><span class="link-arrow">Read <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></span></a></li>
+            <li data-reveal><a class="insight card" href="/resources/" data-tilt-card data-fx-host data-cursor="view"><span class="ph insight__media" aria-hidden="true"></span><span class="t-label-xs c-muted">GUIDE · 6 MIN</span><span class="t-label-xl">The freeze playbook: be ready before the first cold night</span><span class="link-arrow">Read <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></span></a></li>
+            <li data-reveal><a class="insight card" href="/resources/" data-tilt-card data-fx-host data-cursor="view"><span class="ph insight__media" aria-hidden="true"></span><span class="t-label-xs c-muted">DATA · 4 MIN</span><span class="t-label-xl">Missed calls are the most expensive leak in plumbing</span><span class="link-arrow">Read <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></span></a></li>
+            <li data-reveal><a class="insight card" href="/resources/" data-tilt-card data-fx-host data-cursor="view"><span class="ph insight__media" aria-hidden="true"></span><span class="t-label-xs c-muted">COMMERCIAL · 5 MIN</span><span class="t-label-xl">Backflow testing: from compliance chore to recurring revenue</span><span class="link-arrow">Read <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></span></a></li>
           </ul>
         </div>
       </section>
