@@ -1,0 +1,1154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Savvy Line Lab — Production Line Simulator</title>
+<meta name="description" content="Savvy Line Lab by Savvy Marketing Partners: an animated discrete-event simulation of a serial production line for teaching how variability, buffers and breakdowns affect throughput, WIP and flow time.">
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+<script>
+  try { var t = localStorage.getItem('savvy-line-lab-theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+</script>
+<style>
+:root{
+  --font:'Satoshi',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --text:#030712; --text-sub:#4b5563; --text-muted:#6b7280; --text-faint:#9ca3af;
+  --bg-page:#f9fafb; --bg-card:#ffffff; --bg-weak:#f1f5f9; --bg-soft:#e2e8f0; --bg-sub:#cbd5e1; --bg-strong:#1e293b;
+  --stroke:#e5e5e5; --stroke-sub:#d4d4d4;
+  --primary:#0792c2; --primary-text:#0d6d91; --primary-a16:rgba(7,146,194,.16); --primary-dark:#293baa; --primary-darker:#141a40; --lb700:#0d6d91;
+  --secondary:#ff5527; --secondary-a16:rgba(255,85,39,.16); --accent:#c61208;
+  --st-working:#16a34a; --st-blocked:#f59e0b; --st-starved:#dc2626; --st-down:#6b7280;
+  --part-raw:#94a3b8; --part-wip:#0792c2; --part-rework:#ff5527; --part-done:#293baa; --part-scrap:#c61208;
+  --header-bg:#141a40; --cta-bg:#ffffff; --ring-gap:#f9fafb; --sweep:#0d6d91;
+  --shadow:0 1px 2px rgba(3,7,18,.04),0 8px 24px rgba(3,7,18,.05);
+  --conveyor:#cbd5e1; --machine-bg:#ffffff;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --text:#f9fafb; --text-sub:#c3c9d8; --text-muted:#a5adc2; --text-faint:#7f88a3;
+    --bg-page:#0b0d24; --bg-card:#141a40; --bg-weak:#1a2150; --bg-soft:#232a5e; --bg-sub:#323a78; --bg-strong:#e2e8f0;
+    --stroke:rgba(255,255,255,.12); --stroke-sub:rgba(255,255,255,.22);
+    --primary-text:#5cc8ee; --primary-a16:rgba(7,146,194,.24);
+    --st-working:#22c55e; --st-blocked:#fbbf24; --st-starved:#f87171; --st-down:#9ca3af;
+    --part-raw:#cbd5e1; --part-wip:#38bdf8; --part-done:#a5b4fc; --part-scrap:#f87171;
+    --header-bg:#141a40; --cta-bg:#1a2150; --ring-gap:#0b0d24;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+    --conveyor:#323a78; --machine-bg:#1a2150;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --text:#f9fafb; --text-sub:#c3c9d8; --text-muted:#a5adc2; --text-faint:#7f88a3;
+  --bg-page:#0b0d24; --bg-card:#141a40; --bg-weak:#1a2150; --bg-soft:#232a5e; --bg-sub:#323a78; --bg-strong:#e2e8f0;
+  --stroke:rgba(255,255,255,.12); --stroke-sub:rgba(255,255,255,.22);
+  --primary-text:#5cc8ee; --primary-a16:rgba(7,146,194,.24);
+  --st-working:#22c55e; --st-blocked:#fbbf24; --st-starved:#f87171; --st-down:#9ca3af;
+  --part-raw:#cbd5e1; --part-wip:#38bdf8; --part-done:#a5b4fc; --part-scrap:#f87171;
+  --header-bg:#141a40; --cta-bg:#1a2150; --ring-gap:#0b0d24;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+  --conveyor:#323a78; --machine-bg:#1a2150;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg-page);color:var(--text);font:400 16px/24px var(--font);overflow-x:hidden}
+h1,h2,h3,h4,h5{margin:0;font-family:var(--font)}
+p{margin:0}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.skip{position:absolute;left:16px;top:-48px;background:var(--bg-card);color:var(--text);padding:8px 16px;border-radius:999px;z-index:100}
+.skip:focus{top:8px}
+a{color:var(--primary-text)}
+.wrap{max-width:1440px;margin:0 auto;padding:0 32px}
+/* header */
+.topbar-outer{padding:16px 0 0}
+.topbar{display:flex;align-items:center;gap:16px;background:var(--header-bg);color:#f9fafb;border-radius:24px;padding:12px 16px 12px 12px;border:1px solid rgba(255,255,255,.08)}
+.logo-tile{width:48px;height:48px;border-radius:16px;background:#fff;display:grid;place-items:center;flex:none}
+.logo-tile svg{width:32px;height:32px}
+.brand{display:flex;flex-direction:column;min-width:0}
+.brand .b1{font:700 18px/24px var(--font);letter-spacing:-.01em}
+.brand .b2{font:500 12px/16px var(--font);letter-spacing:4px;text-transform:uppercase;color:#9fd9ef;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar .spacer{flex:1}
+.theme-btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;border:1px solid rgba(255,255,255,.22);background:transparent;color:#f9fafb;padding:8px 14px;font:500 14px/20px var(--font);cursor:pointer;min-height:40px}
+.theme-btn:hover{background:rgba(255,255,255,.08)}
+.theme-btn svg{width:18px;height:18px}
+/* hero */
+.hero{padding:48px 0 32px;display:grid;gap:16px}
+.overline{font:500 12px/16px var(--font);letter-spacing:4px;text-transform:uppercase;color:var(--primary-text)}
+.hero h1{font-weight:700;font-size:56px;line-height:64px;letter-spacing:-.02em;max-width:22ch}
+.hero h1 .accent{color:var(--primary-text)}
+.hero p{font-size:18px;line-height:28px;color:var(--text-sub);max-width:70ch}
+/* layout */
+.layout{display:grid;grid-template-columns:minmax(300px,380px) minmax(0,1fr);gap:24px;align-items:start}
+.stage{display:grid;gap:24px;min-width:0}
+.card{background:var(--bg-card);border:1px solid var(--stroke);border-radius:24px;padding:24px;box-shadow:var(--shadow);min-width:0}
+.card-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.card-h h2,.card-h h3{font:500 24px/32px var(--font)}
+.card-h .sub{color:var(--text-sub);font-size:14px;line-height:20px;flex-basis:100%}
+.section{margin-top:24px}
+.h4{font:500 32px/40px var(--font)}
+/* config */
+.config{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow:auto;overscroll-behavior:contain}
+.cfg-group{border-top:1px solid var(--stroke);padding-top:16px;margin-top:16px}
+.cfg-group:first-of-type{border-top:0;padding-top:0;margin-top:0}
+.cfg-title{font:500 12px/16px var(--font);letter-spacing:4px;text-transform:uppercase;color:var(--text-sub);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{display:flex;flex-direction:column;gap:4px;min-width:0}
+.field label,.lbl{font:500 14px/20px var(--font);color:var(--text);display:flex;align-items:center;gap:4px}
+.field.full{grid-column:1/-1}
+input[type=number],input[type=text],select{font:400 16px/22px var(--font);color:var(--text);background:var(--bg-card);border:1px solid var(--stroke-sub);border-radius:12px;padding:8px 10px;min-height:40px;width:100%;min-width:0}
+input:disabled,select:disabled{opacity:.55}
+input:focus-visible,select:focus-visible{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-a16)}
+.check{display:flex;align-items:center;gap:8px;font:500 14px/20px var(--font)}
+.check input{width:18px;height:18px;accent-color:var(--primary)}
+.radio-row{display:flex;gap:16px;flex-wrap:wrap}
+.station-card{border:1px solid var(--stroke);border-radius:16px;padding:12px;background:var(--bg-weak);margin-bottom:8px}
+.station-card .st-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.st-num{width:24px;height:24px;border-radius:999px;display:grid;place-items:center;background:var(--primary-darker);color:#fff;font:700 12px/1 var(--font);flex:none}
+:root[data-theme="dark"] .st-num{background:var(--primary)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .st-num{background:var(--primary)}}
+.buffer-row{display:flex;align-items:center;gap:8px;margin:0 0 8px 12px;padding-left:12px;border-left:2px dashed var(--bg-sub)}
+.buffer-row label{font:500 14px/20px var(--font);white-space:nowrap}
+.buffer-row input{max-width:84px}
+.hint{font-size:12px;line-height:16px;color:var(--text-sub)}
+.note{font-size:14px;line-height:20px;color:var(--text-sub)}
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;border:1px solid var(--stroke-sub);background:var(--bg-card);color:var(--text);font:500 14px/20px var(--font);padding:9px 16px;min-height:40px;cursor:pointer;transition:background .2s,border-color .2s}
+.btn:hover{background:var(--bg-weak);border-color:var(--primary)}
+.btn svg{width:16px;height:16px}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.btn.small{padding:6px 12px;min-height:34px}
+button:focus{outline:none}
+button:focus-visible,.btn:focus-visible,a:focus-visible,.info:focus-visible,input[type=range]:focus-visible,input[type=checkbox]:focus-visible,input[type=radio]:focus-visible{outline:none;box-shadow:0 0 0 2px var(--ring-gap),0 0 0 4px var(--primary),0 0 0 8px var(--primary-a16)}
+.btn-cta{position:relative;overflow:hidden;isolation:isolate;display:inline-flex;align-items:center;gap:12px;padding:5px 5px 5px 20px;min-height:46px;border-radius:999px;background:var(--cta-bg);color:var(--text);border:1px solid var(--stroke);font:500 16px/24px var(--font);cursor:pointer;margin:8px;box-shadow:0 0 0 2px var(--ring-gap),0 0 0 4px var(--primary),0 0 0 8px var(--primary-a16);transition:color 700ms cubic-bezier(.4,0,.2,1)}
+.btn-cta::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--sweep);border-radius:inherit;clip-path:circle(0% at 0% 50%);transition:clip-path 700ms cubic-bezier(.4,0,.2,1)}
+.btn-cta:hover::before,.btn-cta:focus-visible::before{clip-path:circle(150% at 0% 50%)}
+.btn-cta:hover,.btn-cta:focus-visible{color:#fff}
+.btn-cta:focus-visible{box-shadow:0 0 0 2px var(--ring-gap),0 0 0 4px var(--primary),0 0 0 8px var(--primary-a16),0 0 0 10px var(--primary)}
+.btn-cta .arrow{width:36px;height:36px;border-radius:50%;background:var(--primary);color:#fff;display:grid;place-items:center;flex:none;transition:background 700ms cubic-bezier(.4,0,.2,1),color 700ms cubic-bezier(.4,0,.2,1)}
+.btn-cta:hover .arrow,.btn-cta:focus-visible .arrow{background:#fff;color:#0d6d91}
+.btn-cta .arrow svg{width:18px;height:18px}
+.btn-cta[disabled]{opacity:.6;cursor:not-allowed}
+/* controls */
+.controls{display:flex;flex-wrap:wrap;align-items:center;gap:12px 12px}
+.controls .grow{flex:1}
+.speed{display:flex;align-items:center;gap:8px;font:500 14px/20px var(--font)}
+.speed input{width:140px;accent-color:var(--primary)}
+.speed output{min-width:36px;font-variant-numeric:tabular-nums}
+.clockbox{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:12px}
+.clock{font:700 20px/28px var(--font);font-variant-numeric:tabular-nums}
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:4px 12px;font:500 12px/16px var(--font);letter-spacing:.02em;background:var(--bg-weak);color:var(--text-sub);border:1px solid var(--stroke)}
+.pill.warm{background:var(--secondary-a16);color:var(--text);border-color:transparent}
+.pill.live{background:var(--primary-a16);color:var(--text);border-color:transparent}
+.pill .dot{width:8px;height:8px;border-radius:50%;background:currentColor}
+.lastev{font-size:14px;line-height:20px;color:var(--text-sub);min-height:20px;overflow-wrap:anywhere}
+.canvas-wrap{position:relative;width:100%;margin-top:16px;border-radius:16px;background:var(--bg-weak);border:1px solid var(--stroke);overflow:hidden}
+#lineCanvas{display:block;width:100%}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:12px;font-size:13px;line-height:18px;color:var(--text-sub)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+.sw.c{border-radius:50%}
+/* KPIs */
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.kpi{background:var(--bg-card);border:1px solid var(--stroke);border-radius:24px;padding:20px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:6px;min-width:0}
+.kpi .k-h{display:flex;align-items:center;gap:6px;font:500 12px/16px var(--font);letter-spacing:2px;text-transform:uppercase;color:var(--text-sub)}
+.kpi .k-v{font:700 28px/36px var(--font);font-variant-numeric:tabular-nums;letter-spacing:-.01em;overflow-wrap:anywhere}
+.kpi .k-v small{font:500 14px/20px var(--font);color:var(--text-sub);letter-spacing:0}
+.kpi .k-s{font-size:13px;line-height:18px;color:var(--text-sub);overflow-wrap:anywhere}
+.kpi.bn{border-color:var(--secondary);box-shadow:0 0 0 3px var(--secondary-a16),var(--shadow)}
+.meter{height:6px;border-radius:999px;background:var(--bg-soft);overflow:hidden}
+.meter > i{display:block;height:100%;background:var(--primary);border-radius:999px;width:0}
+.ok{color:var(--st-working)} .warn{color:var(--accent)}
+:root[data-theme="dark"] .warn{color:#ff8a66}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .warn{color:#ff8a66}}
+/* info tooltip */
+.info{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;border:1px solid var(--stroke-sub);background:var(--bg-card);color:var(--primary-text);font:700 11px/1 var(--font);cursor:help;padding:0;flex:none;font-style:italic;font-family:Georgia,serif}
+.info:hover{border-color:var(--primary)}
+.tip{position:fixed;z-index:1000;max-width:min(320px,calc(100vw - 24px));background:var(--bg-strong);color:var(--bg-page);border-radius:12px;padding:10px 12px;font:400 13px/19px var(--font);box-shadow:0 8px 24px rgba(0,0,0,.25);pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity .15s,transform .15s;left:0;top:0;visibility:hidden}
+.tip.show{opacity:1;transform:none;visibility:visible}
+/* tables */
+.table-wrap{position:relative;overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--stroke);border-radius:16px}
+table{border-collapse:collapse;width:100%;font-size:14px;line-height:20px;font-variant-numeric:tabular-nums}
+th,td{padding:10px 12px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--stroke)}
+th{font:500 12px/16px var(--font);letter-spacing:1px;text-transform:uppercase;color:var(--text-sub);background:var(--bg-weak);vertical-align:bottom}
+th .thi{display:inline-flex;align-items:center;gap:4px}
+th:first-child,td:first-child{text-align:left}
+tr:last-child td{border-bottom:0}
+tr.is-bn td{background:var(--secondary-a16)}
+.tag-bn{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:999px;background:var(--secondary);color:#030712;font:700 10px/16px var(--font);letter-spacing:1px;text-transform:uppercase}
+.stack{display:flex;width:160px;height:12px;border-radius:999px;overflow:hidden;background:var(--bg-soft)}
+.stack i{display:block;height:100%}
+.stdot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:middle}
+/* charts */
+.charts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.chart-box{position:relative;height:260px;width:100%}
+.chart-fallback{display:none;height:100%;align-items:center;justify-content:center;text-align:center;color:var(--text-sub);font-size:14px;border:1px dashed var(--stroke-sub);border-radius:16px;padding:16px}
+.no-chart .chart-fallback{display:flex}
+.no-chart canvas.chart{display:none}
+/* analysis */
+.an-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.an-form{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:16px}
+.progress{height:8px;border-radius:999px;background:var(--bg-soft);overflow:hidden;margin:12px 0}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--primary),var(--primary-dark));transition:width .1s}
+.actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.results{margin-top:12px}
+footer{padding:48px 0 32px;color:var(--text-sub);font-size:14px;line-height:20px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+footer .fb{display:flex;align-items:center;gap:8px}
+footer svg{width:24px;height:24px}
+@media (max-width:1180px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:1023px){
+  .layout{grid-template-columns:minmax(0,1fr)}
+  .config{position:static;max-height:none;order:2}
+  .stage{order:1}
+  .charts,.an-grid{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:640px){
+  .wrap{padding:0 16px}
+  .hero{padding:32px 0 24px}
+  .hero h1{font-size:36px;line-height:44px}
+  .hero p{font-size:16px;line-height:24px}
+  .card{padding:16px;border-radius:20px}
+  .kpi{padding:16px;border-radius:20px}
+  .kpi .k-v{font-size:22px;line-height:30px}
+  .kpis{gap:12px}
+  .an-form{grid-template-columns:1fr 1fr}
+  .brand .b2{letter-spacing:2px}
+  .theme-btn .tlabel{display:none}
+  .speed input{width:110px}
+  .h4{font-size:24px;line-height:32px}
+  .card-h h2,.card-h h3{font-size:20px;line-height:28px}
+}
+@media (max-width:380px){.kpis{grid-template-columns:minmax(0,1fr)}}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{transition-duration:1ms!important;animation-duration:1ms!important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#sim">Skip to simulator</a>
+<div class="wrap topbar-outer">
+  <header class="topbar">
+    <a class="logo-tile" href="/" aria-label="Savvy Marketing Partners home">
+      <svg width="178" height="179" viewBox="0 0 178 179" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+<path d="M104.342 0.522376C109.132 -0.827611 114.282 0.482139 117.842 3.95206L173.632 58.3427C177.192 61.8127 178.632 66.9224 177.412 71.7323L158.212 147.232C156.982 152.052 153.282 155.852 148.492 157.202L73.5021 178.322C68.7122 179.672 63.5621 178.362 60.0021 174.892L4.21205 120.513C0.642048 117.043 -0.798224 111.932 0.431773 107.112L19.632 31.6122C20.862 26.7923 24.5619 22.9926 29.3517 21.6425L104.342 0.522376ZM83.3742 67.8749C82.4935 67.1527 81.3462 66.84 80.2208 67.0155L53.7667 71.1415C52.0627 71.4079 51.4726 73.5621 52.8029 74.6601L92.5265 107.438L98.3097 112.258C99.4988 113.249 99.1597 115.157 97.7023 115.678L94.4972 116.822L83.7579 119.376C83.5057 119.445 83.3053 119.458 83.0001 119.5C81.9165 119.648 80.8065 119.283 79.9367 118.575L47.4279 92.1288C45.036 90.1835 41.4343 91.5612 40.9523 94.6064L38.049 112.961C37.8275 114.362 38.3646 115.775 39.4601 116.676L74.6515 145.597C75.6572 146.423 77.0024 146.709 78.257 146.362L124.123 133.675C125.69 133.241 126.839 131.902 127.029 130.287L128.859 114.16C128.88 113.967 128.886 113.777 128.881 113.59C129.106 111.747 129.308 110.258 129.499 108.992C129.777 107.148 129.075 105.281 127.614 104.121C126.608 103.322 125.689 102.579 124.77 101.832C124.738 101.802 124.705 101.772 124.67 101.744L120.54 98.3573C120.206 98.0813 119.859 97.7967 119.5 97.4999H119.496L83.3742 67.8749ZM101 32.9999C100.405 33 98.7504 33.3644 97.507 33.6601C96.6198 33.8711 96.0032 34.669 96.0031 35.581L96.0001 61.7138C96.0002 62.3593 96.3119 62.9653 96.837 63.3407L129.813 86.9101C132.232 88.6388 135.624 87.1905 136.089 84.2538L139.067 65.4413C139.289 64.0346 138.746 62.6145 137.642 61.7148L103.506 33.8984C102.548 33.118 101.5 32.9999 101 32.9999ZM64.0001 43.9716C64.0001 42.6841 62.8006 41.7323 61.5451 42.0175C58.786 42.6444 56.5047 43.1443 53.5167 43.873C52.6254 44.0906 52.0001 44.892 52.0001 45.8095V66.0536C52.0001 67.2824 53.0979 68.2205 54.3117 68.0292L62.3117 66.7665C63.2838 66.6131 64.0001 65.7751 64.0001 64.7909V43.9716ZM79.0001 40.4814C79.0001 39.1944 77.8017 38.2425 76.548 38.5331L67.548 40.62C66.6418 40.8304 66.0001 41.6379 66.0001 42.5683V63.8593C66.0001 65.0892 67.1 66.0281 68.3146 65.8349L77.3146 64.4013C78.2855 64.2466 79.0001 63.4088 79.0001 62.4257V40.4814ZM94.0001 37.0136C93.9999 35.7276 92.803 34.7762 91.5499 35.0653L82.5499 37.1425C81.6429 37.3521 81.0002 38.1597 81.0001 39.0907V61.5038C81.0001 62.7253 82.0859 63.6616 83.2941 63.4823L92.2941 62.1454C93.2743 61.9997 94.0001 61.1579 94.0001 60.1669V37.0136Z" fill="url(#paint0_linear_102_223)"/>
+<defs>
+<linearGradient id="paint0_linear_102_223" x1="33.8038" y1="167.138" x2="130.395" y2="30.9527" gradientUnits="userSpaceOnUse">
+<stop stop-color="#14173D"/>
+<stop offset="1" stop-color="#0396C7"/>
+</linearGradient>
+</defs>
+</svg>
+    </a>
+    <div class="brand">
+      <span class="b1">Savvy Line Lab</span>
+      <span class="b2">Savvy Marketing Partners</span>
+    </div>
+    <div class="spacer"></div>
+    <button type="button" class="theme-btn" id="themeBtn" aria-label="Switch to dark mode">
+      <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <span class="tlabel" id="themeLabel">Dark mode</span>
+    </button>
+  </header>
+</div>
+
+<main class="wrap" id="main">
+  <section class="hero" aria-labelledby="pageTitle">
+    <span class="overline">Manufacturing systems · Discrete-event simulation</span>
+    <h1 id="pageTitle">Savvy Line Lab — <span class="accent">Production Line Simulator</span></h1>
+    <p>Watch parts flow through a serial line and see how variability, buffer space, breakdowns and defects shape throughput, WIP and lead time. Change any parameter, press Play, and compare the live dashboard with queueing theory — or run replications and experiments for statistically sound answers.</p>
+  </section>
+
+  <div class="layout">
+    <aside class="card config" aria-labelledby="cfgTitle">
+      <div class="card-h"><h2 id="cfgTitle">Line configuration</h2><span class="sub">Changes reset the live run automatically.</span></div>
+
+      <div class="cfg-group">
+        <div class="cfg-title">Scenario</div>
+        <div class="grid2">
+          <div class="field full">
+            <label for="presetSel">Preset scenario</label>
+            <select id="presetSel">
+              <option value="">Custom</option>
+              <option value="balanced">Balanced line</option>
+              <option value="bottleneck">Clear bottleneck</option>
+              <option value="highvar">High variability</option>
+              <option value="unreliable">Unreliable machine</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="nStations">Stations</label>
+            <select id="nStations"><option>2</option><option selected>3</option><option>4</option><option>5</option><option>6</option></select>
+          </div>
+          <div class="field">
+            <label for="seedIn">Random seed <span data-tip-text="The same seed with the same settings reproduces exactly the same run. Arrivals, every station's processing times, failures and defects each use their own random stream (common random numbers across experiments)."></span></label>
+            <input id="seedIn" type="number" min="1" step="1" value="12345">
+          </div>
+          <div class="field">
+            <label for="warmIn">Warm-up (min) <span data-tip-text="Statistics are discarded until the warm-up ends, removing the empty-and-idle start-up bias. All KPIs are collected (time-weighted where relevant) from then on."></span></label>
+            <input id="warmIn" type="number" min="0" step="5" value="30">
+          </div>
+        </div>
+      </div>
+
+      <div class="cfg-group">
+        <div class="cfg-title">Arrivals &amp; demand <span data-tip-text="Unlimited: Station 1 is never starved — a raw part is released whenever it is free (flow time starts at release). Poisson: parts arrive with exponential inter-arrival times at rate λ into an unlimited input queue (flow time includes that wait)."></span></div>
+        <div class="radio-row" role="radiogroup" aria-label="Arrival process">
+          <label class="check"><input type="radio" name="arrMode" value="unlimited" checked> Unlimited raw material</label>
+          <label class="check"><input type="radio" name="arrMode" value="poisson"> Poisson arrivals</label>
+        </div>
+        <div class="grid2" style="margin-top:12px">
+          <div class="field full">
+            <label for="lambdaIn">Arrival rate λ (parts/hr)</label>
+            <input id="lambdaIn" type="number" min="0.1" step="1" value="48" disabled>
+          </div>
+          <div class="field">
+            <label for="demandIn">Demand (parts/day)</label>
+            <input id="demandIn" type="number" min="1" step="10" value="400">
+          </div>
+          <div class="field">
+            <label for="hoursIn">Available h/day</label>
+            <input id="hoursIn" type="number" min="0.5" step="0.5" value="8">
+          </div>
+        </div>
+      </div>
+
+      <div class="cfg-group">
+        <div class="cfg-title">Stations &amp; buffers</div>
+        <div id="stationsCfg"></div>
+      </div>
+    </aside>
+
+    <section class="stage" id="sim" aria-labelledby="simTitle">
+      <div class="card">
+        <div class="card-h"><h2 id="simTitle">Live line</h2></div>
+        <div class="controls">
+          <button type="button" class="btn-cta" id="playBtn" aria-pressed="false"><span id="playLabel">Play</span><span class="arrow" aria-hidden="true"><svg id="playIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span></button>
+          <button type="button" class="btn" id="stepBtn" aria-label="Step one event"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5v14l9-7zM16 5h3v14h-3z"/></svg>Step</button>
+          <button type="button" class="btn" id="resetBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/></svg>Reset</button>
+          <div class="speed">
+            <label for="speedIn">Speed</label>
+            <input id="speedIn" type="range" min="1" max="50" step="1" value="5" aria-describedby="speedHint">
+            <output id="speedOut" for="speedIn">5x</output>
+          </div>
+        </div>
+        <div class="clockbox">
+          <span class="clock" id="clock" aria-label="Simulated time">00:00:00</span>
+          <span class="pill warm" id="phasePill"><span class="dot"></span><span id="phaseText">Warm-up</span></span>
+          <span class="hint" id="speedHint">1x = 1 simulated minute per second</span>
+        </div>
+        <div class="lastev" id="lastEvent" aria-live="off"></div>
+        <div class="canvas-wrap"><canvas id="lineCanvas" role="img" aria-label="Animated production line"></canvas></div>
+        <div class="legend" aria-label="Legend">
+          <span><i class="sw" style="background:var(--st-working)"></i>Working</span>
+          <span><i class="sw" style="background:var(--st-blocked)"></i>Blocked</span>
+          <span><i class="sw" style="background:var(--st-starved)"></i>Starved</span>
+          <span><i class="sw" style="background:var(--st-down)"></i>Down</span>
+          <span><i class="sw" style="background:transparent;box-shadow:inset 0 0 0 2px var(--secondary)"></i>Bottleneck</span>
+          <span><i class="sw c" style="background:var(--part-raw)"></i>Raw</span>
+          <span><i class="sw c" style="background:var(--part-wip)"></i>WIP</span>
+          <span><i class="sw c" style="background:var(--part-rework)"></i>Rework</span>
+          <span><i class="sw c" style="background:var(--part-done)"></i>Finished</span>
+          <span><i class="sw c" style="background:var(--part-scrap)"></i>Scrap</span>
+        </div>
+      </div>
+      <div class="kpis" id="kpis" aria-live="off"></div>
+    </section>
+  </div>
+
+  <section class="card section" aria-labelledby="stTitle">
+    <div class="card-h"><h2 id="stTitle">Station performance</h2><span class="sub">All values after warm-up. The detected bottleneck is highlighted in orange.</span></div>
+    <div class="table-wrap"><table id="stTable"></table></div>
+    <div class="card-h" style="margin-top:24px"><h3>Buffers</h3></div>
+    <div class="table-wrap"><table id="bufTable"></table></div>
+  </section>
+
+  <section class="charts section" aria-label="Charts">
+    <div class="card"><div class="card-h"><h3>WIP over time</h3><span data-tip-text="Instantaneous number of parts in the system (stepped line) and its time-weighted running average after warm-up."></span></div><div class="chart-box"><canvas class="chart" id="chWip" role="img" aria-label="WIP over time chart"></canvas><div class="chart-fallback">Charts unavailable (Chart.js did not load). All numbers above remain live.</div></div></div>
+    <div class="card"><div class="card-h"><h3>Station time breakdown</h3><span data-tip-text="Share of post-warm-up time each station spent working, blocked, starved and down. Utilization = working share."></span></div><div class="chart-box"><canvas class="chart" id="chStates" role="img" aria-label="Station state breakdown chart"></canvas><div class="chart-fallback">Charts unavailable — see the time-breakdown bars in the station table.</div></div></div>
+    <div class="card"><div class="card-h"><h3>Line balance vs takt</h3><span data-tip-text="Set mean cycle time and effective cycle time (CT ÷ (availability × (1 − defect rate))) per station against takt time. A station above the takt line cannot keep up with demand."></span></div><div class="chart-box"><canvas class="chart" id="chBalance" role="img" aria-label="Line balance chart"></canvas><div class="chart-fallback">Charts unavailable — see the takt and line-balance KPIs.</div></div></div>
+    <div class="card"><div class="card-h"><h3>Average buffer occupancy</h3><span data-tip-text="Time-weighted average number of parts in each buffer compared with its capacity."></span></div><div class="chart-box"><canvas class="chart" id="chBuf" role="img" aria-label="Buffer occupancy chart"></canvas><div class="chart-fallback">Charts unavailable — see the buffer table.</div></div></div>
+  </section>
+
+  <section class="section" aria-labelledby="anTitle">
+    <div class="hero" style="padding:32px 0 24px">
+      <span class="overline">Analysis</span>
+      <h2 class="h4" id="anTitle">Replications &amp; experiments</h2>
+      <p class="note">These run headless (no animation) with the current configuration, seed and warm-up. Replication r uses seed + r.</p>
+    </div>
+    <div class="an-grid">
+      <div class="card">
+        <div class="card-h"><h3>Replication mode</h3><span data-tip-text="Runs N independent replications of length T after warm-up and reports mean ± 95% confidence half-width: x̄ ± t(0.975, N−1)·s/√N (Student-t)."></span></div>
+        <div class="an-form">
+          <div class="field"><label for="repN">Replications N</label><input id="repN" type="number" min="2" max="200" step="1" value="10"></div>
+          <div class="field"><label for="repT">Length T (h)</label><input id="repT" type="number" min="0.5" step="0.5" value="8"></div>
+          <div class="field"><label for="repWarm">Warm-up (min)</label><input id="repWarm" type="number" min="0" step="5" value="30"></div>
+        </div>
+        <div class="actions">
+          <button type="button" class="btn-cta" id="repBtn"><span>Run replications</span><span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+          <button type="button" class="btn" id="repCancel" disabled>Cancel</button>
+        </div>
+        <div class="progress" role="progressbar" aria-label="Replication progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="repProg"><i></i></div>
+        <div class="results" id="repOut"><p class="note">No replications yet.</p></div>
+      </div>
+      <div class="card">
+        <div class="card-h"><h3>Experiment mode</h3><span data-tip-text="Sweeps one parameter and plots mean throughput (± 95% CI) at each value. Each point uses the same seeds (common random numbers), so differences reflect the parameter rather than noise."></span></div>
+        <div class="an-form">
+          <div class="field" style="grid-column:span 2"><label for="expParam">Parameter</label><select id="expParam"></select></div>
+          <div class="field"><label for="expReps">Reps / point</label><input id="expReps" type="number" min="1" max="50" step="1" value="3"></div>
+          <div class="field"><label for="expFrom">From</label><input id="expFrom" type="number" step="any" value="0"></div>
+          <div class="field"><label for="expTo">To</label><input id="expTo" type="number" step="any" value="10"></div>
+          <div class="field"><label for="expStep">Step</label><input id="expStep" type="number" step="any" min="0.01" value="1"></div>
+          <div class="field"><label for="expT">Length T (h)</label><input id="expT" type="number" min="0.5" step="0.5" value="8"></div>
+        </div>
+        <div class="actions">
+          <button type="button" class="btn-cta" id="expBtn"><span>Run experiment</span><span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+          <button type="button" class="btn" id="expCancel" disabled>Cancel</button>
+        </div>
+        <div class="progress" role="progressbar" aria-label="Experiment progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="expProg"><i></i></div>
+        <div class="chart-box"><canvas class="chart" id="chExp" role="img" aria-label="Experiment throughput chart"></canvas><div class="chart-fallback">Charts unavailable — see the results table below.</div></div>
+        <div class="results" id="expOut"></div>
+      </div>
+    </div>
+    <div class="card section">
+      <div class="card-h"><h3>Export</h3><span class="sub">Download the configuration, live KPIs, station and buffer statistics, plus any replication and experiment results as CSV.</span></div>
+      <button type="button" class="btn" id="csvBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Export results (CSV)</button>
+    </div>
+  </section>
+
+  <footer>
+    <span class="fb"><span>Savvy Line Lab · a Savvy Marketing Partners tool for manufacturing systems education.</span></span>
+    <span>Model: event-calendar DES, blocking after service, time-based failures with pre-emptive resume.</span>
+  </footer>
+</main>
+<div id="tip" class="tip" aria-hidden="true"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" async></script>
+<script>
+(function(){
+'use strict';
+/* =====================================================================
+   1. Random numbers (seeded, reproducible)
+   ===================================================================== */
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function streamSeed(seed,k){var h=(seed>>>0)^Math.imul(k+1,0x9E3779B1);h=Math.imul(h^h>>>16,0x85ebca6b);h=Math.imul(h^h>>>13,0xc2b2ae35);return(h^h>>>16)>>>0;}
+function makeGauss(rng){var spare=null;return function(){if(spare!==null){var s=spare;spare=null;return s;}var u=1-rng(),v=rng();var r=Math.sqrt(-2*Math.log(u));spare=r*Math.sin(2*Math.PI*v);return r*Math.cos(2*Math.PI*v);};}
+var MIN_FRAC=0.05;
+var DISTS=[['det','Deterministic'],['uniform','Uniform'],['normal','Normal'],['tri','Triangular'],['exp','Exponential'],['lognormal','Lognormal']];
+function effectiveCV(dist,cv){
+  if(dist==='det')return 0; if(dist==='exp')return 1;
+  if(dist==='uniform')return Math.min(cv,(1-MIN_FRAC)/Math.sqrt(3));
+  if(dist==='tri')return Math.min(cv,(1-MIN_FRAC)/Math.sqrt(6));
+  return cv;
+}
+function makeSampler(dist,mean,cv,rng){
+  var minT=mean*MIN_FRAC, sd=mean*cv, g=makeGauss(rng);
+  switch(dist){
+    case 'det': return function(){return mean;};
+    case 'uniform': {var h=Math.min(Math.sqrt(3)*sd,mean-minT);return function(){return mean-h+2*h*rng();};}
+    case 'normal': return function(){if(sd<=0)return mean;for(var k=0;k<50;k++){var x=mean+sd*g();if(x>=minT)return x;}return minT;};
+    case 'tri': {var w=Math.min(Math.sqrt(6)*sd,mean-minT);return function(){var u=rng();return u<0.5?mean-w+w*Math.sqrt(2*u):mean+w-w*Math.sqrt(2*(1-u));};}
+    case 'exp': return function(){return -mean*Math.log(1-rng());};
+    case 'lognormal': {if(cv<=0)return function(){return mean;};var s2=Math.log(1+cv*cv),mu=Math.log(mean)-s2/2,s=Math.sqrt(s2);return function(){return Math.exp(mu+s*g());};}
+  }
+  return function(){return mean;};
+}
+/* =====================================================================
+   2. Event calendar: binary min-heap ordered by (time, sequence)
+   ===================================================================== */
+function Heap(){this.a=[];}
+Heap.prototype.less=function(x,y){return x.t<y.t||(x.t===y.t&&x.s<y.s);};
+Heap.prototype.push=function(e){var a=this.a;a.push(e);var i=a.length-1;while(i>0){var p=(i-1)>>1;if(this.less(a[i],a[p])){var tmp=a[i];a[i]=a[p];a[p]=tmp;i=p;}else break;}};
+Heap.prototype.pop=function(){var a=this.a;if(!a.length)return null;var top=a[0],last=a.pop();if(a.length){a[0]=last;var i=0,n=a.length;for(;;){var l=2*i+1,r=l+1,m=i;if(l<n&&this.less(a[l],a[m]))m=l;if(r<n&&this.less(a[r],a[m]))m=r;if(m===i)break;var t2=a[i];a[i]=a[m];a[m]=t2;i=m;}}return top;};
+Heap.prototype.peek=function(){return this.a[0]||null;};
+Object.defineProperty(Heap.prototype,'size',{get:function(){return this.a.length;}});
+
+/* =====================================================================
+   3. Discrete-event simulation of a serial line
+   Model notes
+   - Station i takes parts from its input buffer (station 1: raw supply or arrival queue).
+   - Blocking after service: a finished good part stays on the machine until the next
+     buffer has room (capacity 0 = next machine must be idle).
+   - Failures are time-based: time to failure ~ Exp(MTBF) runs on the clock in every
+     state; a failure pre-empts processing and the job resumes after repair ~ Exp(MTTR).
+     A blocked part cannot be unloaded while the machine is down.
+   - Defects: scrap removes the part; rework puts it back at the head of the same
+     station's input (it stays at the machine) and it is processed again.
+   ===================================================================== */
+var ARR=0,END=1,FAIL=2,REP=3;
+function Sim(cfg,opt){
+  opt=opt||{};
+  this.cfg=cfg; this.N=cfg.stations.length;
+  this.warm=(opt.warmup!=null?opt.warmup:(cfg.warmupMin||0)*60);
+  this.hooks=opt.hooks||null;
+  var seed=(cfg.seed>>>0)||1;
+  this.now=0;this.seq=0;this.heap=new Heap();this.partId=0;this.lastT=0;this.wip=0;this.events=0;
+  this.unlimited=!(cfg.arrivals&&cfg.arrivals.mode==='poisson');
+  this.lambda=(cfg.arrivals&&cfg.arrivals.rate||0)/3600;
+  this.arrRng=mulberry32(streamSeed(seed,1000));
+  this.arrQ=[];
+  var self=this;
+  this.st=cfg.stations.map(function(c,i){
+    return {i:i,c:c,phase:'idle',down:false,part:null,startT:0,endT:0,svc:0,remaining:0,token:0,rework:[],state:'starved',
+      sampler:makeSampler(c.dist,c.ct,c.dist==='exp'?1:(c.dist==='det'?0:c.cv),mulberry32(streamSeed(seed,i*10+1))),
+      failRng:mulberry32(streamSeed(seed,i*10+2)),qRng:mulberry32(streamSeed(seed,i*10+3)),
+      T:{working:0,blocked:0,starved:0,down:0},ops:0,good:0,firstTries:0,firstGood:0,scrap:0,reworks:0,ctN:0,ctSum:0,ctSq:0,
+      activeOpen:false,activeStart:0,pS:[],pE:[],pD:[],angle:0,scrapLive:0,reworkLive:0};
+  });
+  this.buf=[null];
+  for(var j=1;j<this.N;j++)this.buf.push({cap:Math.max(0,Math.round(cfg.buffers[j-1]||0)),q:[],area:0,fullT:0});
+  this.arrArea=0;this.wipArea=0;this.finished=0;this.finishedClean=0;this.scrapTotal=0;
+  this.flowSum=0;this.flowSq=0;this.flowArr=[];this.exits=0;this.sojournSum=0;this.bnFrom=0;
+  this.lastEvent=null;
+  if(!this.unlimited&&this.lambda>0)this.schedule(this.expo(this.arrRng,1/this.lambda),ARR,-1,0);
+  for(var i=0;i<this.N;i++){var s=this.st[i];if(s.c.bdOn&&s.c.mtbf>0&&s.c.mttr>0)this.schedule(this.expo(s.failRng,s.c.mtbf*60),FAIL,i,0);}
+  for(i=0;i<this.N;i++)this.tryStart(i);
+  this.refreshStates();
+}
+Sim.prototype.expo=function(rng,mean){return -mean*Math.log(1-rng());};
+Sim.prototype.schedule=function(t,type,i,token){this.heap.push({t:t,s:this.seq++,type:type,i:i,token:token});};
+Sim.prototype.newPart=function(){this.wip++;var p={id:++this.partId,tIn:this.now,reworked:false,stIdx:-1,tries:0};if(this.hooks&&this.hooks.onEnter)this.hooks.onEnter(p);return p;};
+Sim.prototype.integrate=function(t){
+  var a=Math.max(this.lastT,this.warm);
+  if(t>a){var dt=t-a;this.wipArea+=this.wip*dt;this.arrArea+=this.arrQ.length*dt;
+    for(var i=0;i<this.N;i++){var s=this.st[i];s.T[s.state]+=dt;}
+    for(var j=1;j<this.N;j++){var b=this.buf[j];b.area+=b.q.length*dt;if(b.cap>0&&b.q.length>=b.cap)b.fullT+=dt;}}
+  if(t>this.lastT)this.lastT=t;
+};
+Sim.prototype.collecting=function(){return this.now>=this.warm;};
+Sim.prototype.tryStart=function(i){
+  var s=this.st[i];if(s.down||s.phase!=='idle')return;
+  var p=null,fromBuf=false;
+  if(s.rework.length)p=s.rework.shift();
+  else if(i===0){if(this.unlimited)p=this.newPart();else if(this.arrQ.length)p=this.arrQ.shift();}
+  else{var b=this.buf[i];if(b.q.length){p=b.q.shift();fromBuf=true;}}
+  if(!p){ // nothing to do: with zero-capacity buffers the upstream machine may hold a part for us
+    if(i>0){var u=this.st[i-1];if(u.phase==='blocked'&&!u.down)this.tryPush(i-1);}
+    return;}
+  if(p.stIdx!==i){p.stIdx=i;p.tries=0;}
+  s.part=p;s.phase='busy';
+  var d=s.sampler();s.svc=d;s.startT=this.now;s.endT=this.now+d;s.token++;
+  this.schedule(s.endT,END,i,s.token);
+  if(fromBuf){var up=this.st[i-1];if(up.phase==='blocked')this.tryPush(i-1);}
+};
+Sim.prototype.tryPush=function(i){
+  var s=this.st[i];if(s.down||s.phase!=='blocked'&&s.phase!=='done')return;
+  var p=s.part;
+  if(i===this.N-1){
+    s.part=null;s.phase='idle';this.depart(p,'done',i);this.tryStart(i);return;}
+  var b=this.buf[i+1],d=this.st[i+1];
+  var ok=b.q.length<b.cap||(b.q.length===0&&d.phase==='idle'&&!d.down&&d.rework.length===0);
+  if(!ok){s.phase='blocked';return;}
+  s.part=null;s.phase='idle';b.q.push(p);
+  this.tryStart(i+1);this.tryStart(i);
+};
+Sim.prototype.depart=function(p,kind,i){
+  this.wip--;
+  if(this.collecting()){
+    var ft=this.now-p.tIn;this.exits++;this.sojournSum+=ft;
+    if(kind==='done'){this.finished++;if(!p.reworked)this.finishedClean++;this.flowSum+=ft;this.flowSq+=ft*ft;if(this.flowArr.length<400000)this.flowArr.push(ft);}
+    else this.scrapTotal++;
+  }
+  if(this.hooks&&this.hooks.onExit)this.hooks.onExit(p,kind,i);
+};
+Sim.prototype.stateOf=function(s){return s.down?'down':s.phase==='busy'?'working':s.phase==='blocked'?'blocked':'starved';};
+Sim.prototype.refreshStates=function(){
+  for(var i=0;i<this.N;i++){var s=this.st[i],ns=this.stateOf(s);if(ns===s.state)continue;
+    var was=s.state==='working'||s.state==='down',is=ns==='working'||ns==='down';
+    if(was&&!is){this.closePeriod(s);}
+    else if(!was&&is){s.activeOpen=true;s.activeStart=this.now;}
+    s.state=ns;}
+};
+Sim.prototype.closePeriod=function(s){
+  s.activeOpen=false;var a=Math.max(s.activeStart,this.warm),e=this.now;
+  if(e>a){s.pS.push(a);s.pE.push(e);s.pD.push(e-s.activeStart);
+    if(s.pS.length>150000){var cut=50000;this.bnFrom=Math.max(this.bnFrom,s.pE[cut-1]);s.pS.splice(0,cut);s.pE.splice(0,cut);s.pD.splice(0,cut);}}
+};
+Sim.prototype.step=function(){
+  var ev=this.heap.pop();if(!ev)return null;
+  this.integrate(ev.t);this.now=ev.t;this.events++;
+  var i=ev.i,s=i>=0?this.st[i]:null,info={type:ev.type,i:i,t:ev.t,part:null,result:''};
+  if(ev.type===ARR){
+    var p=this.newPart();this.arrQ.push(p);info.part=p.id;
+    this.schedule(this.now+this.expo(this.arrRng,1/this.lambda),ARR,-1,0);
+    this.tryStart(0);
+  }else if(ev.type===END){
+    if(ev.token!==s.token||s.phase!=='busy'||s.down){info.stale=true;}
+    else{
+      var q=s.part;info.part=q.id;q.tries++;var first=q.tries===1,col=this.collecting();
+      if(col){s.ops++;s.ctN++;s.ctSum+=s.svc;s.ctSq+=s.svc*s.svc;if(first)s.firstTries++;}
+      var defect=s.c.defect>0&&s.qRng()<s.c.defect/100;
+      if(defect){
+        if(s.c.action==='rework'){q.reworked=true;s.reworkLive++;if(col)s.reworks++;s.part=null;s.phase='idle';s.rework.push(q);info.result='rework';this.tryStart(i);}
+        else{s.scrapLive++;if(col)s.scrap++;s.part=null;s.phase='idle';info.result='scrap';this.depart(q,'scrap',i);this.tryStart(i);}
+      }else{
+        if(col){s.good++;if(first)s.firstGood++;}
+        s.phase='done';info.result='good';this.tryPush(i);
+        if(s.phase==='blocked')info.result='blocked';
+      }
+    }
+  }else if(ev.type===FAIL){
+    s.down=true;s.downAt=this.now;
+    if(s.phase==='busy'){s.remaining=Math.max(0,s.endT-this.now);s.token++;}
+    this.schedule(this.now+this.expo(s.failRng,s.c.mttr*60),REP,i,0);
+  }else if(ev.type===REP){
+    s.down=false;
+    this.schedule(this.now+this.expo(s.failRng,s.c.mtbf*60),FAIL,i,0);
+    if(s.phase==='busy'){s.endT=this.now+s.remaining;s.startT=s.endT-s.svc;s.token++;this.schedule(s.endT,END,i,s.token);}
+    else if(s.phase==='blocked')this.tryPush(i);
+    else this.tryStart(i);
+    if(s.phase==='idle'&&i>0){var u=this.st[i-1];if(u.phase==='blocked')this.tryPush(i-1);}
+  }
+  this.refreshStates();
+  this.lastEvent=info;
+  return info;
+};
+Sim.prototype.advanceTo=function(T,maxEvents){
+  var n=0,lim=maxEvents||Infinity;
+  while(this.heap.size&&this.heap.peek().t<=T){if(n++>=lim)return false;this.step();}
+  this.integrate(T);if(T>this.now)this.now=T;return true;
+};
+Sim.prototype.progress=function(i){var s=this.st[i];if(s.phase!=='busy'||s.svc<=0)return s.phase==='blocked'?1:0;
+  if(s.down)return Math.min(1,Math.max(0,1-s.remaining/s.svc));return Math.min(1,Math.max(0,(this.now-s.startT)/s.svc));};
+/* Roser active-period method: at every instant, the station whose current active
+   (working or down) period is longest is the momentary bottleneck. */
+Sim.prototype.bottleneck=function(){
+  var N=this.N,t0=Math.max(this.warm,this.bnFrom),t1=this.now,share=new Array(N).fill(0),avg=new Array(N).fill(0);
+  var L=[],i,k;
+  for(i=0;i<N;i++){var s=this.st[i],ex=null;
+    if(s.activeOpen){var a=Math.max(s.activeStart,this.warm);if(t1>a)ex=[a,t1,t1-s.activeStart];}
+    var S=s.pS,E=s.pE,D=s.pD,sum=0;for(k=0;k<D.length;k++)sum+=D[k];var cnt=D.length;if(ex){sum+=ex[2];cnt++;}
+    avg[i]=cnt?sum/cnt:0;L.push({S:S,E:E,D:D,ex:ex,n:S.length+(ex?1:0)});}
+  if(t1<=t0)return {share:share,avg:avg,idx:-1};
+  function gS(l,k){return k<l.S.length?l.S[k]:l.ex[0];}function gE(l,k){return k<l.S.length?l.E[k]:l.ex[1];}function gD(l,k){return k<l.S.length?l.D[k]:l.ex[2];}
+  var idx=new Array(N).fill(0),t=t0;
+  for(i=0;i<N;i++)while(idx[i]<L[i].n&&gE(L[i],idx[i])<=t)idx[i]++;
+  var guard=0;
+  while(t<t1&&guard++<5e6){
+    var next=t1,best=-1,bestD=-1;
+    for(i=0;i<N;i++){var l=L[i];k=idx[i];if(k>=l.n)continue;var ps=gS(l,k),pe=gE(l,k);
+      if(ps<=t){if(pe<next)next=pe;var dd=gD(l,k);if(dd>bestD){bestD=dd;best=i;}}else if(ps<next)next=ps;}
+    if(best>=0)share[best]+=next-t;
+    t=next;for(i=0;i<N;i++)while(idx[i]<L[i].n&&gE(L[i],idx[i])<=t)idx[i]++;
+  }
+  var tot=t1-t0,bi=-1,bv=-1;for(i=0;i<N;i++){share[i]/=tot;if(share[i]>bv+1e-12){bv=share[i];bi=i;}}
+  return {share:share,avg:avg,idx:bi};
+};
+function quantile(arr,q){if(!arr.length)return NaN;var a=Float64Array.from(arr).sort();var pos=(a.length-1)*q,lo=Math.floor(pos),hi=Math.ceil(pos);return a[lo]+(a[hi]-a[lo])*(pos-lo);}
+Sim.prototype.results=function(opts){
+  opts=opts||{};
+  var T=Math.max(0,this.now-this.warm),hrs=T/3600,N=this.N,self=this;
+  var r={T:T,simTime:this.now,warm:this.warm,collecting:T>0,finished:this.finished,scrap:this.scrapTotal,wipNow:this.wip};
+  r.th=T>0?this.finished/hrs:NaN;
+  r.wip=T>0?this.wipArea/T:NaN;
+  r.flowMean=this.finished?this.flowSum/this.finished:NaN;
+  r.flowSd=this.finished>1?Math.sqrt(Math.max(0,(this.flowSq-this.flowSum*this.flowSum/this.finished)/(this.finished-1))):NaN;
+  r.flowP95=opts.noQuantile?NaN:quantile(this.flowArr,0.95);
+  r.exitRate=T>0?this.exits/hrs:NaN;
+  r.sojourn=this.exits?this.sojournSum/this.exits/3600:NaN;
+  r.littleL=r.wip;r.littleR=r.exitRate*r.sojourn;r.littleDiff=(r.littleR-r.littleL)/r.littleL*100;
+  r.fpyLine=(this.finished+this.scrapTotal)?this.finishedClean/(this.finished+this.scrapTotal):NaN;
+  r.arrQ=T>0?this.arrArea/T:NaN;
+  var rty=1,anyFpy=false;
+  r.stations=this.st.map(function(s){
+    var up=T-s.T.down,o={name:s.c.name,state:s.state};
+    o.frac={working:T?s.T.working/T:NaN,blocked:T?s.T.blocked/T:NaN,starved:T?s.T.starved/T:NaN,down:T?s.T.down/T:NaN};
+    o.util=o.frac.working;o.A=T?up/T:NaN;o.P=up>0?Math.min(1,s.c.ct*s.ops/up):NaN;o.Q=s.ops?s.good/s.ops:NaN;
+    o.oee=o.A*o.P*o.Q;o.ops=s.ops;o.scrap=s.scrap;o.reworks=s.reworks;
+    o.fpy=s.firstTries?s.firstGood/s.firstTries:NaN;if(s.firstTries){rty*=o.fpy;anyFpy=true;}
+    o.ctMean=s.ctN?s.ctSum/s.ctN:NaN;
+    var v=s.ctN>1?(s.ctSq-s.ctSum*s.ctSum/s.ctN)/(s.ctN-1):NaN;o.ctCV=s.ctN>1?Math.sqrt(Math.max(0,v))/o.ctMean:NaN;
+    o.setCT=s.c.ct;o.setCV=effectiveCV(s.c.dist,s.c.cv);
+    return o;});
+  r.rty=anyFpy?rty:NaN;
+  r.buffers=[];for(var j=1;j<N;j++){var b=this.buf[j];r.buffers.push({name:'B'+(j+1),cap:b.cap,avg:T?b.area/T:NaN,full:T&&b.cap?b.fullT/T:NaN});}
+  if(!opts.noBottleneck){var bn=this.bottleneck();r.bn=bn;r.stations.forEach(function(o,i){o.bnShare=bn.share[i];o.avgActive=bn.avg[i];});}
+  return r;
+};
+/* Theoretical bottleneck rate (upper bound, ignores blocking/starvation) */
+function theory(cfg){
+  var st=cfg.stations,N=st.length;
+  var y=st.map(function(s){return s.action==='scrap'?1-s.defect/100:1;});
+  var A=st.map(function(s){return s.bdOn&&s.mtbf>0&&s.mttr>=0?s.mtbf/(s.mtbf+s.mttr):1;});
+  var rates=st.map(function(s,i){var r=A[i]*3600/s.ct*(1-s.defect/100);for(var j=i+1;j<N;j++)r*=y[j];return r;});
+  var bi=0;for(var i=1;i<N;i++)if(rates[i]<rates[bi])bi=i;
+  var max=rates[bi],arrivalLimited=false;
+  if(cfg.arrivals.mode==='poisson'){var ar=cfg.arrivals.rate;for(i=0;i<N;i++)ar*=y[i];if(ar<max){max=ar;arrivalLimited=true;}}
+  var effCT=st.map(function(s,i){return s.ct/(A[i]*(1-s.defect/100));});
+  var sum=0,mx=0;st.forEach(function(s){sum+=s.ct;mx=Math.max(mx,s.ct);});
+  var takt=cfg.demand.hoursPerDay*3600/cfg.demand.perDay;
+  return {rates:rates,bnIdx:bi,max:max,arrivalLimited:arrivalLimited,A:A,effCT:effCT,lbe:sum/(N*mx),takt:takt,maxEff:Math.max.apply(null,effCT)};
+}
+/* Student-t 0.975 quantile */
+var T975=[12.706,4.303,3.182,2.776,2.571,2.447,2.365,2.306,2.262,2.228,2.201,2.179,2.160,2.145,2.131,2.120,2.110,2.101,2.093,2.086,2.080,2.074,2.069,2.064,2.060,2.056,2.052,2.048,2.045,2.042];
+function tQuantile(df){if(df<1)return NaN;if(df<=30)return T975[df-1];var z=1.959964;return z+(z*z*z+z)/(4*df)+(5*Math.pow(z,5)+16*z*z*z+3*z)/(96*df*df);}
+function meanCI(xs){var n=xs.length,m=0;xs.forEach(function(x){m+=x;});m/=n;var v=0;xs.forEach(function(x){v+=(x-m)*(x-m);});var sd=n>1?Math.sqrt(v/(n-1)):0;var hw=n>1?tQuantile(n-1)*sd/Math.sqrt(n):NaN;return {mean:m,sd:sd,hw:hw,n:n,lo:m-hw,hi:m+hw};}
+function runHeadless(cfg,o){o=o||{};var warm=(o.warmupMin!=null?o.warmupMin:cfg.warmupMin)*60;var sim=new Sim(cfg,{warmup:warm});sim.advanceTo(warm+(o.lengthHr||8)*3600);return sim.results();}
+
+/* =====================================================================
+   4. Configuration, presets
+   ===================================================================== */
+var NAMES=['Machining','Assembly','Inspection','Painting','Testing','Packaging'];
+function stDef(name,ct,dist,cv,x){x=x||{};return {name:name,ct:ct,dist:dist,cv:cv,bdOn:!!x.bdOn,mtbf:x.mtbf||120,mttr:x.mttr||10,defect:x.defect||0,action:x.action||'scrap'};}
+function baseCfg(){return {stations:[],buffers:[],arrivals:{mode:'unlimited',rate:48},demand:{perDay:400,hoursPerDay:8},seed:12345,warmupMin:30};}
+var PRESETS={
+  balanced:function(){var c=baseCfg();c.stations=[stDef('Machining',60,'normal',0.2),stDef('Assembly',60,'normal',0.2),stDef('Inspection',60,'normal',0.2,{defect:2,action:'scrap'})];c.buffers=[3,3];return c;},
+  bottleneck:function(){var c=baseCfg();c.stations=[stDef('Machining',55,'normal',0.2),stDef('Assembly',80,'normal',0.2),stDef('Inspection',60,'normal',0.2,{defect:2,action:'rework'})];c.buffers=[3,3];return c;},
+  highvar:function(){var c=baseCfg();c.stations=[stDef('Machining',60,'lognormal',1.2),stDef('Assembly',60,'exp',1),stDef('Inspection',60,'lognormal',1.2,{defect:3,action:'rework'})];c.buffers=[2,2];return c;},
+  unreliable:function(){var c=baseCfg();c.stations=[stDef('Machining',60,'normal',0.15),stDef('Assembly',60,'normal',0.15,{bdOn:true,mtbf:45,mttr:15}),stDef('Inspection',60,'normal',0.15,{defect:2,action:'scrap'})];c.buffers=[5,5];return c;}
+};
+var cfg=PRESETS.balanced();
+function clone(o){return JSON.parse(JSON.stringify(o));}
+
+/* =====================================================================
+   5. Helpers
+   ===================================================================== */
+function $(id){return document.getElementById(id);}
+function fmt(x,d){if(x==null||!isFinite(x))return '—';return x.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});}
+function pct(x,d){return isFinite(x)?fmt(x*100,d==null?1:d)+'%':'—';}
+function hms(t){t=Math.floor(t);var h=Math.floor(t/3600),m=Math.floor(t%3600/60),s=t%60;return (h<10?'0':'')+h+':'+(m<10?'0':'')+m+':'+(s<10?'0':'')+s;}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function cssVar(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();}
+var tipSeq=0;
+function infoBtn(label,text){var id='tipx'+(++tipSeq);return '<button type="button" class="info" aria-label="About '+esc(label)+'" aria-describedby="'+id+'" data-tip="'+id+'">i</button><span id="'+id+'" class="sr-only">'+esc(text)+'</span>';}
+function hydrateTips(root){(root||document).querySelectorAll('[data-tip-text]').forEach(function(el){var lab=el.closest('label,.cfg-title,.card-h');var name=lab?lab.textContent.trim():'this item';el.outerHTML=infoBtn(name,el.getAttribute('data-tip-text'));});}
+var reducedMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* Floating tooltip (keyboard + hover + touch) */
+var tipEl=$('tip'),tipOwner=null;
+function showTip(btn){var src=$(btn.getAttribute('data-tip'));if(!src)return;tipOwner=btn;tipEl.textContent=src.textContent;tipEl.classList.add('show');
+  var r=btn.getBoundingClientRect(),tw=tipEl.offsetWidth,th=tipEl.offsetHeight,vw=document.documentElement.clientWidth;
+  var x=Math.min(Math.max(8,r.left+r.width/2-tw/2),vw-tw-8),y=r.bottom+8;if(y+th>window.innerHeight-8)y=Math.max(8,r.top-th-8);
+  tipEl.style.left=x+'px';tipEl.style.top=y+'px';}
+function hideTip(){tipOwner=null;tipEl.classList.remove('show');}
+document.addEventListener('mouseover',function(e){var b=e.target.closest&&e.target.closest('.info');if(b)showTip(b);});
+document.addEventListener('mouseout',function(e){var b=e.target.closest&&e.target.closest('.info');if(b&&document.activeElement!==b)hideTip();});
+document.addEventListener('focusin',function(e){if(e.target.classList&&e.target.classList.contains('info'))showTip(e.target);});
+document.addEventListener('focusout',function(e){if(e.target.classList&&e.target.classList.contains('info'))hideTip();});
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.info');if(b){if(tipOwner===b&&tipEl.classList.contains('show'))hideTip();else showTip(b);}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')hideTip();});
+window.addEventListener('scroll',function(){if(tipOwner)hideTip();},{passive:true});
+
+/* =====================================================================
+   6. Theme
+   ===================================================================== */
+function currentTheme(){var a=document.documentElement.getAttribute('data-theme');if(a)return a;return window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+function syncThemeBtn(){var t=currentTheme(),next=t==='dark'?'light':'dark';$('themeBtn').setAttribute('aria-label','Switch to '+next+' mode');$('themeLabel').textContent=next==='dark'?'Dark mode':'Light mode';
+  $('themeIcon').innerHTML=next==='dark'?'<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>':'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>';}
+$('themeBtn').addEventListener('click',function(){var next=currentTheme()==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',next);try{localStorage.setItem('savvy-line-lab-theme',next);}catch(e){}onTheme();});
+if(window.matchMedia)try{window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(){if(!document.documentElement.getAttribute('data-theme'))onTheme();});}catch(e){}
+var colors={};
+function readColors(){['--text','--text-sub','--text-faint','--bg-card','--bg-weak','--bg-soft','--stroke','--stroke-sub','--primary','--primary-text','--primary-dark','--secondary','--accent','--st-working','--st-blocked','--st-starved','--st-down','--part-raw','--part-wip','--part-rework','--part-done','--part-scrap','--conveyor','--machine-bg','--bg-page'].forEach(function(n){colors[n.slice(2)]=cssVar(n);});}
+function onTheme(){syncThemeBtn();readColors();destroyCharts();ensureCharts();refreshDashboard(true);}
+
+/* =====================================================================
+   7. Config UI
+   ===================================================================== */
+function renderConfig(){
+  var h='';
+  cfg.stations.forEach(function(s,i){
+    if(i>0){h+='<div class="buffer-row"><label for="buf'+i+'">Buffer B'+(i+1)+' capacity</label><input id="buf'+i+'" type="number" min="0" max="10" step="1" value="'+cfg.buffers[i-1]+'" data-k="buf" data-i="'+(i-1)+'"><span data-tip-text="Capacity of the buffer in front of '+esc(s.name)+' (0–10). 0 = no buffer: blocking after service — a finished part stays on the upstream machine until this machine is free."></span></div>';}
+    var cvDis=(s.dist==='det'||s.dist==='exp')?' disabled':'';
+    var cvVal=s.dist==='det'?0:s.dist==='exp'?1:s.cv;
+    h+='<fieldset class="station-card" style="margin-inline:0"><legend class="sr-only">Station '+(i+1)+'</legend><div class="st-head"><span class="st-num" aria-hidden="true">'+(i+1)+'</span><div class="field" style="flex:1"><label class="sr-only" for="s'+i+'name">Station '+(i+1)+' name</label><input id="s'+i+'name" type="text" value="'+esc(s.name)+'" data-k="name" data-i="'+i+'" maxlength="24"></div></div>'
+      +'<div class="grid2">'
+      +'<div class="field"><label for="s'+i+'ct">Mean cycle (s)</label><input id="s'+i+'ct" type="number" min="1" step="1" value="'+s.ct+'" data-k="ct" data-i="'+i+'"></div>'
+      +'<div class="field"><label for="s'+i+'cv">CV</label><input id="s'+i+'cv" type="number" min="0" max="3" step="0.05" value="'+cvVal+'" data-k="cv" data-i="'+i+'"'+cvDis+'></div>'
+      +'<div class="field full"><label for="s'+i+'dist">Distribution <span data-tip-text="Deterministic: CV = 0. Uniform: mean ± √3·σ (CV ≤ 0.55). Normal: truncated at 5% of the mean (redrawn). Triangular: symmetric, mode = mean, half-width √6·σ (CV ≤ 0.39). Exponential: CV fixed at 1. Lognormal: σ² = ln(1+CV²), μ = ln(mean) − σ²/2."></span></label><select id="s'+i+'dist" data-k="dist" data-i="'+i+'">'+DISTS.map(function(d){return '<option value="'+d[0]+'"'+(d[0]===s.dist?' selected':'')+'>'+d[1]+'</option>';}).join('')+'</select></div>'
+      +'<div class="field full"><label class="check"><input type="checkbox" id="s'+i+'bd" data-k="bdOn" data-i="'+i+'"'+(s.bdOn?' checked':'')+'> Breakdowns <span data-tip-text="Time-based failures: time between failures ~ Exponential(MTBF) runs on the clock in every state. A failure during processing pre-empts the job, which resumes where it stopped after repair (repair time ~ Exponential(MTTR)). A blocked part cannot be unloaded while the machine is down. Expected availability = MTBF ÷ (MTBF + MTTR)."></span></label></div>'
+      +'<div class="field"><label for="s'+i+'mtbf">MTBF (min)</label><input id="s'+i+'mtbf" type="number" min="1" step="5" value="'+s.mtbf+'" data-k="mtbf" data-i="'+i+'"'+(s.bdOn?'':' disabled')+'></div>'
+      +'<div class="field"><label for="s'+i+'mttr">MTTR (min)</label><input id="s'+i+'mttr" type="number" min="0.1" step="1" value="'+s.mttr+'" data-k="mttr" data-i="'+i+'"'+(s.bdOn?'':' disabled')+'></div>'
+      +'<div class="field"><label for="s'+i+'def">Defect rate (%)</label><input id="s'+i+'def" type="number" min="0" max="50" step="0.5" value="'+s.defect+'" data-k="defect" data-i="'+i+'"></div>'
+      +'<div class="field"><label for="s'+i+'act">Defects <span data-tip-text="Scrap: the defective part leaves the system immediately. Rework: the part goes back to the head of this station\'s own input queue (it stays at the machine, needing no buffer slot) and is processed again — it can be defective again."></span></label><select id="s'+i+'act" data-k="action" data-i="'+i+'"><option value="scrap"'+(s.action==='scrap'?' selected':'')+'>Scrap</option><option value="rework"'+(s.action==='rework'?' selected':'')+'>Rework loop</option></select></div>'
+      +'</div></fieldset>';
+  });
+  var box=$('stationsCfg');box.innerHTML=h;hydrateTips(box);
+  $('nStations').value=String(cfg.stations.length);
+  $('seedIn').value=cfg.seed;$('warmIn').value=cfg.warmupMin;
+  document.querySelectorAll('input[name=arrMode]').forEach(function(r){r.checked=r.value===cfg.arrivals.mode;});
+  $('lambdaIn').value=cfg.arrivals.rate;$('lambdaIn').disabled=cfg.arrivals.mode!=='poisson';
+  $('demandIn').value=cfg.demand.perDay;$('hoursIn').value=cfg.demand.hoursPerDay;
+  $('repWarm').value=cfg.warmupMin;
+  renderExpParams();
+}
+function num(v,def,min,max){v=parseFloat(v);if(!isFinite(v))v=def;if(min!=null)v=Math.max(min,v);if(max!=null)v=Math.min(max,v);return v;}
+$('stationsCfg').addEventListener('change',onStationInput);
+$('stationsCfg').addEventListener('input',function(e){if(e.target.type==='text')onStationInput(e);});
+function onStationInput(e){
+  var el=e.target,k=el.getAttribute('data-k');if(!k)return;var i=+el.getAttribute('data-i');
+  if(k==='buf'){cfg.buffers[i]=Math.round(num(el.value,0,0,10));el.value=cfg.buffers[i];}
+  else{var s=cfg.stations[i];
+    if(k==='name'){s.name=el.value.trim()||('Station '+(i+1));renderExpParams();}
+    else if(k==='ct'){s.ct=num(el.value,60,1,100000);el.value=s.ct;}
+    else if(k==='cv'){s.cv=num(el.value,0.2,0,3);el.value=s.cv;}
+    else if(k==='dist'){s.dist=el.value;var cv=$('s'+i+'cv');cv.disabled=s.dist==='det'||s.dist==='exp';cv.value=s.dist==='det'?0:s.dist==='exp'?1:s.cv;}
+    else if(k==='bdOn'){s.bdOn=el.checked;$('s'+i+'mtbf').disabled=!s.bdOn;$('s'+i+'mttr').disabled=!s.bdOn;}
+    else if(k==='mtbf'){s.mtbf=num(el.value,120,1);el.value=s.mtbf;}
+    else if(k==='mttr'){s.mttr=num(el.value,10,0.1);el.value=s.mttr;}
+    else if(k==='defect'){s.defect=num(el.value,0,0,50);el.value=s.defect;}
+    else if(k==='action'){s.action=el.value;}}
+  $('presetSel').value='';configChanged();
+}
+$('nStations').addEventListener('change',function(){var n=+this.value;while(cfg.stations.length<n){var i=cfg.stations.length;cfg.stations.push(stDef(NAMES[i]||('Station '+(i+1)),60,'normal',0.2));cfg.buffers.push(3);}
+  cfg.stations.length=n;cfg.buffers.length=n-1;$('presetSel').value='';renderConfig();configChanged();});
+$('presetSel').addEventListener('change',function(){if(!this.value)return;var keep={seed:cfg.seed,warm:cfg.warmupMin,demand:cfg.demand};cfg=PRESETS[this.value]();cfg.seed=keep.seed;cfg.warmupMin=keep.warm;cfg.demand=keep.demand;var v=this.value;renderConfig();$('presetSel').value=v;configChanged();});
+$('seedIn').addEventListener('change',function(){cfg.seed=Math.max(1,Math.round(num(this.value,12345,1)));this.value=cfg.seed;configChanged();});
+$('warmIn').addEventListener('change',function(){cfg.warmupMin=num(this.value,30,0);this.value=cfg.warmupMin;$('repWarm').value=cfg.warmupMin;configChanged();});
+document.querySelectorAll('input[name=arrMode]').forEach(function(r){r.addEventListener('change',function(){if(this.checked){cfg.arrivals.mode=this.value;$('lambdaIn').disabled=this.value!=='poisson';configChanged();}});});
+$('lambdaIn').addEventListener('change',function(){cfg.arrivals.rate=num(this.value,48,0.1);this.value=cfg.arrivals.rate;configChanged();});
+$('demandIn').addEventListener('change',function(){cfg.demand.perDay=num(this.value,400,1);this.value=cfg.demand.perDay;configChanged();});
+$('hoursIn').addEventListener('change',function(){cfg.demand.hoursPerDay=num(this.value,8,0.5,24);this.value=cfg.demand.hoursPerDay;configChanged();});
+var cfgTimer=null;function configChanged(){clearTimeout(cfgTimer);cfgTimer=setTimeout(resetLive,200);}
+
+/* =====================================================================
+   8. Live simulation + animation
+   ===================================================================== */
+var live=null,running=false,speed=5,series=[],sampleDt=30,nextSample=0,flying=[],disp=new Map(),bnIdx=-1,lastDash=0,lastChart=0;
+var hooks={onExit:function(p,kind,i){if(flying.length>10)flying.shift();var d=disp.get(p.id);flying.push({id:p.id,kind:kind,i:i,x:d?d.x:null,y:d?d.y:null,t:0});}};
+function resetLive(){live=new Sim(clone(cfg),{hooks:hooks});series=[];sampleDt=30;nextSample=0;flying=[];disp=new Map();bnIdx=-1;
+  if(window.SavvySim)window.SavvySim.live=live;
+  layoutCanvas();sampleSeries();refreshDashboard(true);describeEvent(null);}
+function sampleSeries(){if(!live)return;
+  while(live.now>=nextSample){var T=live.now-live.warm;series.push({x:nextSample/60,y:live.wip,avg:T>0?live.wipArea/T:null});nextSample+=sampleDt;
+    if(series.length>600){series=series.filter(function(_,k){return k%2===0;});sampleDt*=2;nextSample=series[series.length-1].x*60+sampleDt;}}
+}
+function setRunning(on){running=on;$('playLabel').textContent=on?'Pause':'Play';$('playBtn').setAttribute('aria-pressed',on?'true':'false');
+  $('playIcon').innerHTML=on?'<path d="M7 5h4v14H7zM13 5h4v14h-4z"/>':'<path d="M8 5v14l11-7z"/>';}
+$('playBtn').addEventListener('click',function(){setRunning(!running);});
+$('stepBtn').addEventListener('click',function(){setRunning(false);var ev=live.step();sampleSeries();describeEvent(ev);refreshDashboard(true);});
+$('resetBtn').addEventListener('click',function(){setRunning(false);resetLive();});
+$('speedIn').addEventListener('input',function(){speed=+this.value;$('speedOut').textContent=speed+'x';});
+function describeEvent(ev){var el=$('lastEvent');if(!ev){el.textContent='Ready. Press Play to run, or Step to advance one event at a time.';return;}
+  var nm=ev.i>=0?live.st[ev.i].c.name:'',t=hms(ev.t)+' · ',s;
+  if(ev.type===ARR)s='Part #'+ev.part+' arrived (input queue '+live.arrQ.length+')';
+  else if(ev.type===END){if(ev.stale)s=nm+': pre-empted completion ignored';else s=nm+' finished part #'+ev.part+(ev.result==='scrap'?' — defective, scrapped':ev.result==='rework'?' — defective, sent to rework':ev.result==='blocked'?' — blocked (no space downstream)':ev.i===live.N-1?' — shipped':' — moved on');}
+  else if(ev.type===FAIL)s=nm+' broke down';else s=nm+' repaired';
+  el.textContent='Last event: '+t+s;}
+
+/* ---- canvas layout ---- */
+var cv=$('lineCanvas'),ctx=cv.getContext('2d'),L=null,dpr=1;
+function layoutCanvas(){
+  if(!live)return;var W=cv.parentElement.clientWidth||600,N=live.N;dpr=Math.min(2,window.devicePixelRatio||1);
+  var lay={vertical:W<640,N:N,machines:[],buffers:[null],scrap:[]};
+  var slot=14,sg=3;
+  if(!lay.vertical){
+    var MW=112,MH=96,BW=5*(slot+sg)+sg+8,SW=60,OW=66,G=22;
+    var Lw=16+SW+G+N*MW+(N-1)*(BW+2*G)+G+OW+16,Lh=246,cy=118;
+    var x=16;lay.src={x:x,y:cy-34,w:SW,h:68};x+=SW+G;
+    for(var i=0;i<N;i++){if(i>0){var b={x:x,y:cy-22,w:BW,h:44};lay.buffers.push(b);x+=BW+G;}
+      lay.machines.push({x:x,y:cy-MH/2,w:MW,h:MH});lay.scrap.push({x:x+MW/2-18,y:cy+MH/2+24,w:36,h:26});x+=MW+G;if(i<N-1)x+=G;}
+    lay.out={x:x,y:cy-34,w:OW,h:68};lay.Lw=x+OW+16;lay.Lh=Lh;
+  }else{
+    var Lw2=340,mw=196,mh=84,G2=30,bh=44,y=24,mx=24;
+    lay.src={x:mx+mw/2-60,y:y,w:120,h:42};y+=42+G2;
+    for(i=0;i<N;i++){if(i>0){lay.buffers.push({x:mx+mw/2-(5*(slot+sg)+sg+8)/2,y:y,w:5*(slot+sg)+sg+8,h:bh});y+=bh+G2;}
+      lay.machines.push({x:mx,y:y,w:mw,h:mh});lay.scrap.push({x:mx+mw+28,y:y+mh/2-16,w:44,h:32});y+=mh+G2;}
+    lay.out={x:mx+mw/2-60,y:y,w:120,h:46};y+=46+12;lay.Lw=Lw2;lay.Lh=y;
+  }
+  lay.scale=Math.min(lay.vertical?1.6:1.25,W/lay.Lw);lay.ox=(W-lay.Lw*lay.scale)/2;
+  var Hc=Math.ceil(lay.Lh*lay.scale);cv.style.height=Hc+'px';cv.width=Math.round(W*dpr);cv.height=Math.round(Hc*dpr);
+  // buffer slot centres (slot 0 = next part to be served)
+  for(var j=1;j<N;j++){var bb=lay.buffers[j];bb.slots=[];for(var k=0;k<10;k++){var col=4-(k%5),row=Math.floor(k/5);
+      if(lay.vertical){col=k%5;row=1-Math.floor(k/5);}
+      bb.slots.push({x:bb.x+4+sg+col*(slot+sg)+slot/2,y:bb.y+(bb.h-(2*slot+sg))/2+row*(slot+sg)+slot/2});}}
+  L=lay;
+}
+var lastW=-1;var ro=window.ResizeObserver?new ResizeObserver(function(){var w=cv.parentElement.clientWidth;if(w!==lastW){lastW=w;layoutCanvas();}}):null;
+if(ro)ro.observe(cv.parentElement);else window.addEventListener('resize',layoutCanvas);
+
+function rr(x,y,w,h,r){ctx.beginPath();if(ctx.roundRect){ctx.roundRect(x,y,w,h,r);return;}ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+function drawGear(cx,cy,r,ang,color){var n=8;ctx.save();ctx.translate(cx,cy);ctx.rotate(ang);ctx.beginPath();
+  for(var k=0;k<n;k++){var a=k*2*Math.PI/n,w1=Math.PI/n*0.62,w2=Math.PI/n*0.36,ri=r*0.74;
+    var pts=[[ri,a-w1],[r,a-w2],[r,a+w2],[ri,a+w1]];pts.forEach(function(p,q){var X=p[0]*Math.cos(p[1]),Y=p[0]*Math.sin(p[1]);if(k===0&&q===0)ctx.moveTo(X,Y);else ctx.lineTo(X,Y);});}
+  ctx.closePath();ctx.fillStyle=color;ctx.fill();ctx.beginPath();ctx.arc(0,0,r*0.3,0,2*Math.PI);ctx.fillStyle=colors['machine-bg'];ctx.fill();ctx.restore();}
+function stateColor(s){return colors['st-'+s];}
+function stateLabel(s){return {working:'Working',blocked:'Blocked',starved:'Starved',down:'Down'}[s];}
+function partColor(p,stage){if(stage==='raw')return colors['part-raw'];if(p.reworked)return colors['part-rework'];return colors['part-wip'];}
+var dashOff=0;
+function draw(dt){
+  if(!L||!live)return;var c=colors,S=L.scale;
+  ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,cv.width,cv.height);ctx.setTransform(dpr*S,0,0,dpr*S,dpr*L.ox,0);
+  var font=getFontFamily();
+  if(running&&!reducedMotion)dashOff=(dashOff+dt*30*Math.min(4,speed/5+0.5))%20;
+  // conveyors
+  var chain=[L.src].concat(L.machines.reduce(function(a,m,i){if(i>0)a.push(L.buffers[i]);a.push(m);return a;},[])).concat([L.out]);
+  ctx.lineCap='round';
+  for(var k=0;k<chain.length-1;k++){var A=chain[k],B=chain[k+1],x1,y1,x2,y2;
+    if(L.vertical){x1=A.x+A.w/2;y1=A.y+A.h;x2=B.x+B.w/2;y2=B.y;}else{x1=A.x+A.w;y1=A.y+A.h/2;x2=B.x;y2=B.y+B.h/2;}
+    ctx.strokeStyle=c.conveyor;ctx.lineWidth=8;ctx.setLineDash([]);ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();
+    ctx.strokeStyle=c['bg-card'];ctx.lineWidth=2;ctx.setLineDash([4,6]);ctx.lineDashOffset=-dashOff;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.setLineDash([]);
+    // arrow head
+    ctx.fillStyle=c.conveyor;ctx.beginPath();if(L.vertical){ctx.moveTo(x2-6,y2-8);ctx.lineTo(x2+6,y2-8);ctx.lineTo(x2,y2-1);}else{ctx.moveTo(x2-8,y2-6);ctx.lineTo(x2-8,y2+6);ctx.lineTo(x2-1,y2);}ctx.fill();}
+  // source
+  var src=L.src;rr(src.x,src.y,src.w,src.h,12);ctx.fillStyle=c['bg-card'];ctx.fill();ctx.strokeStyle=c['stroke-sub'];ctx.lineWidth=1;ctx.stroke();
+  ctx.fillStyle=c['text-sub'];ctx.font='500 10px '+font;ctx.textAlign='center';ctx.textBaseline='alphabetic';
+  ctx.fillText(live.unlimited?'RAW ∞':'QUEUE '+live.arrQ.length,src.x+src.w/2,src.y-6);
+  if(live.unlimited){for(var q=0;q<6;q++){ctx.beginPath();var px=src.x+src.w/2+((q%3)-1)*13,py=src.y+src.h/2+(q<3?8:-6)-(L.vertical?2:0);ctx.arc(px,py,5.5,0,7);ctx.fillStyle=c['part-raw'];ctx.fill();}}
+  // output
+  var out=L.out;rr(out.x,out.y,out.w,out.h,12);ctx.fillStyle=c['bg-card'];ctx.fill();ctx.strokeStyle=c['part-done'];ctx.lineWidth=1.5;ctx.stroke();
+  ctx.fillStyle=c['text-sub'];ctx.font='500 10px '+font;ctx.fillText('FINISHED',out.x+out.w/2,out.y-6);
+  ctx.fillStyle=c.text;ctx.font='700 16px '+font;ctx.textBaseline='middle';ctx.fillText(String(live.finished),out.x+out.w/2,out.y+out.h/2);ctx.textBaseline='alphabetic';
+  // buffers
+  for(var j=1;j<live.N;j++){var b=L.buffers[j],bf=live.buf[j],full=bf.cap>0&&bf.q.length>=bf.cap;
+    rr(b.x,b.y,b.w,b.h,10);ctx.fillStyle=full?hexA(c.secondary,.14):c['bg-card'];ctx.fill();ctx.strokeStyle=full?c.secondary:c['stroke-sub'];ctx.lineWidth=full?2:1;ctx.stroke();
+    ctx.fillStyle=full?c.text:c['text-sub'];ctx.font='500 10px '+font;ctx.textAlign='center';
+    ctx.fillText('B'+(j+1)+' '+bf.q.length+'/'+bf.cap+(full?' FULL':''),b.x+b.w/2,b.y-6);
+    if(bf.cap===0){ctx.fillStyle=c['text-sub'];ctx.font='500 9px '+font;ctx.textBaseline='middle';ctx.fillText('no buffer',b.x+b.w/2,b.y+b.h/2);ctx.textBaseline='alphabetic';}
+    for(var k2=0;k2<bf.cap;k2++){var sl=b.slots[k2];rr(sl.x-7,sl.y-7,14,14,4);ctx.fillStyle=c['bg-weak'];ctx.fill();ctx.strokeStyle=c.stroke;ctx.lineWidth=1;ctx.stroke();}}
+  // machines
+  for(var i=0;i<live.N;i++){var m=L.machines[i],s=live.st[i],col=stateColor(s.state),isBn=i===bnIdx;
+    if(s.state==='working'&&!reducedMotion)s.angle+=dt*2.4*Math.min(3,0.6+speed/10);
+    if(isBn){rr(m.x-6,m.y-6,m.w+12,m.h+12,18);ctx.strokeStyle=c.secondary;ctx.lineWidth=3;ctx.setLineDash([6,4]);ctx.stroke();ctx.setLineDash([]);
+      var tagW=78;rr(m.x+m.w/2-tagW/2,m.y-20,tagW,15,7.5);ctx.fillStyle=c.secondary;ctx.fill();ctx.fillStyle='#030712';ctx.font='700 9px '+font;ctx.textAlign='center';ctx.fillText('BOTTLENECK',m.x+m.w/2,m.y-9.5);}
+    rr(m.x,m.y,m.w,m.h,14);ctx.fillStyle=s.state==='down'?hexA(c['st-down'],.18):c['machine-bg'];ctx.fill();ctx.strokeStyle=col;ctx.lineWidth=4;ctx.stroke();
+    ctx.textAlign='left';ctx.fillStyle=c.text;ctx.font='700 12px '+font;ctx.fillText(trunc(s.c.name,L.vertical?20:11),m.x+10,m.y+20);
+    ctx.font='500 10px '+font;ctx.fillStyle=col;ctx.beginPath();ctx.arc(m.x+14,m.y+33,3.5,0,7);ctx.fill();ctx.fillStyle=c['text-sub'];ctx.fillText(stateLabel(s.state)+(s.state==='down'?' — repair':''),m.x+21,m.y+36.5);
+    drawGear(m.x+m.w-22,m.y+24,13,s.angle,s.state==='working'?c.primary:c['text-faint']);
+    // progress bar
+    var pr=live.progress(i),bx=m.x+10,by=m.y+m.h-14,bw=m.w-20;rr(bx,by,bw,6,3);ctx.fillStyle=c['bg-soft'];ctx.fill();
+    if(pr>0){rr(bx,by,Math.max(6,bw*pr),6,3);ctx.fillStyle=s.state==='blocked'?c['st-blocked']:s.state==='down'?c['st-down']:c.primary;ctx.fill();}
+    if(s.state==='down'){ctx.fillStyle=c['text-sub'];ctx.font='700 10px '+font;ctx.textAlign='right';ctx.fillText('⚠ DOWN',m.x+m.w-10,m.y+m.h-22);}
+    // scrap bin
+    if(s.c.defect>0){var sb=L.scrap[i];rr(sb.x,sb.y,sb.w,sb.h,6);ctx.fillStyle=c['bg-card'];ctx.fill();ctx.strokeStyle=s.c.action==='scrap'?c['part-scrap']:c['part-rework'];ctx.lineWidth=1.2;ctx.stroke();
+      ctx.fillStyle=c['text-sub'];ctx.font='500 9px '+font;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(s.c.action==='scrap'?'✕ '+(s.scrapLive||0):'↺ '+(s.reworkLive||0),sb.x+sb.w/2,sb.y+sb.h/2);ctx.textBaseline='alphabetic';}
+  }
+  // parts
+  var k3=reducedMotion?1:1-Math.exp(-dt*14*Math.max(1,speed/4)),seen=new Map(),targets=[];
+  var src0={x:src.x+src.w/2,y:src.y+src.h/2};
+  if(!live.unlimited){live.arrQ.slice(0,8).forEach(function(p,n){targets.push({p:p,x:src.x+12+(n%4)*(src.w-24)/3,y:src.y+src.h/2+(n<4?-7:8)+(L.vertical?0:0),c:colors['part-raw']});});}
+  for(i=0;i<live.N;i++){var st=live.st[i],mm=L.machines[i];
+    if(st.part){var prg=live.progress(i);targets.push({p:st.part,x:mm.x+16+prg*(mm.w-32),y:mm.y+mm.h-26,c:partColor(st.part)});}
+    st.rework.forEach(function(p){targets.push({p:p,x:mm.x+12,y:mm.y+mm.h-26,c:colors['part-rework']});});
+    if(i>0){var bq=live.buf[i].q,bl=L.buffers[i];bq.forEach(function(p,n){var sl=bl.slots[Math.min(n,9)]||{x:bl.x+bl.w/2,y:bl.y+bl.h/2};targets.push({p:p,x:sl.x,y:sl.y,c:partColor(p)});});}}
+  targets.forEach(function(tg){var d=disp.get(tg.p.id);if(!d){d={x:tg.p.stIdx<=0?src0.x:tg.x,y:tg.p.stIdx<=0?src0.y:tg.y};}
+    d.x+=(tg.x-d.x)*k3;d.y+=(tg.y-d.y)*k3;seen.set(tg.p.id,d);ctx.beginPath();ctx.arc(d.x,d.y,5.5,0,7);ctx.fillStyle=tg.c;ctx.fill();ctx.lineWidth=1;ctx.strokeStyle=c['bg-card'];ctx.stroke();});
+  disp=seen;
+  // flying (exits)
+  var keep=[];flying.forEach(function(f){f.t+=dt;var dur=reducedMotion?0.15:Math.max(0.12,0.5/Math.max(1,speed/5));var tgt=f.kind==='done'?{x:out.x+out.w/2,y:out.y+out.h/2}:{x:L.scrap[f.i].x+L.scrap[f.i].w/2,y:L.scrap[f.i].y+L.scrap[f.i].h/2};
+    if(f.x==null){var mm2=L.machines[f.i];f.x=mm2.x+mm2.w-16;f.y=mm2.y+mm2.h-26;}
+    var u=Math.min(1,f.t/dur),e=u*u*(3-2*u),x=f.x+(tgt.x-f.x)*e,y=f.y+(tgt.y-f.y)*e;
+    ctx.globalAlpha=1-Math.max(0,(u-0.8)/0.2);ctx.beginPath();ctx.arc(x,y,5.5,0,7);ctx.fillStyle=f.kind==='done'?c['part-done']:c['part-scrap'];ctx.fill();ctx.globalAlpha=1;if(u<1)keep.push(f);});
+  flying=keep;
+}
+function trunc(s,n){return s.length>n?s.slice(0,n-1)+'…':s;}
+function hexA(hex,a){if(!hex||hex[0]!=='#')return hex;var h=hex.slice(1);if(h.length===3)h=h.split('').map(function(x){return x+x;}).join('');var n=parseInt(h,16);return 'rgba('+(n>>16&255)+','+(n>>8&255)+','+(n&255)+','+a+')';}
+var fontFam=null;function getFontFamily(){if(!fontFam)fontFam=cssVar('--font')||'system-ui, sans-serif';return fontFam;}
+
+var lastTs=0;
+function frame(ts){var dt=lastTs?Math.min(0.1,(ts-lastTs)/1000):0;lastTs=ts;
+  if(running&&live){var simDt=dt*speed*60;var t0=performance.now();var target=live.now+simDt;
+    live.advanceTo(target,200000);
+    // track rework events for the bin counter
+    sampleSeries();}
+  if(live){$('clock').textContent=hms(live.now);var warm=live.now<live.warm;$('phasePill').className='pill '+(warm?'warm':'live');$('phaseText').textContent=warm?'Warm-up until '+hms(live.warm):'Collecting statistics';}
+  try{draw(dt);}catch(e){console.error(e);}
+  if(ts-lastDash>400){lastDash=ts;if(running&&live&&live.lastEvent)describeEvent(live.lastEvent);refreshDashboard(ts-lastChart>1000);if(ts-lastChart>1000)lastChart=ts;}
+  requestAnimationFrame(frame);}
+
+/* =====================================================================
+   9. Dashboard
+   ===================================================================== */
+var KPI_DEFS=[
+  ['th','Throughput','Good parts leaving the last station per hour, after warm-up: TH = finished ÷ (t − warm-up). Compared with the theoretical bottleneck rate min_i[A_i · 3600/CT_i · (1 − d_i) · Π downstream scrap yields] (and λ for Poisson arrivals) — an upper bound that ignores blocking and starvation.'],
+  ['wip','Average WIP','Time-weighted average number of parts in the system, from release/arrival until they leave as finished or scrap: WIP = (1/T)∫WIP(t)dt.'],
+  ['flow','Flow time','Manufacturing lead time of finished parts = exit time − entry time. Mean and 95th percentile. With Poisson arrivals the wait in the input queue is included.'],
+  ['little','Little\'s Law','L = λ·W. L = average WIP; λ = exit rate of all parts (finished + scrap, per hour); W = their mean time in system (hours). Both sides should agree within a few % in a long, stable run.'],
+  ['takt','Takt time','Takt = available time per day ÷ daily demand. If a station\'s effective cycle time CT ÷ (A·(1 − d)) exceeds takt, the line cannot meet demand.'],
+  ['lbe','Line balance','Line balance efficiency = Σ CT_i ÷ (N × max CT_i) using the set mean cycle times. 100% = perfectly balanced; balance delay = 1 − efficiency.'],
+  ['quality','Quality','Line FPY = finished parts never reworked ÷ all parts that left (finished + scrap). RTY = Π FPY_i, with FPY_i = parts good at the first attempt at station i ÷ first attempts. Scrap = defective parts removed (after warm-up).'],
+  ['bn','Bottleneck','Active-period method (Roser): a station is active while working or down, inactive while blocked or starved. At each instant the station with the longest current active period is the momentary bottleneck; the line bottleneck is the station that holds that role for the largest share of time.']
+];
+(function buildKpis(){var h='';KPI_DEFS.forEach(function(d){h+='<div class="kpi" id="kpi-'+d[0]+'"><div class="k-h">'+esc(d[1])+infoBtn(d[1],d[2])+'</div><div class="k-v" id="kv-'+d[0]+'">—</div><div class="k-s" id="ks-'+d[0]+'"></div></div>';});$('kpis').innerHTML=h;})();
+var lastRes=null,lastTheo=null;
+function refreshDashboard(withCharts){
+  if(!live)return;var r=live.results(),th=theory(live.cfg);lastRes=r;lastTheo=th;
+  bnIdx=r.bn&&r.T>0?r.bn.idx:-1;
+  var thName=th.arrivalLimited?'arrival rate λ':live.cfg.stations[th.bnIdx].name;
+  set('th',fmt(r.th,1)+' <small>parts/hr</small>','Theoretical max '+fmt(th.max,1)+'/hr ('+esc(thName)+') · '+(isFinite(r.th)?pct(r.th/th.max,0)+' of max':'')+'<div class="meter" style="margin-top:6px"><i style="width:'+(isFinite(r.th)?Math.min(100,r.th/th.max*100):0)+'%"></i></div>');
+  set('wip',fmt(r.wip,2)+' <small>parts</small>','Now: '+r.wipNow+' in system'+(live.unlimited?'':' · input queue avg '+fmt(r.arrQ,2)));
+  set('flow',fmt(r.flowMean/60,2)+' <small>min</small>','95th percentile: '+fmt(r.flowP95/60,2)+' min · '+r.finished+' parts');
+  var ld=r.littleDiff;set('little','<span style="font-size:.8em">L '+fmt(r.littleL,2)+' ≈ λW '+fmt(r.littleR,2)+'</span>','λ = '+fmt(r.exitRate,1)+'/hr × W = '+fmt(r.sojourn*60,2)+' min · difference '+(isFinite(ld)?'<b class="'+(Math.abs(ld)<5?'ok':'warn')+'">'+fmt(ld,1)+'%</b>':'—'));
+  var meet=th.maxEff<=th.takt;set('takt',fmt(th.takt,1)+' <small>s</small>','Max effective CT '+fmt(th.maxEff,1)+' s → <b class="'+(meet?'ok':'warn')+'">'+(meet?'demand can be met':'cannot meet demand')+'</b>');
+  set('lbe',pct(th.lbe,1),'Σ CT = '+fmt(live.cfg.stations.reduce(function(a,s){return a+s.ct;},0),0)+' s · N × max CT = '+fmt(live.N*Math.max.apply(null,live.cfg.stations.map(function(s){return s.ct;})),0)+' s');
+  set('quality','FPY '+pct(r.fpyLine,1),'RTY '+pct(r.rty,1)+' · scrap '+r.scrap+' parts');
+  var bnv=bnIdx>=0?esc(live.cfg.stations[bnIdx].name):'—';
+  set('bn',bnv,bnIdx>=0?'Momentary bottleneck '+pct(r.bn.share[bnIdx],0)+' of the time · avg active period '+fmt(r.bn.avg[bnIdx]/60,2)+' min':'Collecting after warm-up…');
+  $('kpi-bn').classList.toggle('bn',bnIdx>=0);
+  renderTables(r,th);
+  if(withCharts)updateCharts(r,th);
+}
+function set(k,v,s){$('kv-'+k).innerHTML=v;$('ks-'+k).innerHTML=s;}
+var ST_KEYS=['working','blocked','starved','down'];
+function renderTables(r,th){
+  var hd='<thead><tr><th scope="col">Station</th><th scope="col">State</th><th scope="col"><span class="thi">Time breakdown'+infoBtn('Time breakdown','Fraction of post-warm-up time spent working (green), blocked (amber: finished part cannot move because the next buffer is full — blocking after service), starved (red: no part available) and down (gray: failed, under repair). Utilization = working share.')+'</span></th><th scope="col">Util.</th>'
+   +'<th scope="col"><span class="thi">A · P · Q'+infoBtn('OEE components','Availability A = (T − downtime) ÷ T. Performance P = (set CT × operations completed) ÷ (T − downtime), capped at 100% — blocking and starvation lower P. Quality Q = good operations ÷ all operations.')+'</span></th><th scope="col"><span class="thi">OEE'+infoBtn('OEE','OEE = Availability × Performance × Quality.')+'</span></th>'
+   +'<th scope="col"><span class="thi">CT set → obs'+infoBtn('Cycle time','Set mean cycle time and CV versus the observed mean and CV of sampled processing times. Uniform and triangular CVs are capped so times stay positive; truncation slightly raises a normal\'s mean at high CV.')+'</span></th>'
+   +'<th scope="col"><span class="thi">FPY'+infoBtn('FPY','First-pass yield at this station = parts good at the first attempt ÷ first attempts.')+'</span></th><th scope="col">Scrap / rework</th>'
+   +'<th scope="col"><span class="thi">Avg active'+infoBtn('Average active period','Mean length of an uninterrupted active (working or down) period. Longer active periods indicate a bottleneck (Roser).')+'</span></th><th scope="col"><span class="thi">% bottleneck'+infoBtn('Momentary bottleneck share','Share of time this station had the longest current active period, i.e. was the momentary bottleneck.')+'</span></th></tr></thead>';
+  var rows=r.stations.map(function(o,i){var bnr=i===bnIdx;
+    var stack=ST_KEYS.map(function(k){return '<i style="width:'+(isFinite(o.frac[k])?o.frac[k]*100:0)+'%;background:var(--st-'+k+')" title="'+k+' '+pct(o.frac[k])+'"></i>';}).join('');
+    var lbl=ST_KEYS.map(function(k){return k[0].toUpperCase()+' '+pct(o.frac[k],0);}).join(' · ');
+    return '<tr'+(bnr?' class="is-bn"':'')+'><td><b>'+esc(o.name)+'</b>'+(bnr?'<span class="tag-bn">Bottleneck</span>':'')+'</td><td><span class="stdot" style="background:var(--st-'+o.state+')"></span>'+stateLabel(o.state)+'</td>'
+      +'<td><div class="stack" role="img" aria-label="'+lbl+'">'+stack+'</div><div class="hint" style="margin-top:4px">'+lbl+'</div></td><td>'+pct(o.util)+'</td>'
+      +'<td>'+pct(o.A,0)+' · '+pct(o.P,0)+' · '+pct(o.Q,0)+'</td><td><b>'+pct(o.oee)+'</b></td>'
+      +'<td>'+fmt(o.setCT,1)+' s / '+fmt(o.setCV,2)+' → '+fmt(o.ctMean,1)+' s / '+fmt(o.ctCV,2)+'</td><td>'+pct(o.fpy)+'</td><td>'+o.scrap+' / '+o.reworks+'</td>'
+      +'<td>'+fmt(o.avgActive/60,2)+' min</td><td>'+pct(o.bnShare)+'</td></tr>';}).join('');
+  $('stTable').innerHTML='<caption class="sr-only">Per-station statistics</caption>'+hd+'<tbody>'+rows+'</tbody>';
+  hydrate();
+  var bh='<caption class="sr-only">Buffer statistics</caption><thead><tr><th scope="col">Buffer</th><th scope="col">In front of</th><th scope="col">Capacity</th><th scope="col">Now</th><th scope="col">Avg occupancy</th><th scope="col">% of capacity</th><th scope="col">% time full</th></tr></thead><tbody>';
+  r.buffers.forEach(function(b,j){bh+='<tr><td><b>'+b.name+'</b></td><td>'+esc(live.cfg.stations[j+1].name)+'</td><td>'+b.cap+(b.cap===0?' (blocking)':'')+'</td><td>'+live.buf[j+1].q.length+'</td><td>'+fmt(b.avg,2)+'</td><td>'+(b.cap?pct(b.avg/b.cap,0):'—')+'</td><td>'+(b.cap?pct(b.full,0):'—')+'</td></tr>';});
+  if(!live.unlimited)bh+='<tr><td><b>Input queue</b></td><td>'+esc(live.cfg.stations[0].name)+'</td><td>∞</td><td>'+live.arrQ.length+'</td><td>'+fmt(r.arrQ,2)+'</td><td>—</td><td>—</td></tr>';
+  $('bufTable').innerHTML=bh+'</tbody>';
+}
+function hydrate(){}
+
+/* =====================================================================
+   10. Charts (guarded: everything works without Chart.js)
+   ===================================================================== */
+var charts={};
+function hasChart(){return typeof window.Chart==='function';}
+function markNoChart(){document.querySelectorAll('.chart-box').forEach(function(b){b.classList.toggle('no-chart',!hasChart());});}
+function baseOpts(){return {responsive:true,maintainAspectRatio:false,animation:false,
+  plugins:{legend:{labels:{color:colors['text-sub'],boxWidth:12,boxHeight:12,font:{family:getFontFamily()}}},tooltip:{backgroundColor:colors['bg-card'],titleColor:colors.text,bodyColor:colors.text,borderColor:colors.stroke,borderWidth:1}},
+  scales:{x:{ticks:{color:colors['text-sub']},grid:{color:colors.stroke}},y:{ticks:{color:colors['text-sub']},grid:{color:colors.stroke},beginAtZero:true}}};}
+function mk(id,config){try{var el=$(id);if(!el||!hasChart())return null;return new window.Chart(el.getContext('2d'),config);}catch(e){console.warn('Chart error',e);return null;}}
+function destroyCharts(){Object.keys(charts).forEach(function(k){try{charts[k]&&charts[k].destroy();}catch(e){}charts[k]=null;});}
+function ensureCharts(){
+  markNoChart();if(!hasChart())return;
+  try{window.Chart.defaults.font.family=getFontFamily();}catch(e){}
+  if(!charts.wip){var o=baseOpts();o.scales.x.type='linear';o.scales.x.title={display:true,text:'Simulated time (min)',color:colors['text-sub']};o.scales.y.title={display:true,text:'Parts',color:colors['text-sub']};o.elements={point:{radius:0}};
+    charts.wip=mk('chWip',{type:'line',data:{datasets:[{label:'WIP (instant)',data:[],borderColor:colors.primary,backgroundColor:hexA(colors.primary,.12),fill:true,stepped:true,borderWidth:1.5},{label:'Average WIP',data:[],borderColor:colors.secondary,borderWidth:2,borderDash:[6,4]}]},options:o});}
+  if(!charts.states){var o2=baseOpts();o2.indexAxis='y';o2.scales.x.stacked=true;o2.scales.y.stacked=true;o2.scales.x.max=100;o2.scales.x.ticks.callback=function(v){return v+'%';};
+    charts.states=mk('chStates',{type:'bar',data:{labels:[],datasets:ST_KEYS.map(function(k){return {label:stateLabel(k),data:[],backgroundColor:colors['st-'+k],borderRadius:4,barPercentage:.7};})},options:o2});}
+  if(!charts.balance){var o3=baseOpts();o3.scales.y.title={display:true,text:'Seconds per part',color:colors['text-sub']};
+    charts.balance=mk('chBalance',{data:{labels:[],datasets:[{type:'bar',label:'Set mean CT',data:[],backgroundColor:[],borderRadius:8,order:2},{type:'bar',label:'Effective CT',data:[],backgroundColor:hexA(colors.primary,.28),borderColor:colors.primary,borderWidth:1,borderRadius:8,order:3},{type:'line',label:'Takt time',data:[],borderColor:colors.text,borderWidth:2,borderDash:[6,4],pointRadius:0,order:1}]},options:o3});}
+  if(!charts.buf){var o4=baseOpts();o4.scales.y.title={display:true,text:'Parts',color:colors['text-sub']};
+    charts.buf=mk('chBuf',{type:'bar',data:{labels:[],datasets:[{label:'Average occupancy',data:[],backgroundColor:colors.primary,borderRadius:8},{label:'Capacity',data:[],backgroundColor:hexA(colors['text-faint'],.35),borderRadius:8}]},options:o4});}
+  if(!charts.exp){var o5=baseOpts();o5.scales.x.type='linear';o5.scales.x.title={display:true,text:'Parameter',color:colors['text-sub']};o5.scales.y.title={display:true,text:'Throughput (parts/hr)',color:colors['text-sub']};o5.scales.y.beginAtZero=false;
+    charts.exp=mk('chExp',{type:'line',data:{datasets:[{label:'Mean throughput',data:[],borderColor:colors.primary,backgroundColor:colors.primary,pointRadius:4,borderWidth:2},{label:'95% CI upper',data:[],borderColor:hexA(colors.primary,.35),borderDash:[4,4],pointRadius:0,borderWidth:1,fill:false},{label:'95% CI lower',data:[],borderColor:hexA(colors.primary,.35),borderDash:[4,4],pointRadius:0,borderWidth:1,fill:'-1',backgroundColor:hexA(colors.primary,.1)}]},options:o5});
+    if(expResults)drawExpChart();}
+}
+function updateCharts(r,th){
+  ensureCharts();if(!hasChart())return;
+  try{
+    var names=live.cfg.stations.map(function(s){return s.name;});
+    if(charts.wip){charts.wip.data.datasets[0].data=series.map(function(p){return {x:p.x,y:p.y};});charts.wip.data.datasets[1].data=series.filter(function(p){return p.avg!=null;}).map(function(p){return {x:p.x,y:p.avg};});charts.wip.update('none');}
+    if(charts.states){charts.states.data.labels=names;ST_KEYS.forEach(function(k,n){charts.states.data.datasets[n].data=r.stations.map(function(o){return isFinite(o.frac[k])?+(o.frac[k]*100).toFixed(2):0;});});charts.states.update('none');}
+    if(charts.balance){var b=charts.balance;b.data.labels=names;b.data.datasets[0].data=live.cfg.stations.map(function(s){return s.ct;});b.data.datasets[0].backgroundColor=live.cfg.stations.map(function(s,i){return i===bnIdx?colors.secondary:colors.primary;});
+      b.data.datasets[1].data=th.effCT.map(function(x){return +x.toFixed(2);});b.data.datasets[2].data=names.map(function(){return +th.takt.toFixed(2);});b.update('none');}
+    if(charts.buf){charts.buf.data.labels=r.buffers.map(function(b){return b.name;});charts.buf.data.datasets[0].data=r.buffers.map(function(b){return isFinite(b.avg)?+b.avg.toFixed(3):0;});charts.buf.data.datasets[1].data=r.buffers.map(function(b){return b.cap;});charts.buf.update('none');}
+  }catch(e){console.warn(e);}
+}
+
+/* =====================================================================
+   11. Headless batch runner (chunked so the UI stays responsive)
+   ===================================================================== */
+function runJobs(jobs,onProgress,isCancelled){
+  return new Promise(function(resolve){
+    var out=[],j=0,sim=null,end=0,totalT=jobs.reduce(function(a,b){return a+b.warm+b.len;},0),doneT=0;
+    function slice(){
+      if(isCancelled()){resolve(null);return;}
+      var t0=performance.now();
+      while(performance.now()-t0<14){
+        if(j>=jobs.length){onProgress(1);resolve(out);return;}
+        if(!sim){sim=new Sim(jobs[j].cfg,{warmup:jobs[j].warm});end=jobs[j].warm+jobs[j].len;}
+        if(sim.advanceTo(end,4000)){out.push(sim.results({noBottleneck:!jobs[j].bn}));doneT+=end;sim=null;j++;}
+      }
+      onProgress((doneT+(sim?sim.now:0))/totalT);
+      setTimeout(slice,0);
+    }
+    setTimeout(slice,0);
+  });
+}
+function setProg(id,f){var el=$(id);el.querySelector('i').style.width=(f*100).toFixed(1)+'%';el.setAttribute('aria-valuenow',Math.round(f*100));}
+var repResults=null,expResults=null,repCancel=false,expCancel=false;
+$('repBtn').addEventListener('click',function(){
+  var N=Math.round(num($('repN').value,10,2,200)),T=num($('repT').value,8,0.5),W=num($('repWarm').value,cfg.warmupMin,0);$('repN').value=N;
+  var base=clone(cfg),jobs=[];for(var r=0;r<N;r++){var c=clone(base);c.seed=(base.seed+r)>>>0||1;jobs.push({cfg:c,warm:W*60,len:T*3600,bn:true});}
+  repCancel=false;$('repBtn').disabled=true;$('repCancel').disabled=false;$('repOut').innerHTML='<p class="note">Running '+N+' replications…</p>';
+  runJobs(jobs,function(f){setProg('repProg',f);},function(){return repCancel;}).then(function(res){
+    $('repBtn').disabled=false;$('repCancel').disabled=true;
+    if(!res){$('repOut').innerHTML='<p class="note">Cancelled.</p>';setProg('repProg',0);return;}
+    var bnCount={};res.forEach(function(x){var n=x.bn&&x.bn.idx>=0?x.stations[x.bn.idx].name:'—';bnCount[n]=(bnCount[n]||0)+1;});
+    var metrics=[['Throughput','parts/hr',res.map(function(x){return x.th;}),2],['Average WIP','parts',res.map(function(x){return x.wip;}),3],['Mean flow time','min',res.map(function(x){return x.flowMean/60;}),3],['95th pct flow time','min',res.map(function(x){return x.flowP95/60;}),3],['Line FPY','%',res.map(function(x){return x.fpyLine*100;}),2]];
+    repResults={N:N,T:T,W:W,seed:base.seed,metrics:metrics.map(function(m){return {name:m[0],unit:m[1],ci:meanCI(m[2]),vals:m[2],d:m[3]};}),bn:bnCount};
+    var h='<div class="table-wrap"><table><caption class="sr-only">Replication results</caption><thead><tr><th scope="col">KPI</th><th scope="col">Mean</th><th scope="col">± 95% CI</th><th scope="col">CI range</th><th scope="col">Std dev</th></tr></thead><tbody>';
+    repResults.metrics.forEach(function(m){h+='<tr><td><b>'+m.name+'</b> <span class="hint">'+m.unit+'</span></td><td>'+fmt(m.ci.mean,m.d)+'</td><td>± '+fmt(m.ci.hw,m.d)+'</td><td>['+fmt(m.ci.lo,m.d)+', '+fmt(m.ci.hi,m.d)+']</td><td>'+fmt(m.ci.sd,m.d)+'</td></tr>';});
+    h+='</tbody></table></div><p class="note" style="margin-top:8px">N = '+N+' replications × '+T+' h after '+W+' min warm-up · t(0.975, '+(N-1)+') = '+fmt(tQuantile(N-1),3)+' · Bottleneck detected: '+Object.keys(bnCount).map(function(k){return esc(k)+' ('+bnCount[k]+'/'+N+')';}).join(', ')+'</p>';
+    $('repOut').innerHTML=h;});
+});
+$('repCancel').addEventListener('click',function(){repCancel=true;});
+function renderExpParams(){var sel=$('expParam'),v=sel.value;var h='<option value="buf">Buffer size (all buffers)</option>';cfg.stations.forEach(function(s,i){h+='<option value="cv'+i+'">CV of '+esc(s.name)+'</option>';});sel.innerHTML=h;if(v&&sel.querySelector('option[value="'+v+'"]'))sel.value=v;}
+$('expParam').addEventListener('change',function(){if(this.value==='buf'){$('expFrom').value=0;$('expTo').value=10;$('expStep').value=1;}else{$('expFrom').value=0;$('expTo').value=1.5;$('expStep').value=0.25;}});
+$('expBtn').addEventListener('click',function(){
+  var p=$('expParam').value,from=num($('expFrom').value,0),to=num($('expTo').value,10),step=Math.max(0.01,num($('expStep').value,1)),R=Math.round(num($('expReps').value,3,1,50)),T=num($('expT').value,8,0.5),W=cfg.warmupMin;
+  if(p==='buf'){from=Math.max(0,Math.round(from));to=Math.min(10,Math.round(to));step=Math.max(1,Math.round(step));}
+  var vals=[];for(var x=from;x<=to+1e-9&&vals.length<60;x+=step)vals.push(+x.toFixed(4));
+  if(!vals.length){$('expOut').innerHTML='<p class="note">Empty range.</p>';return;}
+  var base=clone(cfg),jobs=[],note='';
+  vals.forEach(function(v){for(var r=0;r<R;r++){var c=clone(base);c.seed=(base.seed+r)>>>0||1;
+    if(p==='buf')c.buffers=c.buffers.map(function(){return v;});
+    else{var i=+p.slice(2),s=c.stations[i];if(s.dist==='det'||s.dist==='exp'){s.dist='lognormal';note='Note: '+esc(s.name)+' uses a '+(base.stations[i].dist==='det'?'deterministic':'exponential')+' distribution, so the sweep uses Lognormal with the chosen CV.';}
+      if(s.dist==='uniform'||s.dist==='tri')note='Note: '+(s.dist==='uniform'?'Uniform':'Triangular')+' caps the CV to keep times positive.';s.cv=v;}
+    jobs.push({cfg:c,warm:W*60,len:T*3600,v:v});}});
+  expCancel=false;$('expBtn').disabled=true;$('expCancel').disabled=false;$('expOut').innerHTML='<p class="note">Running '+jobs.length+' simulations…</p>';
+  runJobs(jobs,function(f){setProg('expProg',f);},function(){return expCancel;}).then(function(res){
+    $('expBtn').disabled=false;$('expCancel').disabled=true;
+    if(!res){$('expOut').innerHTML='<p class="note">Cancelled.</p>';setProg('expProg',0);return;}
+    var label=$('expParam').selectedOptions[0].textContent;
+    expResults={param:label,R:R,T:T,points:vals.map(function(v,k){var sl=res.slice(k*R,(k+1)*R);return {v:v,th:meanCI(sl.map(function(x){return x.th;})),wip:meanCI(sl.map(function(x){return x.wip;})),flow:meanCI(sl.map(function(x){return x.flowMean/60;}))};})};
+    drawExpChart();
+    var h='<div class="table-wrap"><table><caption class="sr-only">Experiment results</caption><thead><tr><th scope="col">'+esc(label)+'</th><th scope="col">Throughput /hr</th><th scope="col">± 95% CI</th><th scope="col">Avg WIP</th><th scope="col">Flow time (min)</th></tr></thead><tbody>';
+    expResults.points.forEach(function(pt){h+='<tr><td>'+pt.v+'</td><td>'+fmt(pt.th.mean,2)+'</td><td>'+(R>1?'± '+fmt(pt.th.hw,2):'—')+'</td><td>'+fmt(pt.wip.mean,2)+'</td><td>'+fmt(pt.flow.mean,2)+'</td></tr>';});
+    $('expOut').innerHTML=(note?'<p class="note" style="margin-bottom:8px">'+note+'</p>':'')+h+'</tbody></table></div>';});
+});
+$('expCancel').addEventListener('click',function(){expCancel=true;});
+function drawExpChart(){ensureCharts();var c=charts.exp;if(!c||!expResults)return;try{
+  c.data.datasets[0].data=expResults.points.map(function(p){return {x:p.v,y:p.th.mean};});
+  c.data.datasets[1].data=expResults.points.map(function(p){return {x:p.v,y:isFinite(p.th.hi)?p.th.hi:p.th.mean};});
+  c.data.datasets[2].data=expResults.points.map(function(p){return {x:p.v,y:isFinite(p.th.lo)?p.th.lo:p.th.mean};});
+  c.options.scales.x.title.text=expResults.param;c.update('none');}catch(e){console.warn(e);}}
+
+/* =====================================================================
+   12. CSV export
+   ===================================================================== */
+function csvCell(v){if(v==null)return '';if(typeof v==='number')return isFinite(v)?String(+v.toFixed(6)):'';var s=String(v);return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;}
+function buildCSV(){
+  var rows=[],r=live.results(),th=theory(live.cfg),c=live.cfg;
+  rows.push(['Savvy Line Lab — Production Line Simulator','Savvy Marketing Partners']);rows.push(['Exported',new Date().toISOString()]);rows.push([]);
+  rows.push(['CONFIGURATION']);rows.push(['Seed',c.seed]);rows.push(['Warm-up (min)',c.warmupMin]);rows.push(['Arrivals',c.arrivals.mode==='poisson'?'Poisson':'Unlimited raw material']);if(c.arrivals.mode==='poisson')rows.push(['Arrival rate (parts/hr)',c.arrivals.rate]);
+  rows.push(['Demand (parts/day)',c.demand.perDay]);rows.push(['Available hours/day',c.demand.hoursPerDay]);
+  rows.push(['Station','Mean CT (s)','Distribution','CV','Breakdowns','MTBF (min)','MTTR (min)','Defect %','Defect action','Buffer in front (cap)']);
+  c.stations.forEach(function(s,i){rows.push([s.name,s.ct,s.dist,effectiveCV(s.dist,s.cv),s.bdOn?'on':'off',s.bdOn?s.mtbf:'',s.bdOn?s.mttr:'',s.defect,s.action,i>0?c.buffers[i-1]:'']);});
+  rows.push([]);rows.push(['LIVE RUN KPIs (after warm-up)']);
+  rows.push(['Simulated time (h)',live.now/3600]);rows.push(['Statistics period (h)',r.T/3600]);
+  rows.push(['Throughput (parts/hr)',r.th]);rows.push(['Theoretical bottleneck rate (parts/hr)',th.max]);rows.push(['Average WIP',r.wip]);rows.push(['Mean flow time (min)',r.flowMean/60]);rows.push(['95th pct flow time (min)',r.flowP95/60]);
+  rows.push(['Little L (avg WIP)',r.littleL]);rows.push(['Little lambda*W',r.littleR]);rows.push(['Little difference %',r.littleDiff]);
+  rows.push(['Takt time (s)',th.takt]);rows.push(['Line balance efficiency %',th.lbe*100]);rows.push(['Line FPY %',r.fpyLine*100]);rows.push(['RTY %',r.rty*100]);rows.push(['Scrap count',r.scrap]);rows.push(['Finished parts',r.finished]);
+  rows.push(['Bottleneck (active period)',r.bn&&r.bn.idx>=0?c.stations[r.bn.idx].name:'']);
+  rows.push([]);rows.push(['Station','Working %','Blocked %','Starved %','Down %','Utilization %','Availability %','Performance %','Quality %','OEE %','Set CT (s)','Set CV','Observed CT (s)','Observed CV','FPY %','Scrap','Reworks','Avg active period (min)','Momentary bottleneck %']);
+  r.stations.forEach(function(o){rows.push([o.name,o.frac.working*100,o.frac.blocked*100,o.frac.starved*100,o.frac.down*100,o.util*100,o.A*100,o.P*100,o.Q*100,o.oee*100,o.setCT,o.setCV,o.ctMean,o.ctCV,o.fpy*100,o.scrap,o.reworks,o.avgActive/60,o.bnShare*100]);});
+  rows.push([]);rows.push(['Buffer','Capacity','Avg occupancy','% time full']);r.buffers.forEach(function(b){rows.push([b.name,b.cap,b.avg,b.cap?b.full*100:'']);});
+  if(repResults){rows.push([]);rows.push(['REPLICATIONS','N='+repResults.N,'T(h)='+repResults.T,'warm-up(min)='+repResults.W,'base seed='+repResults.seed]);rows.push(['KPI','Unit','Mean','95% CI half-width','CI low','CI high','Std dev'].concat(repResults.metrics[0].vals.map(function(_,k){return 'Rep '+(k+1);})));
+    repResults.metrics.forEach(function(m){rows.push([m.name,m.unit,m.ci.mean,m.ci.hw,m.ci.lo,m.ci.hi,m.ci.sd].concat(m.vals));});}
+  if(expResults){rows.push([]);rows.push(['EXPERIMENT',expResults.param,'reps/point='+expResults.R,'T(h)='+expResults.T]);rows.push(['Value','Throughput mean','Throughput CI half-width','Avg WIP mean','Flow time mean (min)']);
+    expResults.points.forEach(function(p){rows.push([p.v,p.th.mean,p.th.hw,p.wip.mean,p.flow.mean]);});}
+  return rows.map(function(row){return row.map(csvCell).join(',');}).join('\r\n');
+}
+$('csvBtn').addEventListener('click',function(){var csv=buildCSV();var blob=new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='savvy-line-lab-results.csv';document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(url);a.remove();},1000);});
+
+/* =====================================================================
+   13. Boot
+   ===================================================================== */
+window.SavvySim={Sim:Sim,theory:theory,runHeadless:runHeadless,presets:PRESETS,tQuantile:tQuantile,meanCI:meanCI,makeSampler:makeSampler,mulberry32:mulberry32,
+  getConfig:function(){return clone(cfg);},setConfig:function(c){cfg=clone(c);renderConfig();resetLive();},buildCSV:function(){return buildCSV();},live:null};
+hydrateTips(document);
+readColors();syncThemeBtn();renderConfig();$('presetSel').value='balanced';resetLive();markNoChart();
+// Chart.js loads asynchronously; build charts whenever it becomes available
+(function waitChart(n){if(hasChart()){ensureCharts();refreshDashboard(true);return;}if(n>0)setTimeout(function(){waitChart(n-1);},250);else markNoChart();})(80);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){fontFam=null;});
+requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
