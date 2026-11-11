@@ -1,0 +1,682 @@
+/* Careers — Figma "Careers A — Desktop 1440" (5791:130) + Mobile 393 (5791:499) */
+@import './company-shared.css';
+
+.car-wrap {
+  width: 100%;
+  max-width: 1100px;
+  margin-inline: auto;
+}
+
+/* 01 · Hero */
+.car-hero {
+  padding: 262px var(--sp-40) 80px;
+  background: var(--bg-strong-800);
+  color: var(--text-white-0);
+}
+
+.car-hero__fx {
+  opacity: 0.6;
+  mask-image: linear-gradient(180deg, transparent 0%, #000 35%, #000 100%);
+}
+
+.car-hero__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-6);
+  max-width: 896px;
+  margin-inline: auto;
+}
+
+.car-hero .eyebrow {
+  color: var(--text-disabled-300);
+}
+
+.car-hero__lead {
+  color: var(--text-disabled-300);
+}
+
+.search {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 52px;
+  padding: 0 8px 0 20px;
+  border-radius: var(--r-full);
+  background: var(--bg-white-0);
+  color: var(--text-strong-950);
+  box-shadow: var(--shadow-lg);
+  transition: box-shadow 0.25s;
+}
+
+.search:focus-within {
+  box-shadow: 0 0 0 4px rgba(7, 146, 194, 0.35), var(--shadow-lg);
+}
+
+.search__icon {
+  color: var(--text-sub-400);
+  font-size: 16px;
+}
+
+.search__input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0 12px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: inherit;
+  font: 400 16px/24px var(--font);
+}
+
+.search__input::placeholder {
+  color: var(--text-sub-400);
+}
+
+.search__input::-webkit-search-cancel-button {
+  cursor: pointer;
+}
+
+.search__kbd {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  margin-right: 4px;
+  border-radius: 8px;
+  background: var(--bg-weak-50);
+  color: var(--text-sub-600);
+  font: 500 13px/1 var(--font);
+}
+
+.search__pop {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  left: 0;
+  overflow: hidden;
+  border: 1px solid var(--stroke-soft-200);
+  border-radius: var(--r-20);
+  background: var(--bg-white-0);
+  box-shadow: var(--shadow-xl);
+  animation: car-pop 0.2s var(--ease-out);
+}
+
+@keyframes car-pop {
+  from {
+    opacity: 0;
+    translate: 0 -4px;
+  }
+}
+
+.search__list {
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+}
+
+.search__opt {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  padding: 10px 14px;
+  border-radius: var(--r-12);
+  cursor: pointer;
+}
+
+.search__opt small {
+  color: var(--text-sub-400);
+  font-size: 12px;
+}
+
+.search__opt:hover,
+.search__opt[aria-selected='true'] {
+  background: var(--bg-weak-50);
+}
+
+.search__foot {
+  padding: 10px 20px;
+  border-top: 1px solid var(--stroke-soft-200);
+  color: var(--text-sub-600);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.car-hero__inner > div:last-child {
+  width: 100%;
+}
+
+.car-hero__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-6);
+  width: 100%;
+  margin: var(--sp-2) 0 0;
+}
+
+.car-hero__stats div {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.car-hero__stats dt {
+  color: var(--text-disabled-300);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.car-hero__stats dd {
+  margin: 0;
+  font-size: 40px;
+  line-height: 48px;
+  font-weight: 500;
+}
+
+.car-hero__updated {
+  margin-top: var(--sp-6);
+  color: var(--text-disabled-300);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+/* 02 · Filters */
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: var(--sp-6);
+  border: 1px solid var(--stroke-soft-200);
+  border-radius: var(--r-20);
+  background: var(--bg-white-0);
+}
+
+.filters__group {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-6);
+}
+
+.filters__label {
+  flex: 0 0 76px;
+  color: var(--text-sub-400);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.filters__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  margin-top: var(--sp-3);
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--stroke-soft-200);
+}
+
+.filters__tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-4);
+  color: var(--text-sub-600);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.filters__query {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 4px 2px 10px;
+  border-radius: var(--r-full);
+  background: var(--bg-weak-50);
+  color: var(--text-strong-950);
+}
+
+.filters__query[hidden] {
+  display: none;
+}
+
+.filters__query button {
+  width: 22px;
+  height: 22px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+
+.filters__sort select {
+  padding: 2px 4px;
+  border: 0;
+  background: transparent;
+  color: var(--text-strong-950);
+  font: 500 14px/20px var(--font);
+  cursor: pointer;
+}
+
+.filters__clear {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text-strong-950);
+  font: 500 14px/20px var(--font);
+  cursor: pointer;
+}
+
+.filters__clear:disabled {
+  color: var(--text-disabled-300);
+  cursor: default;
+}
+
+/* 03 · Positions list */
+.jobs-head,
+.job__head {
+  display: grid;
+  grid-template-columns: 1fr 144px 144px 200px 40px;
+  align-items: center;
+  gap: 0 var(--sp-2);
+}
+
+.jobs-head {
+  margin: var(--sp-8) 0 var(--sp-3);
+  padding: 0 var(--sp-6);
+  color: var(--text-sub-400);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.jobs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  margin: 0;
+  padding: 0;
+}
+
+.job {
+  border: 1px solid var(--stroke-soft-200);
+  border-radius: var(--r-20);
+  background: var(--bg-white-0);
+  transition: background-color 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+
+.job[hidden] {
+  display: none;
+}
+
+.job:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.job.is-open {
+  background: var(--bg-weak-10);
+}
+
+.job__head {
+  min-height: 100px;
+  padding: var(--sp-5) var(--sp-6);
+}
+
+.job__name {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.job__title {
+  margin: 0;
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 500;
+}
+
+.job__title a:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.job__posted {
+  color: var(--text-sub-400);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.job__cell {
+  color: var(--text-sub-600);
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.job__toggle {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--bg-weak-50);
+  cursor: pointer;
+  transition: background-color 0.25s;
+}
+
+.job__toggle::before,
+.job__toggle::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 1.5px;
+  border-radius: 1px;
+  background: var(--text-strong-950);
+  translate: -50% -50%;
+  transition: rotate 0.3s var(--ease-out), background-color 0.25s;
+}
+
+.job__toggle::after {
+  rotate: 90deg;
+}
+
+.job:hover .job__toggle {
+  background: var(--bg-soft-200);
+}
+
+.job__toggle[aria-expanded='true'] {
+  width: 36px;
+  height: 36px;
+  background: var(--bg-strong-800);
+}
+
+.job__toggle[aria-expanded='true']::before,
+.job__toggle[aria-expanded='true']::after {
+  background: var(--text-white-0);
+}
+
+.job__toggle[aria-expanded='true']::after {
+  rotate: 0deg;
+}
+
+.job__panel {
+  overflow: hidden;
+}
+
+.job__panel-inner {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: var(--sp-12);
+  margin: 0 var(--sp-6);
+  padding: var(--sp-5) 0 var(--sp-6);
+  border-top: 1px solid var(--stroke-soft-200);
+}
+
+.job__summary,
+.job__side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-3);
+}
+
+.job__side {
+  align-items: stretch;
+}
+
+.job__bullets {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  margin: 0;
+  padding: 0 0 0 4px;
+  color: var(--text-sub-600);
+}
+
+.job__bullets li::before {
+  content: '•';
+  margin-right: 10px;
+}
+
+.job__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin: 0 0 var(--sp-3);
+  padding: 0;
+}
+
+.job__tags li {
+  padding: 6px 12px;
+  border: 1px solid var(--stroke-soft-200);
+  border-radius: var(--r-full);
+  background: var(--bg-white-0);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+}
+
+.job__side .btn {
+  margin: 4px 0;
+}
+
+.job__apply {
+  align-self: center;
+}
+
+.jobs-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  padding: var(--sp-8);
+  border: 1px dashed var(--stroke-sub-300);
+  border-radius: var(--r-20);
+}
+
+.jobs-empty[hidden] {
+  display: none;
+}
+
+/* 04 · Send your CV */
+.car-cv__card {
+  display: grid;
+  grid-template-columns: 1fr 560px;
+  gap: var(--sp-12);
+  padding: 40px;
+  border-radius: var(--r-24);
+  background: var(--bg-strong-800);
+  color: var(--text-white-0);
+}
+
+.car-cv__copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.car-cv__copy .eyebrow,
+.car-cv__copy .t-p-lg,
+.car-cv__copy .t-p-sm {
+  color: var(--text-disabled-300);
+}
+
+.car-cv__copy .t-h2 {
+  font-weight: 500;
+}
+
+.car-cv__panel {
+  padding: var(--sp-6);
+  border-radius: var(--r-20);
+  background: var(--bg-white-0);
+  color: var(--text-strong-950);
+}
+
+.cv-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.cv-form .btn {
+  margin-top: var(--sp-2);
+}
+
+.cv-done {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  padding: var(--sp-8) var(--sp-4);
+  perspective: 600px;
+}
+
+/* 05 · CTA */
+.car-cta__card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-8);
+  padding: 40px;
+  border-radius: var(--r-24);
+  background: var(--bg-weak-10);
+}
+
+.car-cta__copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.car-cta__copy .t-h2 {
+  font-weight: 500;
+}
+
+.car-cta__actions {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: 8px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1180px) {
+  .car-hero {
+    padding-inline: var(--sp-10);
+  }
+  .car-cv__card {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .car-hero {
+    padding: 136px var(--sp-5) var(--sp-12);
+  }
+  .car-hero__stats dd {
+    font-size: 32px;
+    line-height: 40px;
+  }
+  .search__kbd {
+    display: none;
+  }
+  .filters {
+    padding: var(--sp-4);
+  }
+  .filters__group {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--sp-2);
+  }
+  .filters__label {
+    flex: 0 0 auto;
+  }
+  .filters__group .chips {
+    flex-wrap: nowrap;
+    margin: 0 calc(-1 * var(--sp-4));
+    padding: 2px var(--sp-4);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .filters__foot {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .jobs-head {
+    display: none;
+  }
+  .jobs {
+    margin-top: var(--sp-6);
+  }
+  .job__head {
+    grid-template-columns: 1fr auto;
+    grid-template-areas: 'name toggle' 'meta toggle';
+    gap: var(--sp-2) var(--sp-3);
+    min-height: 0;
+    padding: var(--sp-4);
+  }
+  .job__name {
+    grid-area: name;
+  }
+  .job__title {
+    font-size: 18px;
+    line-height: 24px;
+  }
+  .job__cell {
+    display: inline;
+    grid-column: 1;
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .job__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 6px;
+  }
+  .job__name {
+    flex: 1 0 calc(100% - 52px);
+    order: 0;
+  }
+  .job__toggle {
+    order: 1;
+    margin-left: auto;
+  }
+  .job__cell {
+    order: 2;
+  }
+  .job__cell + .job__cell::before {
+    content: '· ';
+  }
+  .job__panel-inner {
+    grid-template-columns: 1fr;
+    gap: var(--sp-5);
+    margin: 0 var(--sp-4);
+  }
+  .car-cv__card {
+    grid-template-columns: 1fr;
+    gap: var(--sp-6);
+    padding: var(--sp-6) var(--sp-4);
+  }
+  .car-cv__panel {
+    padding: var(--sp-5);
+  }
+  .car-cta__card {
+    flex-direction: column;
+    align-items: stretch;
+    padding: var(--sp-6);
+  }
+  .car-cta__actions .btn {
+    justify-content: center;
+    width: 100%;
+  }
+}

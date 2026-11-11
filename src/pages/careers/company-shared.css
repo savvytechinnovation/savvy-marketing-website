@@ -1,0 +1,397 @@
+/* Shared by the company pages (Who We Are, Work With Us, Careers, Job detail).
+ * Page-local variants of DS patterns that the Figma "company" pages reuse. */
+
+/* Respect the hidden attribute even on elements styled with display:flex/grid */
+main [hidden] {
+  display: none !important;
+}
+
+/* Section rhythm: Figma sections are 64px top/bottom, 72px sides, 1312px content */
+.co-section {
+  padding: var(--sp-32) var(--sp-40);
+}
+
+.co-wrap {
+  width: 100%;
+  max-width: 1312px;
+  margin-inline: auto;
+}
+
+/* First section clears the fixed floating header */
+.co-first {
+  padding-top: 232px;
+}
+
+/* ---------- Chip (Figma "IX · Chip": 14/20 medium, 6px 12px, pill) ---------- */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 6px 12px;
+  border: 1px solid var(--stroke-soft-200);
+  border-radius: var(--r-full);
+  background: var(--bg-white-0);
+  color: var(--text-strong-950);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: -0.006em;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, scale 0.2s var(--ease-out);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.chip:hover {
+  border-color: var(--stroke-sub-300);
+}
+
+.chip:active {
+  scale: 0.97;
+}
+
+.chip[aria-pressed='true'],
+.chip[aria-checked='true'],
+.chip[aria-selected='true'] {
+  border-color: #020617;
+  background: #020617;
+  color: var(--text-white-0);
+}
+
+.chip__count {
+  color: var(--text-sub-400);
+  font-weight: 500;
+}
+
+.chip[aria-pressed='true'] .chip__count,
+.chip[aria-checked='true'] .chip__count {
+  color: var(--text-disabled-300);
+}
+
+.chip[aria-disabled='true'] {
+  border-color: var(--bg-weak-50);
+  color: var(--text-disabled-300);
+  cursor: not-allowed;
+}
+
+.chip[aria-disabled='true'] .chip__count {
+  color: var(--text-disabled-300);
+}
+
+/* ---------- Status pills (Now / Next / Later) ---------- */
+.status {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: var(--r-full);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+}
+
+.status--now {
+  background: #f0fdf4;
+  color: #052e16;
+}
+
+.status--next {
+  background: #eff6ff;
+  color: #172554;
+}
+
+.status--later {
+  background: var(--bg-weak-10);
+  color: var(--text-sub-600);
+}
+
+/* ---------- Round icon button (← → in carousels) ---------- */
+.round-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 48px;
+  height: 34px;
+  border: 1px solid var(--stroke-soft-200);
+  border-radius: var(--r-full);
+  background: var(--bg-white-0);
+  color: var(--text-strong-950);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.round-btn:hover:not(:disabled) {
+  border-color: var(--stroke-sub-300);
+}
+
+.round-btn--dark {
+  border-color: var(--bg-strong-800);
+  background: var(--bg-strong-800);
+  color: var(--text-white-0);
+}
+
+.round-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* ---------- CV drop zone (Figma "Drop zone": dashed, 127px, bg weak) ---------- */
+.dropzone {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 127px;
+  padding: var(--sp-6) var(--sp-4);
+  border: 1.5px dashed var(--stroke-sub-300);
+  border-radius: var(--r-16);
+  background: var(--bg-weak-10);
+  text-align: center;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.dropzone__input {
+  /* the real, keyboard-accessible file input covers the zone (click/tap/Enter/Space open the picker) */
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.dropzone__icon {
+  width: 24px;
+  height: 24px;
+}
+
+.dropzone__browse {
+  color: var(--primary-base);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.dropzone:hover,
+.dropzone.is-over {
+  border-color: var(--primary-base);
+  background: var(--primary-alpha-5);
+}
+
+.dropzone:focus-within {
+  border-color: var(--primary-base);
+  box-shadow: 0 0 0 4px var(--primary-alpha-16);
+}
+
+.field.has-error .dropzone {
+  border-color: var(--error-base);
+  background: rgba(229, 55, 42, 0.04);
+}
+
+.dropzone[hidden] {
+  display: none;
+}
+
+.file-chip {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  border: 1px solid var(--stroke-soft-200);
+  border-radius: var(--r-16);
+  background: var(--bg-white-0);
+}
+
+.file-chip[hidden] {
+  display: none;
+}
+
+.file-chip__icon {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--r-10);
+  background: var(--primary-alpha-16);
+  color: var(--primary-700);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.file-chip__meta {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.file-chip__name {
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.file-chip__size {
+  color: var(--text-sub-600);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.file-chip__remove {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: var(--r-full);
+  background: var(--bg-weak-50);
+  cursor: pointer;
+}
+
+.file-chip__remove:hover {
+  background: var(--bg-soft-200);
+}
+
+/* Field-level error with icon (Figma: "never rely on red alone: the ⚠ icon and message are always present") */
+.field__error:not(:empty)::before {
+  content: '⚠ ';
+}
+
+/* Form-level banners (error summary, network error, draft restored) */
+.form-banner {
+  display: flex;
+  gap: var(--sp-3);
+  padding: var(--sp-4);
+  border-radius: var(--r-12);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.form-banner[hidden] {
+  display: none;
+}
+
+.form-banner:focus {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.form-banner--error {
+  background: #fef2f2;
+  color: #7f1d1d;
+}
+
+.form-banner--info {
+  background: #eff6ff;
+  color: #172554;
+}
+
+.form-banner__icon {
+  flex: 0 0 auto;
+  font-weight: 700;
+}
+
+.form-banner__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.form-banner__body strong {
+  font-weight: 500;
+}
+
+.form-banner ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.form-banner a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.form-banner__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+}
+
+.text-btn {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.apply-done__check {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--success-base);
+  color: #fff;
+  font-size: 22px;
+}
+
+/* Honeypot */
+.hp {
+  position: absolute !important;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* Absolutely-positioned 3D layer behind a section's content (Three.js canvas from src/ds/fx3d.js) */
+.fx-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.has-fx {
+  position: relative;
+  isolation: isolate;
+}
+
+.has-fx > :not(.fx-layer) {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 1180px) {
+  .co-section {
+    padding-inline: var(--sp-10);
+  }
+}
+
+@media (max-width: 900px) {
+  .co-section {
+    padding: var(--sp-20) var(--sp-5);
+  }
+  .co-first {
+    padding-top: 136px;
+  }
+}

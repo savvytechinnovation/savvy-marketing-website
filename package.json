@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "build:posts": "node scripts/build-posts.mjs",
-    "build:industries": "node scripts/build-industries.mjs"
+    "build:industries": "node scripts/build-industries.mjs",
+    "build:jobs": "node scripts/build-jobs.mjs"
   },
   "dependencies": {
     "gsap": "^3.15.0",

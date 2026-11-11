@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- @include head -->
+    <title>Careers — Open roles at Savvy Post</title>
+    <meta name="description" content="Join a small team building growth systems for HVAC, plumbing, electrical, roofing and cleaning companies. Search open roles in strategy, media, creative and data, or send us your CV." />
+    <meta property="og:title" content="Careers — Open roles at Savvy Post" />
+    <meta property="og:description" content="Every role works on real client accounts from week one." />
+  </head>
+  <body class="page-careers">
+    <!-- @include header -->
+
+    <main id="main">
+      <!-- 01 · Hero: live search (Figma 5791:221) -->
+      <section class="car-hero has-fx" aria-labelledby="careers-title">
+        <div class="fx-layer car-hero__fx" data-3d="field" data-3d-theme="dark" data-3d-scrub aria-hidden="true"></div>
+        <div class="car-hero__inner">
+          <p class="eyebrow" data-hero-item>Careers</p>
+          <h1 class="t-h1" id="careers-title" data-split="hero">Open roles at Savvy Post</h1>
+          <p class="t-p-lg car-hero__lead" data-hero-item>Join a small team building growth systems for HVAC, plumbing, electrical, roofing and cleaning companies. Every role works on real client accounts from week one.</p>
+          <div class="search" data-hero-item data-search>
+            <label class="sr-only" for="role-search">Search open roles</label>
+            <span class="search__icon" aria-hidden="true">⌕</span>
+            <input class="search__input" id="role-search" type="search" role="combobox" autocomplete="off" aria-autocomplete="list" aria-expanded="false" aria-controls="role-suggest" placeholder='Search by role or skill, e.g. "Google Ads"' />
+            <kbd class="search__kbd" aria-hidden="true">/</kbd>
+            <div class="search__pop" id="role-suggest-pop" hidden>
+              <ul class="search__list" id="role-suggest" role="listbox" aria-label="Matching roles"></ul>
+              <p class="search__foot" data-suggest-foot></p>
+            </div>
+          </div>
+          <div data-hero-item>
+            <!-- jobs:careers-stats:start -->
+            <dl class="car-hero__stats">
+              <div><dt>open roles</dt><dd>5</dd></div>
+              <div><dt>teams hiring</dt><dd>4</dd></div>
+              <div><dt>remote-friendly</dt><dd>100%</dd></div>
+            </dl>
+            <p class="car-hero__updated">Updated <time datetime="2026-11-10">Nov 10, 2026</time></p>
+            <!-- jobs:careers-stats:end -->
+          </div>
+        </div>
+      </section>
+
+      <!-- 02 · Filters + 03 · Positions list (Figma 5791:244) -->
+      <section class="car-list co-section" id="open-roles" aria-labelledby="roles-heading">
+        <h2 class="sr-only" id="roles-heading">Open roles</h2>
+        <div class="car-wrap">
+          <div class="filters" data-filters>
+            <!-- jobs:careers-filters:start -->
+            <div class="filters__group" role="group" aria-labelledby="flt-area">
+              <span class="filters__label" id="flt-area">Area</span>
+              <div class="chips">
+                <button class="chip" type="button" aria-pressed="true" data-group="area" data-value="all">All <span class="chip__count" data-count-for="all">5</span></button>
+                <button class="chip" type="button" aria-pressed="false" data-group="area" data-value="Strategy">Strategy <span class="chip__count" data-count-for="Strategy">1</span></button>
+                <button class="chip" type="button" aria-pressed="false" data-group="area" data-value="Media">Media <span class="chip__count" data-count-for="Media">2</span></button>
+                <button class="chip" type="button" aria-pressed="false" data-group="area" data-value="Creative">Creative <span class="chip__count" data-count-for="Creative">1</span></button>
+                <button class="chip" type="button" aria-pressed="false" data-group="area" data-value="Data">Data <span class="chip__count" data-count-for="Data">1</span></button>
+              </div>
+            </div>
+            <div class="filters__group" role="group" aria-labelledby="flt-type">
+              <span class="filters__label" id="flt-type">Type</span>
+              <div class="chips">
+                <button class="chip" type="button" aria-pressed="false" data-group="type" data-value="Full-time">Full-time <span class="chip__count" data-count-for="Full-time">4</span></button>
+                <button class="chip" type="button" aria-pressed="false" data-group="type" data-value="Contract">Contract <span class="chip__count" data-count-for="Contract">1</span></button>
+                <button class="chip" type="button" aria-pressed="false" data-group="type" data-value="Part-time" aria-disabled="true" title="No roles right now">Part-time <span class="chip__count" data-count-for="Part-time">0</span></button>
+              </div>
+            </div>
+            <div class="filters__group" role="group" aria-labelledby="flt-location">
+              <span class="filters__label" id="flt-location">Location</span>
+              <div class="chips">
+                <button class="chip" type="button" aria-pressed="false" data-group="location" data-value="Remote · US hours">Remote · US hours <span class="chip__count" data-count-for="Remote · US hours">4</span></button>
+                <button class="chip" type="button" aria-pressed="false" data-group="location" data-value="Remote · Any timezone">Remote · Any timezone <span class="chip__count" data-count-for="Remote · Any timezone">1</span></button>
+              </div>
+            </div>
+            <!-- jobs:careers-filters:end -->
+            <div class="filters__foot">
+              <p class="t-label-sm" aria-live="polite" data-result-count>Showing all roles</p>
+              <div class="filters__tools">
+                <span class="filters__query" data-query-chip hidden><span data-query-text></span> <button type="button" aria-label="Clear search" data-query-clear>×</button></span>
+                <label class="filters__sort">Sort:
+                  <select data-sort aria-label="Sort roles">
+                    <option value="newest">Newest first</option>
+                    <option value="oldest">Oldest first</option>
+                    <option value="az">A–Z</option>
+                  </select>
+                </label>
+                <button class="filters__clear" type="button" data-clear disabled>Clear all</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="jobs-head" aria-hidden="true">
+            <span>Role</span><span>Area</span><span>Type</span><span>Location</span><span></span>
+          </div>
+          <!-- jobs:careers-list:start -->
+          <ul class="jobs" role="list" data-jobs>
+          <li class="job" id="role-growth-strategist" data-slug="growth-strategist" data-title="Growth Strategist" data-area="Strategy" data-type="Full-time" data-location="Remote · US hours" data-posted-at="2026-11-09" data-keywords="growth strategist strategy growth strategy google lsa meta account management planning performance marketing 3+ years in performance marketing clear writer us hours overlap">
+            <div class="job__head">
+              <div class="job__name">
+                <h3 class="job__title"><a href="/careers/growth-strategist/" data-expand>Growth Strategist</a></h3>
+                <span class="job__posted" data-posted="2026-11-09">Posted Nov 9, 2026</span>
+              </div>
+              <span class="job__cell"><span class="sr-only">Area: </span>Strategy</span>
+              <span class="job__cell"><span class="sr-only">Type: </span>Full-time</span>
+              <span class="job__cell"><span class="sr-only">Location: </span>Remote · US hours</span>
+              <button class="job__toggle" type="button" aria-expanded="false" aria-controls="role-growth-strategist-panel"><span class="sr-only">Show summary: Growth Strategist</span></button>
+            </div>
+            <div class="job__panel" id="role-growth-strategist-panel" hidden>
+              <div class="job__panel-inner">
+                <div class="job__summary">
+                  <p class="t-label-lg">Own growth plans for 4–6 home service clients, from first audit to monthly reviews in booked jobs and revenue.</p>
+                  <p class="eyebrow">What you'll do</p>
+                  <ul class="job__bullets" role="list">
+                    <li>Lead discovery calls and write the growth plan</li>
+                    <li>Coordinate your pod: media, creative and analytics</li>
+                    <li>Report results in booked jobs and revenue</li>
+                  </ul>
+                </div>
+                <div class="job__side">
+                  <p class="eyebrow">What we look for</p>
+                  <ul class="job__tags" role="list">
+                    <li>3+ years in performance marketing</li>
+                    <li>Clear writer</li>
+                    <li>US hours overlap</li>
+                  </ul>
+                  <a class="btn btn--l btn--block" href="/careers/growth-strategist/"><span>View role</span><span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span></a>
+                  <a class="link-arrow job__apply" href="/careers/growth-strategist/#apply">Apply now <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></a>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="job" id="role-paid-media-specialist-google-lsa" data-slug="paid-media-specialist-google-lsa" data-title="Paid Media Specialist (Google &amp; LSA)" data-area="Media" data-type="Full-time" data-location="Remote · US hours" data-posted-at="2026-11-06" data-keywords="paid media specialist (google &amp; lsa) media google ads lsa local services ads ppc search pmax paid media ads 2+ years managing google ads lsa experience us hours overlap">
+            <div class="job__head">
+              <div class="job__name">
+                <h3 class="job__title"><a href="/careers/paid-media-specialist-google-lsa/" data-expand>Paid Media Specialist (Google &amp; LSA)</a></h3>
+                <span class="job__posted" data-posted="2026-11-06">Posted Nov 6, 2026</span>
+              </div>
+              <span class="job__cell"><span class="sr-only">Area: </span>Media</span>
+              <span class="job__cell"><span class="sr-only">Type: </span>Full-time</span>
+              <span class="job__cell"><span class="sr-only">Location: </span>Remote · US hours</span>
+              <button class="job__toggle" type="button" aria-expanded="false" aria-controls="role-paid-media-specialist-google-lsa-panel"><span class="sr-only">Show summary: Paid Media Specialist (Google &amp; LSA)</span></button>
+            </div>
+            <div class="job__panel" id="role-paid-media-specialist-google-lsa-panel" hidden>
+              <div class="job__panel-inner">
+                <div class="job__summary">
+                  <p class="t-label-lg">Build and run Google Ads and Local Services Ads that fill technician calendars, not just dashboards.</p>
+                  <p class="eyebrow">What you'll do</p>
+                  <ul class="job__bullets" role="list">
+                    <li>Build and optimize Search, PMax and LSA accounts</li>
+                    <li>Tie spend to calls, booked jobs and revenue</li>
+                    <li>Test offers and landing pages with your pod</li>
+                  </ul>
+                </div>
+                <div class="job__side">
+                  <p class="eyebrow">What we look for</p>
+                  <ul class="job__tags" role="list">
+                    <li>2+ years managing Google Ads</li>
+                    <li>LSA experience</li>
+                    <li>US hours overlap</li>
+                  </ul>
+                  <a class="btn btn--l btn--block" href="/careers/paid-media-specialist-google-lsa/"><span>View role</span><span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span></a>
+                  <a class="link-arrow job__apply" href="/careers/paid-media-specialist-google-lsa/#apply">Apply now <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></a>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="job" id="role-meta-ads-specialist" data-slug="meta-ads-specialist" data-title="Meta Ads Specialist" data-area="Media" data-type="Contract" data-location="Remote · US hours" data-posted-at="2026-11-04" data-keywords="meta ads specialist media meta ads facebook ads instagram paid social creative testing ads 2+ years running meta ads creative testing us hours overlap">
+            <div class="job__head">
+              <div class="job__name">
+                <h3 class="job__title"><a href="/careers/meta-ads-specialist/" data-expand>Meta Ads Specialist</a></h3>
+                <span class="job__posted" data-posted="2026-11-04">Posted Nov 4, 2026</span>
+              </div>
+              <span class="job__cell"><span class="sr-only">Area: </span>Media</span>
+              <span class="job__cell"><span class="sr-only">Type: </span>Contract</span>
+              <span class="job__cell"><span class="sr-only">Location: </span>Remote · US hours</span>
+              <button class="job__toggle" type="button" aria-expanded="false" aria-controls="role-meta-ads-specialist-panel"><span class="sr-only">Show summary: Meta Ads Specialist</span></button>
+            </div>
+            <div class="job__panel" id="role-meta-ads-specialist-panel" hidden>
+              <div class="job__panel-inner">
+                <div class="job__summary">
+                  <p class="t-label-lg">Run Meta campaigns that create demand for service businesses before customers start searching.</p>
+                  <p class="eyebrow">What you'll do</p>
+                  <ul class="job__bullets" role="list">
+                    <li>Plan and run Meta campaigns for 3–5 clients</li>
+                    <li>Brief and test creative with the creative team</li>
+                    <li>Report leads, booked jobs and cost per job</li>
+                  </ul>
+                </div>
+                <div class="job__side">
+                  <p class="eyebrow">What we look for</p>
+                  <ul class="job__tags" role="list">
+                    <li>2+ years running Meta Ads</li>
+                    <li>Creative testing</li>
+                    <li>US hours overlap</li>
+                  </ul>
+                  <a class="btn btn--l btn--block" href="/careers/meta-ads-specialist/"><span>View role</span><span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span></a>
+                  <a class="link-arrow job__apply" href="/careers/meta-ads-specialist/#apply">Apply now <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></a>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="job" id="role-web-designer-webflow" data-slug="web-designer-webflow" data-title="Web Designer (Webflow)" data-area="Creative" data-type="Full-time" data-location="Remote · Any timezone" data-posted-at="2026-10-28" data-keywords="web designer (webflow) creative webflow figma web design landing pages cro ux design 3+ years in web design strong webflow portfolio conversion mindset">
+            <div class="job__head">
+              <div class="job__name">
+                <h3 class="job__title"><a href="/careers/web-designer-webflow/" data-expand>Web Designer (Webflow)</a></h3>
+                <span class="job__posted" data-posted="2026-10-28">Posted Oct 28, 2026</span>
+              </div>
+              <span class="job__cell"><span class="sr-only">Area: </span>Creative</span>
+              <span class="job__cell"><span class="sr-only">Type: </span>Full-time</span>
+              <span class="job__cell"><span class="sr-only">Location: </span>Remote · Any timezone</span>
+              <button class="job__toggle" type="button" aria-expanded="false" aria-controls="role-web-designer-webflow-panel"><span class="sr-only">Show summary: Web Designer (Webflow)</span></button>
+            </div>
+            <div class="job__panel" id="role-web-designer-webflow-panel" hidden>
+              <div class="job__panel-inner">
+                <div class="job__summary">
+                  <p class="t-label-lg">Design and build websites and landing pages in Webflow that turn visitors into booked jobs.</p>
+                  <p class="eyebrow">What you'll do</p>
+                  <ul class="job__bullets" role="list">
+                    <li>Design sites and landing pages in Figma</li>
+                    <li>Build them in Webflow, fast and accessible</li>
+                    <li>Test pages with media and analytics</li>
+                  </ul>
+                </div>
+                <div class="job__side">
+                  <p class="eyebrow">What we look for</p>
+                  <ul class="job__tags" role="list">
+                    <li>3+ years in web design</li>
+                    <li>Strong Webflow portfolio</li>
+                    <li>Conversion mindset</li>
+                  </ul>
+                  <a class="btn btn--l btn--block" href="/careers/web-designer-webflow/"><span>View role</span><span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span></a>
+                  <a class="link-arrow job__apply" href="/careers/web-designer-webflow/#apply">Apply now <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></a>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="job" id="role-marketing-analyst" data-slug="marketing-analyst" data-title="Marketing Analyst" data-area="Data" data-type="Full-time" data-location="Remote · US hours" data-posted-at="2026-10-21" data-keywords="marketing analyst data analytics ga4 looker studio attribution call tracking sql data reporting 2+ years in marketing analytics ga4 + looker studio us hours overlap">
+            <div class="job__head">
+              <div class="job__name">
+                <h3 class="job__title"><a href="/careers/marketing-analyst/" data-expand>Marketing Analyst</a></h3>
+                <span class="job__posted" data-posted="2026-10-21">Posted Oct 21, 2026</span>
+              </div>
+              <span class="job__cell"><span class="sr-only">Area: </span>Data</span>
+              <span class="job__cell"><span class="sr-only">Type: </span>Full-time</span>
+              <span class="job__cell"><span class="sr-only">Location: </span>Remote · US hours</span>
+              <button class="job__toggle" type="button" aria-expanded="false" aria-controls="role-marketing-analyst-panel"><span class="sr-only">Show summary: Marketing Analyst</span></button>
+            </div>
+            <div class="job__panel" id="role-marketing-analyst-panel" hidden>
+              <div class="job__panel-inner">
+                <div class="job__summary">
+                  <p class="t-label-lg">Connect every call, form and booked job to the campaign that drove it, and turn it into clear reports.</p>
+                  <p class="eyebrow">What you'll do</p>
+                  <ul class="job__bullets" role="list">
+                    <li>Set up tracking from first click to booked job</li>
+                    <li>Build Looker Studio reports owners understand</li>
+                    <li>Find where leads leak and why</li>
+                  </ul>
+                </div>
+                <div class="job__side">
+                  <p class="eyebrow">What we look for</p>
+                  <ul class="job__tags" role="list">
+                    <li>2+ years in marketing analytics</li>
+                    <li>GA4 + Looker Studio</li>
+                    <li>US hours overlap</li>
+                  </ul>
+                  <a class="btn btn--l btn--block" href="/careers/marketing-analyst/"><span>View role</span><span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span></a>
+                  <a class="link-arrow job__apply" href="/careers/marketing-analyst/#apply">Apply now <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></a>
+                </div>
+              </div>
+            </div>
+          </li>
+          </ul>
+          <!-- jobs:careers-list:end -->
+          <div class="jobs-empty" data-jobs-empty hidden>
+            <p class="t-label-xl" data-empty-text>No roles match these filters yet.</p>
+            <a class="link-arrow" href="#open-application">Send your CV and we'll reach out when one opens <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 04 · No openings? Send your CV (Figma 5791:402) -->
+      <section class="car-cv co-section" id="open-application" aria-labelledby="cv-title" tabindex="-1">
+        <div class="car-wrap car-cv__card">
+          <div class="car-cv__copy">
+            <p class="eyebrow">No openings for you?</p>
+            <h2 class="t-h2" id="cv-title" data-split>Send us your CV anyway</h2>
+            <p class="t-p-lg">Tell us what you'd build at Savvy. We read every application and keep it on file for [6 months], so we can reach out when a role opens.</p>
+            <p class="t-p-sm">We reply to every application within [10 business days].</p>
+          </div>
+          <div class="car-cv__panel">
+            <form class="cv-form" novalidate data-cv-form>
+              <div class="form-banner form-banner--error" role="alert" tabindex="-1" data-banner-network hidden>
+                <span class="form-banner__icon" aria-hidden="true">⚠</span>
+                <div class="form-banner__body"><strong>We couldn't send your CV.</strong><span data-network-text>Check your connection and try again.</span></div>
+              </div>
+              <div class="field" data-field="name">
+                <label class="field__label" for="cv-name">Full name</label>
+                <input class="input" id="cv-name" name="name" type="text" autocomplete="name" placeholder="Jane Doe" maxlength="80" required aria-describedby="cv-name-error" />
+                <p class="field__error" id="cv-name-error"></p>
+              </div>
+              <div class="field" data-field="email">
+                <label class="field__label" for="cv-email">Email</label>
+                <input class="input" id="cv-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="jane@email.com" maxlength="150" required aria-describedby="cv-email-error" />
+                <p class="field__error" id="cv-email-error"></p>
+              </div>
+              <div class="field" data-field="area">
+                <label class="field__label" for="cv-area">Area of interest</label>
+                <select class="select" id="cv-area" name="area" required aria-describedby="cv-area-error">
+                  <option value="">Choose an area</option>
+                  <option>Strategy</option><option>Media</option><option>Creative</option><option>Data</option><option>Operations</option><option>Something else</option>
+                </select>
+                <p class="field__error" id="cv-area-error"></p>
+              </div>
+              <div class="field" data-field="link">
+                <label class="field__label" for="cv-link">LinkedIn or portfolio</label>
+                <input class="input" id="cv-link" name="link" type="url" inputmode="url" placeholder="https://" maxlength="300" required aria-describedby="cv-link-error" />
+                <p class="field__error" id="cv-link-error"></p>
+              </div>
+              <div class="field" data-field="cv">
+                <span class="sr-only" id="cv-cv-label">CV / résumé</span>
+                <div class="dropzone" data-dropzone>
+                  <input class="dropzone__input" id="cv-cv" name="cv" type="file" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" aria-labelledby="cv-cv-label cv-cv-cta" aria-describedby="cv-cv-hint cv-cv-error" required />
+                  <img class="dropzone__icon" src="/ds/icons/careers-upload.svg" alt="" width="24" height="24" />
+                  <p class="t-label-sm" id="cv-cv-cta" data-drop-text>Drag your CV here or <span class="dropzone__browse">browse</span></p>
+                  <p class="field__hint" id="cv-cv-hint">PDF, DOC or DOCX · max 5 MB</p>
+                </div>
+                <div class="file-chip" data-file-chip hidden>
+                  <span class="file-chip__icon" data-file-ext aria-hidden="true">PDF</span>
+                  <span class="file-chip__meta"><span class="file-chip__name" data-file-name></span><span class="file-chip__size" data-file-size></span></span>
+                  <button class="file-chip__remove" type="button" data-file-remove aria-label="Remove file"><img src="/ds/icons/close.svg" alt="" width="16" height="16" /></button>
+                </div>
+                <p class="field__error" id="cv-cv-error"></p>
+              </div>
+              <div class="field" data-field="consent">
+                <label class="check"><input type="checkbox" id="cv-consent" name="consent" required aria-describedby="cv-consent-error" /> <span>I agree to Savvy storing my application for [6 months].</span></label>
+                <p class="field__error" id="cv-consent-error"></p>
+              </div>
+              <div class="hp" aria-hidden="true"><label>Leave this empty <input type="text" name="botField" tabindex="-1" autocomplete="off" /></label></div>
+              <button class="btn btn--l btn--block" type="submit" data-submit data-magnetic><span data-submit-label>Send my CV</span><span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span></button>
+            </form>
+            <div class="cv-done" data-cv-done tabindex="-1" hidden>
+              <span class="apply-done__check" aria-hidden="true">✓</span>
+              <p class="t-h4" data-cv-done-title>Thanks. Your CV is in.</p>
+              <p class="t-p-md c-sub">We reply to every application within [10 business days].</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 05 · CTA to job detail (Figma 5791:443) -->
+      <section class="car-cta co-section" aria-labelledby="cta-title">
+        <div class="car-wrap car-cta__card">
+          <div class="car-cta__copy">
+            <h2 class="t-h2" id="cta-title">Found a role that fits?</h2>
+            <p class="t-p-lg c-sub">Open the role to read the full description, the 90-day plan and how the hiring process works.</p>
+          </div>
+          <div class="car-cta__actions">
+            <a class="btn btn--l" href="#open-roles" data-cta-role data-magnetic><span data-cta-label>See all roles</span><span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span></a>
+            <a class="link-arrow" href="/work-with-us/">Back to Work With Us <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- @include footer -->
+    <script type="module" src="/src/pages/careers/careers.js"></script>
+  </body>
+</html>
