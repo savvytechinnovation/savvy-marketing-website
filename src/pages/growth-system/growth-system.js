@@ -1,20 +1,78 @@
 import { initSite, gsap, ScrollTrigger, reduceMotion, lenis } from '../../ds/site.js';
 import { mount3D } from '../../ds/fx3d.js';
+import { SplitText } from 'gsap/SplitText';
+import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin';
 import { $, $$, initHeadings, initMagnetic, initTilt } from '../industry/motion.js';
+import { mountJourney } from './scene-journey.js';
 import './growth-system.css';
 
+gsap.registerPlugin(SplitText, ScrambleTextPlugin);
 initSite();
 const mm = gsap.matchMedia();
 initHeadings(mm);
 initMagnetic();
-initTilt('.stage-card, .loop__detail', 3);
+initTilt('.stage-card', 3);
 
-// 3D: flowing ribbons behind the hero staircase; the 7-node 'rings' scene inside the loop
-mount3D($('[data-3d-ribbons]'), { scene: 'ribbons', theme: 'light' });
-let rings = null;
-mount3D($('[data-loop-3d]'), { scene: 'rings', theme: 'light' }).then((api) => {
-  rings = api;
-  rings?.setProgress(pinST ? pinST.progress : (current + 1) / 7);
+// 3D: a dark flowing field behind the hero; the loop is a camera journey through 7 stations
+mount3D($('[data-gs-field]'), { scene: 'field', theme: 'dark', scrub: true });
+let journey = null;
+mountJourney($('[data-loop-3d]'), { reduce: reduceMotion })
+  .then((api) => {
+    journey = api;
+    if (!api) return;
+    section.classList.add('has-journey');
+    ScrollTrigger.refresh(); // the pinned layout changes once the journey is in
+    if (pinST) api.setProgress(pinST.progress);
+    else api.goTo(current);
+  })
+  .catch((err) => console.warn('[journey]', err));
+
+// Kinetic hero title: characters flip up in 3D, words drift away on scroll
+mm.add('(prefers-reduced-motion: no-preference)', () => {
+  const run = () =>
+    SplitText.create('[data-kinetic]', {
+      type: 'words,chars',
+      wordsClass: 'kw',
+      charsClass: 'kc',
+      aria: 'auto',
+      autoSplit: true,
+      onSplit(self) {
+        gsap.set(self.chars, { transformPerspective: 700, transformOrigin: '50% 100% -30px' });
+        return gsap
+          .timeline()
+          .from(self.chars, { rotationX: -100, yPercent: 70, opacity: 0, duration: 1.3, ease: 'expo.out', stagger: 0.02, delay: 0.15 })
+          .add(
+            gsap.to(self.words, {
+              y: (i) => -30 - ((i * 41) % 70),
+              opacity: 0.15,
+              ease: 'none',
+              scrollTrigger: { trigger: '.gs-hero', start: 'top top', end: 'bottom top', scrub: true },
+            }),
+            0,
+          );
+      },
+    });
+  document.fonts ? document.fonts.ready.then(run) : run();
+  gsap.from('.gs-hero__meta > *', { opacity: 0, y: -8, duration: 0.8, stagger: 0.08, delay: 0.6 });
+});
+
+// Hero staircase: a 3D object that follows the pointer
+const stair = $('[data-staircase]');
+if (stair && matchMedia('(hover: hover) and (pointer: fine)').matches && !reduceMotion) {
+  gsap.set(stair, { transformPerspective: 1400, rotationX: 14, rotationY: -18 });
+  const rx = gsap.quickTo(stair, 'rotationX', { duration: 1, ease: 'power3' });
+  const ry = gsap.quickTo(stair, 'rotationY', { duration: 1, ease: 'power3' });
+  $('.gs-hero').addEventListener('pointermove', (e) => {
+    rx(14 - (e.clientY / innerHeight - 0.5) * 14);
+    ry(-18 + (e.clientX / innerWidth - 0.5) * 22);
+  });
+}
+
+// Proof values scramble in
+$$('.proof .metric__value').forEach((el, i) => {
+  if (reduceMotion) return;
+  const text = el.textContent;
+  ScrollTrigger.create({ trigger: el, start: 'top 88%', once: true, onEnter: () => gsap.to(el, { duration: 1.3, delay: i * 0.1, scrambleText: { text, chars: '0123456789%$X', revealDelay: 0.35 } }) });
 });
 
 // Hero staircase grows step by step on load
@@ -95,7 +153,7 @@ function render(i, { animate = true } = {}) {
 function setRing(p) {
   if (reduceMotion) p = (current + 1) / 7;
   gsap.set(progress, { attr: { 'stroke-dashoffset': 1 - p } });
-  rings?.setProgress(p);
+  if (journey) pinST ? journey.setProgress(p) : journey.goTo(current);
   comet.style.setProperty('--angle', `${-90 + p * 360}deg`);
 }
 

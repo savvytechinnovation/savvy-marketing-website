@@ -12,18 +12,20 @@
     <main id="main">
       <!-- Section / 404 hero -->
       <section class="nf-hero" aria-labelledby="nf-title">
+        <div class="nf-hero__image" data-nf-stage aria-hidden="true">
+          <div class="nf-hero__3d" data-nf-3d data-cursor="drag"></div>
+          <span class="nf-hero__code" data-nf-code>404</span>
+        </div>
+        <div class="nf-hero__meta" aria-hidden="true"><span>Error 404 · route not found</span><span class="nf-hero__hint">Push the numbers · tap to make them jump</span><span data-nf-path></span></div>
         <div class="nf-hero__row">
           <div class="nf-hero__copy">
             <p class="eyebrow" data-hero-item>Error 404</p>
-            <h1 class="t-h1" id="nf-title" data-split data-split-hero>This page doesn't exist. We noticed.</h1>
+            <h1 class="nf-hero__title" id="nf-title" data-split data-split-hero>This page doesn't exist. We noticed.</h1>
             <p class="t-p-lg c-sub" data-hero-item>Every broken link gets logged and fixed. Meanwhile, here's where you probably meant to go.</p>
             <div class="nf-hero__actions" data-hero-item>
               <a class="btn" href="/"><span>Back to home</span><span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span></a>
+              <a class="link-arrow link-arrow--on-dark" href="#nf-routes-title" data-no-transition>Find the page <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></a>
             </div>
-          </div>
-          <div class="nf-hero__image ph" data-nf-stage aria-hidden="true">
-            <div class="nf-hero__3d" data-nf-3d></div>
-            <span class="nf-hero__code" data-nf-code>404</span>
           </div>
         </div>
       </section>

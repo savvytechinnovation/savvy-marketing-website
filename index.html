@@ -10,266 +10,327 @@
   <body class="page-home">
     <!-- @include header -->
 
-    <main id="main">
+    <!-- One fixed WebGL world behind the whole page (src/pages/home/world.js) -->
+    <div class="world" data-world aria-hidden="true"></div>
+    <div class="h-grid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+    <div class="h-rail" data-rail aria-hidden="true"></div>
+    <div class="h-readout" aria-hidden="true"><span data-readout-index>01 / 12</span><span data-readout-name>Hero</span><span class="h-readout__fps" data-readout-fps></span></div>
+
+    <main id="main" class="h-main">
       <!-- 01 · Hero -->
-      <section class="home-hero" aria-labelledby="hero-title">
-        <div class="home-hero__row">
-          <div class="home-hero__copy">
-            <p class="t-label-sm c-sub" data-hero-item>For established service businesses</p>
-            <h1 class="t-h1" id="hero-title" data-split>Build the marketing system your next stage of growth needs.</h1>
-            <p class="t-p-lg c-sub" data-hero-item>We help established HVAC, plumbing, electrical, roofing and cleaning companies generate demand, convert more customers and see exactly what drives revenue.</p>
-            <div class="home-hero__actions" data-hero-item>
-              <a class="btn" href="/explore-partnership/"><span>Explore Partnership</span><span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span></a>
-              <a class="link-arrow" href="/are-we-a-fit/">Are we a fit? <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></a>
+      <section class="h-hero tone-dark" data-sec="Hero" data-shape="logo" data-tone="dark" aria-labelledby="hero-title">
+        <div class="h-hero__meta" aria-hidden="true">
+          <span>Savvy / Growth systems</span>
+          <span class="h-hero__meta-mid">Isologo · <span data-pts>24,000</span> particles</span>
+          <span>Index 01 / 12</span>
+        </div>
+        <div class="h-hero__grid">
+          <div class="h-hero__copy">
+            <p class="h-kicker" data-hero-item><span class="h-pulse" aria-hidden="true"></span>For established service businesses</p>
+            <h1 class="h-hero__title" id="hero-title" data-kinetic>Build the marketing system your next stage of growth needs.</h1>
+            <div class="h-hero__foot">
+              <p class="t-p-lg h-hero__lead" data-hero-item>We help established HVAC, plumbing, electrical, roofing and cleaning companies generate demand, convert more customers and see exactly what drives revenue.</p>
+              <div class="h-hero__actions" data-hero-item>
+                <a class="btn btn--l" href="/explore-partnership/"><span>Explore Partnership</span><span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span></a>
+                <a class="link-arrow link-arrow--on-dark" href="/are-we-a-fit/">Are we a fit? <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></a>
+              </div>
             </div>
           </div>
-          <div class="home-hero__media ph" data-tilt aria-hidden="true"><div class="fx-layer" data-3d="logo" data-3d-scrub></div><span class="home-hero__chip home-hero__chip--a">Booked jobs <b>↑</b></span><span class="home-hero__chip home-hero__chip--b">Cost per lead <b>↓</b></span></div>
+          <div class="h-hero__stage" aria-hidden="true">
+            <img class="h-hero__fallback" src="/brand/isologo-gradient.svg" alt="" width="178" height="179" />
+            <span class="h-cross h-cross--tl"></span><span class="h-cross h-cross--br"></span>
+            <span class="h-chip h-chip--a">Booked jobs <b>↑</b></span>
+            <span class="h-chip h-chip--b">Cost per lead <b>↓</b></span>
+            <span class="h-coord h-coord--a">x 0.62 · y 0.48</span>
+            <span class="h-coord h-coord--b">Move the pointer</span>
+          </div>
         </div>
+        <div class="h-scrollcue" aria-hidden="true"><span>Scroll</span><span class="h-scrollcue__line"></span></div>
       </section>
 
-      <!-- 02 · Trust strip -->
-      <section class="trust" aria-label="Industries we specialize in">
-        <p class="t-label-sm c-sub">Specialized in five service industries · 10+ years in marketing</p>
-        <ul class="trust__marks" role="list" data-reveal-stagger="0.06">
-          <li data-reveal><span class="trust__icon" aria-hidden="true"></span>HVAC</li>
-          <li data-reveal><span class="trust__icon" aria-hidden="true"></span>Plumbing</li>
-          <li data-reveal><span class="trust__icon" aria-hidden="true"></span>Electrical</li>
-          <li data-reveal><span class="trust__icon" aria-hidden="true"></span>Roofing</li>
-          <li data-reveal><span class="trust__icon" aria-hidden="true"></span>Cleaning</li>
-        </ul>
+      <!-- 02 · Trust strip: velocity marquee -->
+      <section class="h-trust tone-dark" data-sec="Specialized" data-shape="field" data-tone="dark" aria-label="Industries we specialize in">
+        <p class="h-trust__line t-label-sm"><span class="h-index" aria-hidden="true">02 / 12</span>Specialized in five service industries · 10+ years in marketing</p>
+        <div class="h-marquee" data-marquee data-skew>
+          <div class="h-marquee__row" data-marquee-row>
+            <ul class="h-marquee__set" role="list">
+              <li><img src="/ds/icons/industry-hvac.svg" alt="" width="33" height="32" />HVAC</li>
+              <li><img src="/ds/icons/industry-plumbing.svg" alt="" width="33" height="32" />Plumbing</li>
+              <li><img src="/ds/icons/industry-electrical.svg" alt="" width="33" height="32" />Electrical</li>
+              <li><img src="/ds/icons/industry-roofing.svg" alt="" width="33" height="32" />Roofing</li>
+              <li><img src="/ds/icons/industry-cleaning.svg" alt="" width="33" height="32" />Cleaning</li>
+            </ul>
+          </div>
+          <div class="h-marquee__row h-marquee__row--b" data-marquee-row data-dir="-1" aria-hidden="true">
+            <ul class="h-marquee__set" role="list">
+              <li>Demand</li><li>Conversion</li><li>Booked jobs</li><li>Revenue</li><li>Measured</li>
+            </ul>
+          </div>
+        </div>
       </section>
 
       <!-- 03 · The problem / How we compare -->
-      <section class="compare section" aria-labelledby="compare-title">
-        <div class="section-heading">
+      <section class="h-compare tone-light" data-sec="How we compare" data-shape="field" data-tone="light" aria-labelledby="compare-title">
+        <div class="h-head">
+          <p class="h-index" aria-hidden="true">03 / 12</p>
           <p class="eyebrow" data-reveal>Sound familiar?</p>
-          <h2 class="t-h3" id="compare-title" data-split>More marketing hasn't meant more predictable growth.</h2>
+          <h2 class="t-h2" id="compare-title" data-split>More marketing hasn't meant more predictable growth.</h2>
           <p class="t-p-lg c-sub" data-reveal>Most established service businesses are not short on tactics. They are short on a system that connects them to booked jobs and revenue.</p>
         </div>
-        <div class="compare__wrap" data-reveal>
-          <table class="compare__table">
+        <div class="h-split" data-scan>
+          <span class="h-split__beam" aria-hidden="true" data-scan-beam></span>
+          <table class="h-split__table">
             <caption class="sr-only">Savvy Marketing Partners compared with other providers</caption>
             <thead>
               <tr>
-                <td class="compare__corner"></td>
-                <th scope="col" class="compare__savvy">Savvy Marketing Partners</th>
-                <th scope="col" class="compare__others">Others</th>
+                <td class="h-split__corner"><span class="h-split__legend" aria-hidden="true">12 capabilities · scanned on scroll</span></td>
+                <th scope="col" class="h-split__others"><span class="h-split__tag" aria-hidden="true">Before</span>Others</th>
+                <th scope="col" class="h-split__savvy"><span class="h-split__tag" aria-hidden="true">After</span>Savvy Marketing Partners</th>
               </tr>
             </thead>
             <tbody>
-              <tr><th scope="row">Turnover Cleaning</th><td class="compare__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td><td><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td></tr>
-              <tr><th scope="row">Guest-Ready Reset</th><td class="compare__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td><td>Limited</td></tr>
-              <tr><th scope="row">Linens &amp; Restocking</th><td class="compare__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td><td>Sometimes</td></tr>
-              <tr><th scope="row">Property Inspections</th><td class="compare__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td><td><span class="sr-only">Not included</span></td></tr>
-              <tr><th scope="row">Photo &amp; Property Reporting</th><td class="compare__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td><td><span class="sr-only">Not included</span></td></tr>
-              <tr><th scope="row">Maintenance Coordination</th><td class="compare__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td><td><span class="sr-only">Not included</span></td></tr>
-              <tr><th scope="row">On-the-Ground Support</th><td class="compare__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td><td>Limited</td></tr>
-              <tr><th scope="row">Guest Experience Support</th><td class="compare__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td><td><span class="sr-only">Not included</span></td></tr>
-              <tr><th scope="row">Multi-Property Support</th><td class="compare__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td><td>Limited</td></tr>
-              <tr><th scope="row">Owner Keeps Operational Control</th><td class="compare__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td><td><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td></tr>
-              <tr><th scope="row">Flexible Service Selection</th><td class="compare__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td><td><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td></tr>
-              <tr><th scope="row">Listing / Revenue Management</th><td class="compare__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td><td><span class="sr-only">Not included</span></td></tr>
+              <tr><th scope="row">Turnover Cleaning</th><td class="h-split__others"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td><td class="h-split__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td></tr>
+              <tr><th scope="row">Guest-Ready Reset</th><td class="h-split__others">Limited</td><td class="h-split__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td></tr>
+              <tr><th scope="row">Linens &amp; Restocking</th><td class="h-split__others">Sometimes</td><td class="h-split__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td></tr>
+              <tr><th scope="row">Property Inspections</th><td class="h-split__others"><span class="h-split__none" aria-hidden="true"></span><span class="sr-only">Not included</span></td><td class="h-split__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td></tr>
+              <tr><th scope="row">Photo &amp; Property Reporting</th><td class="h-split__others"><span class="h-split__none" aria-hidden="true"></span><span class="sr-only">Not included</span></td><td class="h-split__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td></tr>
+              <tr><th scope="row">Maintenance Coordination</th><td class="h-split__others"><span class="h-split__none" aria-hidden="true"></span><span class="sr-only">Not included</span></td><td class="h-split__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td></tr>
+              <tr><th scope="row">On-the-Ground Support</th><td class="h-split__others">Limited</td><td class="h-split__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td></tr>
+              <tr><th scope="row">Guest Experience Support</th><td class="h-split__others"><span class="h-split__none" aria-hidden="true"></span><span class="sr-only">Not included</span></td><td class="h-split__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td></tr>
+              <tr><th scope="row">Multi-Property Support</th><td class="h-split__others">Limited</td><td class="h-split__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td></tr>
+              <tr><th scope="row">Owner Keeps Operational Control</th><td class="h-split__others"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td><td class="h-split__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td></tr>
+              <tr><th scope="row">Flexible Service Selection</th><td class="h-split__others"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td><td class="h-split__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td></tr>
+              <tr><th scope="row">Listing / Revenue Management</th><td class="h-split__others"><span class="h-split__none" aria-hidden="true"></span><span class="sr-only">Not included</span></td><td class="h-split__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td></tr>
             </tbody>
           </table>
         </div>
-        <p class="compare__closing t-h5" data-reveal>You manage the business. We help take care of what happens at the property.</p>
+        <p class="h-compare__closing t-h4" data-split>You manage the business. We help take care of what happens at the property.</p>
       </section>
 
-      <!-- 04 · Growth System preview -->
-      <section class="growth section bg-weak fx-host" aria-labelledby="growth-title">
-        <div class="fx-layer fx-layer--soft" data-3d="rings" data-3d-scrub aria-hidden="true"></div>
-        <div class="section-heading">
-          <p class="eyebrow" data-reveal>The Savvy Post Growth System</p>
-          <h2 class="t-h3" id="growth-title" data-split>One connected system, not a menu of services.</h2>
-          <p class="t-p-md c-sub" data-reveal>Seven stages that turn strategy into a system you can measure, improve and scale.</p>
+      <!-- 04 · Growth System preview: pinned, particles form the 7-node loop -->
+      <section class="h-growth tone-dark" data-sec="Growth System" data-shape="loop" data-tone="dark" aria-labelledby="growth-title">
+        <div class="h-growth__pin" data-growth-pin>
+          <div class="h-growth__copy">
+            <p class="h-index" aria-hidden="true">04 / 12</p>
+            <p class="eyebrow" data-reveal>The Savvy Post Growth System</p>
+            <h2 class="t-h2" id="growth-title" data-split>One connected system, not a menu of services.</h2>
+            <p class="t-p-md c-sub" data-reveal>Seven stages that turn strategy into a system you can measure, improve and scale.</p>
+            <ol class="h-stages" role="list" data-loop>
+              <li class="h-stage"><span class="h-stage__n" aria-hidden="true">01</span><span class="t-label-md">Strategy</span><span class="t-p-sm c-sub">Understand the business and market</span></li>
+              <li class="h-stage"><span class="h-stage__n" aria-hidden="true">02</span><span class="t-label-md">Build</span><span class="t-p-sm c-sub">Set up site, tracking and CRM</span></li>
+              <li class="h-stage"><span class="h-stage__n" aria-hidden="true">03</span><span class="t-label-md">Generate</span><span class="t-p-sm c-sub">Create demand in the right channels</span></li>
+              <li class="h-stage"><span class="h-stage__n" aria-hidden="true">04</span><span class="t-label-md">Convert</span><span class="t-p-sm c-sub">Turn attention into booked jobs</span></li>
+              <li class="h-stage"><span class="h-stage__n" aria-hidden="true">05</span><span class="t-label-md">Measure</span><span class="t-p-sm c-sub">Track the journey to revenue</span></li>
+              <li class="h-stage"><span class="h-stage__n" aria-hidden="true">06</span><span class="t-label-md">Optimize</span><span class="t-p-sm c-sub">Improve what the data shows</span></li>
+              <li class="h-stage"><span class="h-stage__n" aria-hidden="true">07</span><span class="t-label-md">Grow</span><span class="t-p-sm c-sub">Scale what works</span></li>
+            </ol>
+            <a class="btn" href="/growth-system/" data-reveal><span>Explore Growth System</span><span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span></a>
+          </div>
+          <div class="h-growth__viz" aria-hidden="true">
+            <svg class="h-growth__ring" viewBox="0 0 200 200"><circle cx="100" cy="100" r="98" /><circle class="h-growth__ring-p" cx="100" cy="100" r="98" pathLength="1" data-ring /></svg>
+            <span class="h-growth__big" data-stage-big>01</span>
+            <span class="h-growth__label" data-stage-label>Strategy</span>
+            <span class="h-growth__hint">Stage <span data-stage-num>1</span> of 7 · scroll to travel the loop</span>
+          </div>
         </div>
-        <ol class="growth__loop" role="list" data-loop>
-          <li class="stage"><span class="stage__icon ph" aria-hidden="true"></span><span class="t-label-md">Strategy</span><span class="t-p-sm c-sub">Understand the business and market</span></li>
-          <li class="stage__arrow" aria-hidden="true"><img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></li>
-          <li class="stage"><span class="stage__icon ph" aria-hidden="true"></span><span class="t-label-md">Build</span><span class="t-p-sm c-sub">Set up site, tracking and CRM</span></li>
-          <li class="stage__arrow" aria-hidden="true"><img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></li>
-          <li class="stage"><span class="stage__icon ph" aria-hidden="true"></span><span class="t-label-md">Generate</span><span class="t-p-sm c-sub">Create demand in the right channels</span></li>
-          <li class="stage__arrow" aria-hidden="true"><img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></li>
-          <li class="stage"><span class="stage__icon ph" aria-hidden="true"></span><span class="t-label-md">Convert</span><span class="t-p-sm c-sub">Turn attention into booked jobs</span></li>
-          <li class="stage__arrow" aria-hidden="true"><img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></li>
-          <li class="stage"><span class="stage__icon ph" aria-hidden="true"></span><span class="t-label-md">Measure</span><span class="t-p-sm c-sub">Track the journey to revenue</span></li>
-          <li class="stage__arrow" aria-hidden="true"><img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></li>
-          <li class="stage"><span class="stage__icon ph" aria-hidden="true"></span><span class="t-label-md">Optimize</span><span class="t-p-sm c-sub">Improve what the data shows</span></li>
-          <li class="stage__arrow" aria-hidden="true"><img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></li>
-          <li class="stage"><span class="stage__icon ph" aria-hidden="true"></span><span class="t-label-md">Grow</span><span class="t-p-sm c-sub">Scale what works</span></li>
-        </ol>
-        <a class="btn" href="/growth-system/" data-reveal><span>Explore Growth System</span><span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span></a>
       </section>
 
       <!-- 05 · Who it's for -->
-      <section class="fit section bg-weak" aria-labelledby="fit-title">
-        <div class="section-heading">
+      <section class="h-fit tone-light" data-sec="Who it's for" data-shape="field" data-tone="light" aria-labelledby="fit-title">
+        <div class="h-head">
+          <p class="h-index" aria-hidden="true">05 / 12</p>
           <p class="eyebrow" data-reveal>Who we work with</p>
-          <h2 class="t-h3" id="fit-title" data-split>Built for businesses that have proven their model.</h2>
+          <h2 class="t-h2" id="fit-title" data-split>Built for businesses that have proven their model.</h2>
           <p class="t-p-lg c-sub" data-reveal>We care more about maturity than size. The right partner already has customers, a team and a service that works.</p>
         </div>
-        <div class="fit__cols">
-          <div class="fit__card fit__card--good" data-reveal>
+        <div class="h-fit__cols">
+          <div class="h-fit__cell h-fit__cell--good" data-reveal><div class="h-fit__card h-fit__card--good" data-tilt-glare>
+            <span class="h-fit__glare" aria-hidden="true"></span>
             <h3 class="t-label-xl">A good fit if you are…</h3>
-            <ul class="fit__list" role="list">
-              <li><span class="fit__item"><span class="dot" aria-hidden="true"></span>Established, with a proven service and customers</span><span class="t-p-sm c-sub">You already invest in marketing and want it to work as one system.</span></li>
-              <li><span class="fit__item"><span class="dot" aria-hidden="true"></span>Growing, adding crews, vehicles or service areas</span><span class="t-p-sm c-sub">You need demand dependable enough to justify new investments.</span></li>
-              <li><span class="fit__item"><span class="dot" aria-hidden="true"></span>Multi-location, or preparing to expand</span><span class="t-p-sm c-sub">You want local strategies, not one plan copied between markets.</span></li>
+            <ul class="h-fit__list" role="list">
+              <li><span class="h-fit__item"><span class="h-fit__tick" aria-hidden="true"></span>Established, with a proven service and customers</span><span class="t-p-sm c-sub">You already invest in marketing and want it to work as one system.</span></li>
+              <li><span class="h-fit__item"><span class="h-fit__tick" aria-hidden="true"></span>Growing, adding crews, vehicles or service areas</span><span class="t-p-sm c-sub">You need demand dependable enough to justify new investments.</span></li>
+              <li><span class="h-fit__item"><span class="h-fit__tick" aria-hidden="true"></span>Multi-location, or preparing to expand</span><span class="t-p-sm c-sub">You want local strategies, not one plan copied between markets.</span></li>
             </ul>
-          </div>
-          <div class="fit__card fit__card--not" data-reveal>
+          </div></div>
+          <div class="h-fit__cell h-fit__cell--not" data-reveal><div class="h-fit__card h-fit__card--not" data-tilt-glare>
+            <span class="h-fit__glare" aria-hidden="true"></span>
             <h3 class="t-label-xl">Not the right fit yet if…</h3>
-            <ul class="dot-list" role="list">
-              <li><span class="dot dot--soft" aria-hidden="true"></span>You are still defining what you sell or who you serve</li>
-              <li><span class="dot dot--soft" aria-hidden="true"></span>You cannot take on more work right now</li>
-              <li><span class="dot dot--soft" aria-hidden="true"></span>You are looking for the cheapest option or one-off tasks</li>
+            <ul class="h-fit__list h-fit__list--not" role="list">
+              <li><span class="h-fit__item"><span class="h-fit__x" aria-hidden="true"></span>You are still defining what you sell or who you serve</span></li>
+              <li><span class="h-fit__item"><span class="h-fit__x" aria-hidden="true"></span>You cannot take on more work right now</span></li>
+              <li><span class="h-fit__item"><span class="h-fit__x" aria-hidden="true"></span>You are looking for the cheapest option or one-off tasks</span></li>
+            </ul>
+          </div></div>
+        </div>
+        <div class="h-center"><a class="btn" href="/are-we-a-fit/#fit-check" data-reveal><span>Take The Fit Check</span><span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span></a></div>
+      </section>
+
+      <!-- 06 · Industries: pinned horizontal gallery, WebGL cards -->
+      <section class="h-ind tone-white" data-sec="Industries" data-shape="field" data-tone="white" aria-labelledby="industries-title">
+        <div class="h-ind__pin" data-ind-pin>
+          <div class="h-ind__track" data-ind-track>
+            <div class="h-ind__intro">
+              <p class="h-index" aria-hidden="true">06 / 12</p>
+              <p class="eyebrow" data-reveal>Industries</p>
+              <h2 class="t-h2" id="industries-title" data-split>We don't market industries we don't understand.</h2>
+              <p class="h-ind__hint t-label-sm" aria-hidden="true"><span class="h-ind__hint-bar"><span data-ind-progress></span></span><span data-ind-count>01</span> / 05</p>
+            </div>
+            <ul class="h-films" role="list">
+              <li class="h-film"><a href="/industries/hvac/" class="h-film__link" data-cursor="view"><span class="h-film__media" data-film="hvac" aria-hidden="true"></span><span class="h-film__top" aria-hidden="true"><span>01</span><img src="/ds/icons/industry-hvac.svg" alt="" width="33" height="32" /></span><span class="h-film__label"><span>HVAC</span><span class="h-film__arrow" aria-hidden="true">→</span></span></a></li>
+              <li class="h-film"><a href="/industries/plumbing/" class="h-film__link" data-cursor="view"><span class="h-film__media" data-film="plumbing" aria-hidden="true"></span><span class="h-film__top" aria-hidden="true"><span>02</span><img src="/ds/icons/industry-plumbing.svg" alt="" width="33" height="32" /></span><span class="h-film__label"><span>Plumbing</span><span class="h-film__arrow" aria-hidden="true">→</span></span></a></li>
+              <li class="h-film"><a href="/industries/electrical/" class="h-film__link" data-cursor="view"><span class="h-film__media" data-film="electrical" aria-hidden="true"></span><span class="h-film__top" aria-hidden="true"><span>03</span><img src="/ds/icons/industry-electrical.svg" alt="" width="33" height="32" /></span><span class="h-film__label"><span>Electrical</span><span class="h-film__arrow" aria-hidden="true">→</span></span></a></li>
+              <li class="h-film"><a href="/industries/roofing/" class="h-film__link" data-cursor="view"><span class="h-film__media" data-film="roofing" aria-hidden="true"></span><span class="h-film__top" aria-hidden="true"><span>04</span><img src="/ds/icons/industry-roofing.svg" alt="" width="33" height="32" /></span><span class="h-film__label"><span>Roofing</span><span class="h-film__arrow" aria-hidden="true">→</span></span></a></li>
+              <li class="h-film"><a href="/industries/cleaning/" class="h-film__link" data-cursor="view"><span class="h-film__media" data-film="cleaning" aria-hidden="true"></span><span class="h-film__top" aria-hidden="true"><span>05</span><img src="/ds/icons/industry-cleaning.svg" alt="" width="33" height="32" /></span><span class="h-film__label"><span>Cleaning</span><span class="h-film__arrow" aria-hidden="true">→</span></span></a></li>
             </ul>
           </div>
         </div>
-        <a class="btn" href="/are-we-a-fit/#fit-check" data-reveal><span>Take The Fit Check</span><span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span></a>
       </section>
 
-      <!-- 06 · Industries -->
-      <section class="industries section" aria-labelledby="industries-title">
-        <div class="industries__heading">
-          <p class="eyebrow" data-reveal>Industries</p>
-          <h2 class="t-h3" id="industries-title" data-split>We don't market industries we don't understand.</h2>
-        </div>
-        <ul class="filmstrip" role="list">
-          <li class="film" style="--h: 340px"><a href="/industries/hvac/" class="film__link"><span class="ph film__media" aria-hidden="true"></span><span class="t-p-sm c-sub film__kicker">Photo</span><span class="film__label"><span>HVAC</span><span class="film__arrow" aria-hidden="true">→</span></span></a></li>
-          <li class="film" style="--h: 400px"><a href="/industries/plumbing/" class="film__link"><span class="ph film__media" aria-hidden="true"></span><span class="t-p-sm c-sub film__kicker">Photo</span><span class="film__label"><span>Plumbing</span><span class="film__arrow" aria-hidden="true">→</span></span></a></li>
-          <li class="film" style="--h: 440px"><a href="/industries/electrical/" class="film__link"><span class="ph film__media" aria-hidden="true"></span><span class="t-p-sm c-sub film__kicker">Photo</span><span class="film__label"><span>Electrical</span><span class="film__arrow" aria-hidden="true">→</span></span></a></li>
-          <li class="film" style="--h: 400px"><a href="/industries/roofing/" class="film__link"><span class="ph film__media" aria-hidden="true"></span><span class="t-p-sm c-sub film__kicker">Photo</span><span class="film__label"><span>Roofing</span><span class="film__arrow" aria-hidden="true">→</span></span></a></li>
-          <li class="film" style="--h: 340px"><a href="/industries/cleaning/" class="film__link"><span class="ph film__media" aria-hidden="true"></span><span class="t-p-sm c-sub film__kicker">Photo</span><span class="film__label"><span>Cleaning</span><span class="film__arrow" aria-hidden="true">→</span></span></a></li>
-        </ul>
-      </section>
-
-      <!-- 07 · How we measure -->
-      <section class="measure section" aria-labelledby="measure-title">
-        <div class="measure__row">
-          <div class="measure__heading">
+      <!-- 07 · How we measure: particles form the funnel -->
+      <section class="h-measure tone-light" data-sec="Measurement" data-shape="funnel" data-tone="light" aria-labelledby="measure-title">
+        <div class="h-measure__row">
+          <div class="h-measure__copy">
+            <p class="h-index" aria-hidden="true">07 / 12</p>
             <p class="eyebrow" data-reveal>Measurement</p>
-            <h2 class="t-h3" id="measure-title" data-split>We measure the journey, not just the campaign.</h2>
+            <h2 class="t-h2" id="measure-title" data-split>We measure the journey, not just the campaign.</h2>
             <p class="t-p-lg c-sub" data-reveal>A campaign can create a lead and still fail to create revenue. We show you every step, and where opportunities are lost.</p>
+            <ol class="h-funnel" role="list" data-funnel>
+              <li style="--w: 1"><span class="h-funnel__n" aria-hidden="true">01</span><span class="t-label-md">Traffic</span><span class="t-p-sm c-sub">Where did they come from?</span><span class="h-funnel__bar" aria-hidden="true"></span></li>
+              <li style="--w: 0.908"><span class="h-funnel__n" aria-hidden="true">02</span><span class="t-label-md">Lead</span><span class="t-p-sm c-sub">Did they call or submit a form?</span><span class="h-funnel__bar" aria-hidden="true"></span></li>
+              <li style="--w: 0.816"><span class="h-funnel__n" aria-hidden="true">03</span><span class="t-label-md">Qualified lead</span><span class="t-p-sm c-sub">Were they a fit?</span><span class="h-funnel__bar" aria-hidden="true"></span></li>
+              <li style="--w: 0.724"><span class="h-funnel__n" aria-hidden="true">04</span><span class="t-label-md">Appointment</span><span class="t-p-sm c-sub">Was a visit booked?</span><span class="h-funnel__bar" aria-hidden="true"></span></li>
+              <li style="--w: 0.632"><span class="h-funnel__n" aria-hidden="true">05</span><span class="t-label-md">Estimate</span><span class="t-p-sm c-sub">Was a quote sent and followed up?</span><span class="h-funnel__bar" aria-hidden="true"></span></li>
+              <li style="--w: 0.54"><span class="h-funnel__n" aria-hidden="true">06</span><span class="t-label-md">Customer</span><span class="t-p-sm c-sub">Did they hire you?</span><span class="h-funnel__bar" aria-hidden="true"></span></li>
+              <li style="--w: 0.447"><span class="h-funnel__n" aria-hidden="true">07</span><span class="t-label-md">Revenue</span><span class="t-p-sm c-sub">What was the job worth?</span><span class="h-funnel__bar" aria-hidden="true"></span></li>
+            </ol>
           </div>
-          <ol class="funnel" role="list" data-funnel>
-            <li style="--w: 760px"><span class="t-label-md">Traffic</span><span class="t-p-sm c-sub">Where did they come from?</span></li>
-            <li style="--w: 690px"><span class="t-label-md">Lead</span><span class="t-p-sm c-sub">Did they call or submit a form?</span></li>
-            <li style="--w: 620px"><span class="t-label-md">Qualified lead</span><span class="t-p-sm c-sub">Were they a fit?</span></li>
-            <li style="--w: 550px"><span class="t-label-md">Appointment</span><span class="t-p-sm c-sub">Was a visit booked?</span></li>
-            <li style="--w: 480px"><span class="t-label-md">Estimate</span><span class="t-p-sm c-sub">Was a quote sent and followed up?</span></li>
-            <li style="--w: 410px"><span class="t-label-md">Customer</span><span class="t-p-sm c-sub">Did they hire you?</span></li>
-            <li style="--w: 340px"><span class="t-label-md">Revenue</span><span class="t-p-sm c-sub">What was the job worth?</span></li>
-          </ol>
+          <div class="h-measure__viz" aria-hidden="true">
+            <span class="h-measure__tick h-measure__tick--top">First touch</span>
+            <span class="h-measure__level"><span data-level-n>01</span> / 07 · <span data-level-name>Traffic</span></span>
+            <span class="h-measure__tick h-measure__tick--bot">Revenue</span>
+          </div>
         </div>
       </section>
 
-      <!-- 08 · Proof — data only -->
-      <section class="proof section fx-host" aria-labelledby="proof-title">
-        <div class="fx-layer" data-3d="field" data-3d-theme="dark" data-3d-scrub aria-hidden="true"></div>
-        <div class="proof__heading">
-          <div class="proof__title">
-            <p class="eyebrow proof__eyebrow" data-reveal>Proof · Measured results</p>
-            <h2 class="t-h2" id="proof-title" data-split>Numbers from systems we built and measured.</h2>
+      <!-- 08 · Proof — data only: particles form a bar chart -->
+      <section class="h-proof tone-dark" data-sec="Proof" data-shape="bars" data-tone="dark" aria-labelledby="proof-title">
+        <div class="h-proof__heading">
+          <div class="h-proof__title">
+            <p class="h-index" aria-hidden="true">08 / 12</p>
+            <p class="eyebrow" data-reveal>Proof · Measured results</p>
+            <h2 class="h-proof__h2" id="proof-title" data-split>Numbers from systems we built and measured.</h2>
           </div>
-          <div class="proof__note" data-reveal>
+          <div class="h-proof__note" data-reveal>
             <p class="t-p-md">Every figure links to how it was measured: period, sample and source.</p>
             <a class="link-arrow link-arrow--on-dark" href="/results/">How we measure <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></a>
           </div>
         </div>
-        <ul class="metrics" role="list" data-reveal-stagger="0.08">
-          <li class="metric" data-reveal><p class="metric__value">[X%]</p><p class="t-label-md">More booked jobs from the same lead volume</p><p class="t-p-sm metric__meta">Cleaning · 6 months · verified</p></li>
-          <li class="metric" data-reveal><p class="metric__value">[X%]</p><p class="t-label-md">Leads followed up within 5 minutes</p><p class="t-p-sm metric__meta">Cleaning · 90 days · CRM data</p></li>
-          <li class="metric" data-reveal><p class="metric__value">[$X]</p><p class="t-label-md">Revenue attributed to tracked campaigns</p><p class="t-p-sm metric__meta">Cleaning · 12 months · verified</p></li>
-          <li class="metric" data-reveal><p class="metric__value">[X]</p><p class="t-label-md">Markets launched on the same system</p><p class="t-p-sm metric__meta">Across partners · to date</p></li>
+        <ul class="h-metrics" role="list" data-metrics>
+          <li class="h-metric" data-bar="1"><span class="h-metric__i" aria-hidden="true">M.01</span><p class="h-metric__value" data-scramble>[X%]</p><p class="t-label-md">More booked jobs from the same lead volume</p><p class="t-p-sm h-metric__meta">Cleaning · 6 months · verified</p></li>
+          <li class="h-metric" data-bar="3"><span class="h-metric__i" aria-hidden="true">M.02</span><p class="h-metric__value" data-scramble>[X%]</p><p class="t-label-md">Leads followed up within 5 minutes</p><p class="t-p-sm h-metric__meta">Cleaning · 90 days · CRM data</p></li>
+          <li class="h-metric" data-bar="5"><span class="h-metric__i" aria-hidden="true">M.03</span><p class="h-metric__value" data-scramble>[$X]</p><p class="t-label-md">Revenue attributed to tracked campaigns</p><p class="t-p-sm h-metric__meta">Cleaning · 12 months · verified</p></li>
+          <li class="h-metric" data-bar="6"><span class="h-metric__i" aria-hidden="true">M.04</span><p class="h-metric__value" data-scramble>[X]</p><p class="t-label-md">Markets launched on the same system</p><p class="t-p-sm h-metric__meta">Across partners · to date</p></li>
         </ul>
       </section>
 
-      <!-- 08 · Proof — testimonials -->
-      <section class="quotes section bg-weak" aria-labelledby="quotes-title">
-        <div class="quotes__row">
-          <figure class="quote-featured" data-reveal aria-live="polite">
+      <!-- 09 · Proof — testimonials: featured quote + 3D card stack -->
+      <section class="h-quotes tone-light" data-sec="In their words" data-shape="field" data-tone="light" aria-labelledby="quotes-title">
+        <div class="h-quotes__row">
+          <figure class="h-quote" data-reveal aria-live="polite">
+            <p class="h-index" aria-hidden="true">09 / 12</p>
             <p class="eyebrow" id="quotes-title">Proof · In their words</p>
-            <blockquote class="quote-featured__text t-h3" data-quote-text>"Sample quote: replace with a real, named testimonial about working with Savvy Post, two or three lines long."</blockquote>
-            <figcaption class="quote-author">
-              <span class="quote-author__avatar ph" aria-hidden="true"></span>
+            <span class="h-quote__mark" aria-hidden="true">“</span>
+            <blockquote class="h-quote__text" data-quote-text>"Sample quote: replace with a real, named testimonial about working with Savvy Post, two or three lines long."</blockquote>
+            <figcaption class="h-quote__author">
+              <span class="h-quote__avatar ph" aria-hidden="true"></span>
               <span><span class="t-label-lg" data-quote-name>[Client name]</span><span class="t-p-sm c-sub" data-quote-role>[Role · Company · Industry]</span></span>
             </figcaption>
           </figure>
-          <ul class="quote-list" role="list" data-reveal-stagger="0.08">
-            <li data-reveal><button class="quote-card" type="button" data-quote='{"text":"\"Sample quote: replace with a real, named testimonial.\"","name":"[Client name]","role":"[Industry]"}'><span class="t-p-md">"Sample quote: replace with a real, named testimonial."</span><span class="quote-card__author"><span class="dot dot--soft" aria-hidden="true"></span><span class="t-p-sm c-sub">[Client name] · [Industry]</span></span></button></li>
-            <li data-reveal><button class="quote-card" type="button" data-quote='{"text":"\"Sample quote: replace with a real, named testimonial.\"","name":"[Client name]","role":"[Industry]"}'><span class="t-p-md">"Sample quote: replace with a real, named testimonial."</span><span class="quote-card__author"><span class="dot dot--soft" aria-hidden="true"></span><span class="t-p-sm c-sub">[Client name] · [Industry]</span></span></button></li>
-            <li data-reveal><button class="quote-card" type="button" data-quote='{"text":"\"Sample quote: replace with a real, named testimonial.\"","name":"[Client name]","role":"[Industry]"}'><span class="t-p-md">"Sample quote: replace with a real, named testimonial."</span><span class="quote-card__author"><span class="dot dot--soft" aria-hidden="true"></span><span class="t-p-sm c-sub">[Client name] · [Industry]</span></span></button></li>
-          </ul>
+          <div class="h-stack-wrap">
+            <p class="h-stack__hint t-label-xs c-muted" aria-hidden="true">Pick a card to feature it</p>
+            <ul class="h-stack" role="list" data-stack>
+              <li style="--i: 0"><button class="h-card" type="button" data-cursor="Read" data-quote='{"text":"\"Sample quote: replace with a real, named testimonial.\"","name":"[Client name]","role":"[Industry]"}'><span class="h-card__no" aria-hidden="true">01</span><span class="t-p-md">"Sample quote: replace with a real, named testimonial."</span><span class="h-card__author"><span class="dot dot--soft" aria-hidden="true"></span><span class="t-p-sm c-sub">[Client name] · [Industry]</span></span></button></li>
+              <li style="--i: 1"><button class="h-card" type="button" data-cursor="Read" data-quote='{"text":"\"Sample quote: replace with a real, named testimonial.\"","name":"[Client name]","role":"[Industry]"}'><span class="h-card__no" aria-hidden="true">02</span><span class="t-p-md">"Sample quote: replace with a real, named testimonial."</span><span class="h-card__author"><span class="dot dot--soft" aria-hidden="true"></span><span class="t-p-sm c-sub">[Client name] · [Industry]</span></span></button></li>
+              <li style="--i: 2"><button class="h-card" type="button" data-cursor="Read" data-quote='{"text":"\"Sample quote: replace with a real, named testimonial.\"","name":"[Client name]","role":"[Industry]"}'><span class="h-card__no" aria-hidden="true">03</span><span class="t-p-md">"Sample quote: replace with a real, named testimonial."</span><span class="h-card__author"><span class="dot dot--soft" aria-hidden="true"></span><span class="t-p-sm c-sub">[Client name] · [Industry]</span></span></button></li>
+            </ul>
+          </div>
         </div>
       </section>
 
-      <!-- 09 · How it starts -->
-      <section class="starts section bg-weak" aria-labelledby="starts-title">
-        <div class="section-heading section-heading--tight">
-          <p class="eyebrow" data-reveal>How it starts</p>
-          <h2 class="t-h2" id="starts-title" data-split>A low-pressure way to start.</h2>
-          <p class="t-p-lg c-sub" data-reveal>No long pitch. A short assessment, a real conversation and a first plan you can evaluate.</p>
-        </div>
-        <div class="timeline" data-timeline>
-          <div class="timeline__track" aria-hidden="true">
-            <span class="timeline__node">1</span><span class="timeline__line"><span class="timeline__fill"></span></span>
-            <span class="timeline__node">2</span><span class="timeline__line"><span class="timeline__fill"></span></span>
-            <span class="timeline__node">3</span>
+      <!-- 10 · How it starts: pinned camera move through three steps -->
+      <section class="h-starts tone-light" data-sec="How it starts" data-shape="field" data-tone="light" aria-labelledby="starts-title">
+        <div class="h-starts__pin" data-starts-pin>
+          <div class="h-head h-head--tight">
+            <p class="h-index" aria-hidden="true">10 / 12</p>
+            <p class="eyebrow" data-reveal>How it starts</p>
+            <h2 class="t-h2" id="starts-title" data-split>A low-pressure way to start.</h2>
+            <p class="t-p-lg c-sub" data-reveal>No long pitch. A short assessment, a real conversation and a first plan you can evaluate.</p>
           </div>
-          <ol class="timeline__steps" role="list">
-            <li class="timeline__step" data-step="0"><h3 class="t-label-xl"><span class="sr-only">Step 1: </span>Share where you are</h3><p class="t-p-md c-sub">A short assessment about your business, goals and current marketing, so we start with context.</p><p class="t-p-sm c-muted">About 5 minutes</p></li>
-            <li class="timeline__step" data-step="1"><h3 class="t-label-xl"><span class="sr-only">Step 2: </span>Talk it through</h3><p class="t-p-md c-sub">A 30-minute conversation with our team about your market, challenges and next stage.</p><p class="t-p-sm c-muted">30 minutes</p></li>
-            <li class="timeline__step" data-step="2"><h3 class="t-label-xl"><span class="sr-only">Step 3: </span>Get a first plan</h3><p class="t-p-md c-sub">If there is a fit, we outline the first priorities and how we would measure progress.</p><p class="t-p-sm c-muted">Within a few days</p></li>
-          </ol>
-          <div class="timeline__controls" aria-label="Steps">
-            <button class="timeline__btn" type="button" data-prev aria-label="Previous step"><img src="/ds/icons/alt-arrow-right.svg" alt="" width="16" height="16" /></button>
-            <span class="timeline__count t-label-sm" aria-live="polite"><span data-current>1</span> / 3</span>
-            <button class="timeline__btn" type="button" data-next aria-label="Next step"><img src="/ds/icons/alt-arrow-right.svg" alt="" width="16" height="16" /></button>
+          <div class="timeline" data-timeline>
+            <div class="timeline__track" aria-hidden="true">
+              <span class="timeline__node">1</span><span class="timeline__line"><span class="timeline__fill"></span></span>
+              <span class="timeline__node">2</span><span class="timeline__line"><span class="timeline__fill"></span></span>
+              <span class="timeline__node">3</span>
+            </div>
+            <div class="timeline__stage">
+              <ol class="timeline__steps" role="list" data-steps>
+                <li class="timeline__step" data-step="0"><span class="timeline__big" aria-hidden="true">01</span><h3 class="t-label-xl"><span class="sr-only">Step 1: </span>Share where you are</h3><p class="t-p-md c-sub">A short assessment about your business, goals and current marketing, so we start with context.</p><p class="t-p-sm c-muted timeline__time">About 5 minutes</p></li>
+                <li class="timeline__step" data-step="1"><span class="timeline__big" aria-hidden="true">02</span><h3 class="t-label-xl"><span class="sr-only">Step 2: </span>Talk it through</h3><p class="t-p-md c-sub">A 30-minute conversation with our team about your market, challenges and next stage.</p><p class="t-p-sm c-muted timeline__time">30 minutes</p></li>
+                <li class="timeline__step" data-step="2"><span class="timeline__big" aria-hidden="true">03</span><h3 class="t-label-xl"><span class="sr-only">Step 3: </span>Get a first plan</h3><p class="t-p-md c-sub">If there is a fit, we outline the first priorities and how we would measure progress.</p><p class="t-p-sm c-muted timeline__time">Within a few days</p></li>
+              </ol>
+            </div>
+            <div class="timeline__controls" aria-label="Steps">
+              <button class="timeline__btn" type="button" data-prev aria-label="Previous step"><img src="/ds/icons/alt-arrow-right.svg" alt="" width="16" height="16" /></button>
+              <span class="timeline__count t-label-sm" aria-live="polite"><span data-current>1</span> / 3</span>
+              <button class="timeline__btn" type="button" data-next aria-label="Next step"><img src="/ds/icons/alt-arrow-right.svg" alt="" width="16" height="16" /></button>
+            </div>
           </div>
+          <div class="h-center"><a class="btn btn--xl" href="/explore-partnership/" data-reveal><span>Explore Partnership</span><span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span></a></div>
         </div>
-        <a class="btn btn--xl" href="/explore-partnership/" data-reveal><span>Explore Partnership</span><span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span></a>
       </section>
 
-      <!-- 10 · Latest resources -->
-      <section class="resources section" aria-labelledby="resources-title">
-        <div class="resources__heading">
-          <div class="resources__title">
+      <!-- 11 · Latest resources -->
+      <section class="h-res tone-white" data-sec="Insights" data-shape="field" data-tone="white" aria-labelledby="resources-title">
+        <div class="h-res__heading">
+          <div class="h-res__title">
+            <p class="h-index" aria-hidden="true">11 / 12</p>
             <p class="eyebrow" data-reveal>Insights</p>
             <h2 class="t-h2" id="resources-title" data-split>Latest insights for service businesses</h2>
           </div>
           <a class="link-arrow" href="/resources/" data-reveal>View all resources <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></a>
         </div>
-        <div class="resources__row">
-          <article class="post-featured" data-reveal>
-            <a href="/resources/how-to-connect-marketing-to-booked-jobs/" class="post-featured__link">
-              <span class="ph post-featured__media" aria-hidden="true"></span>
+        <div class="h-res__row">
+          <article class="h-post" data-reveal>
+            <a href="/resources/how-to-connect-marketing-to-booked-jobs/" class="h-post__link" data-cursor="Read">
+              <span class="ph h-post__media" aria-hidden="true"><span class="h-post__art"></span></span>
               <span class="t-label-xs c-muted">Guide · All industries · 6 min read</span>
               <h3 class="t-h4">How to connect your marketing to booked jobs</h3>
               <p class="t-p-md c-sub">A practical look at the systems between a lead and a paid invoice.</p>
             </a>
           </article>
-          <ul class="post-list" role="list" data-reveal-stagger="0.08">
-            <li data-reveal><a class="post-row" href="/resources/why-shoulder-seasons-are-a-marketing-problem/"><span class="ph post-row__thumb" aria-hidden="true"></span><span class="post-row__copy"><span class="t-label-xs c-muted">Guide · All industries</span><span class="t-label-lg">Why shoulder seasons are a marketing problem</span><span class="t-p-sm c-muted">6 min read</span></span></a></li>
-            <li data-reveal><a class="post-row" href="/resources/what-we-learned-tracking-leads-to-revenue/"><span class="ph post-row__thumb" aria-hidden="true"></span><span class="post-row__copy"><span class="t-label-xs c-muted">Breakdown · HVAC</span><span class="t-label-lg">What we learned tracking leads to revenue</span><span class="t-p-sm c-muted">5 min read</span></span></a></li>
-            <li data-reveal><a class="post-row" href="/resources/missed-calls-hidden-cost-of-paid-demand/"><span class="ph post-row__thumb" aria-hidden="true"></span><span class="post-row__copy"><span class="t-label-xs c-muted">Findings · Cleaning</span><span class="t-label-lg">Missed calls: the hidden cost of paid demand</span><span class="t-p-sm c-muted">7 min read</span></span></a></li>
+          <ul class="h-posts" role="list" data-reveal-stagger="0.08">
+            <li data-reveal><a class="h-row" href="/resources/why-shoulder-seasons-are-a-marketing-problem/"><span class="h-row__i" aria-hidden="true">01</span><span class="ph h-row__thumb" aria-hidden="true"></span><span class="h-row__copy"><span class="t-label-xs c-muted">Guide · All industries</span><span class="t-label-lg">Why shoulder seasons are a marketing problem</span><span class="t-p-sm c-muted">6 min read</span></span><span class="h-row__go" aria-hidden="true">→</span></a></li>
+            <li data-reveal><a class="h-row" href="/resources/what-we-learned-tracking-leads-to-revenue/"><span class="h-row__i" aria-hidden="true">02</span><span class="ph h-row__thumb" aria-hidden="true"></span><span class="h-row__copy"><span class="t-label-xs c-muted">Breakdown · HVAC</span><span class="t-label-lg">What we learned tracking leads to revenue</span><span class="t-p-sm c-muted">5 min read</span></span><span class="h-row__go" aria-hidden="true">→</span></a></li>
+            <li data-reveal><a class="h-row" href="/resources/missed-calls-hidden-cost-of-paid-demand/"><span class="h-row__i" aria-hidden="true">03</span><span class="ph h-row__thumb" aria-hidden="true"></span><span class="h-row__copy"><span class="t-label-xs c-muted">Findings · Cleaning</span><span class="t-label-lg">Missed calls: the hidden cost of paid demand</span><span class="t-p-sm c-muted">7 min read</span></span><span class="h-row__go" aria-hidden="true">→</span></a></li>
           </ul>
         </div>
       </section>
 
-      <!-- 11 · Closing CTA -->
-      <section class="closing" aria-labelledby="closing-title">
-        <div class="closing__card fx-host" data-reveal>
-          <div class="fx-layer fx-layer--soft" data-3d="ribbons" aria-hidden="true"></div>
-          <div class="closing__invite">
+      <!-- 12 · Closing CTA: the particles re-form the isologo -->
+      <section class="h-closing tone-dark" data-sec="Next step" data-shape="logo" data-tone="dark" aria-labelledby="closing-title">
+        <p class="h-closing__giant" aria-hidden="true" data-closing-giant>Next stage</p>
+        <div class="h-closing__card" data-reveal>
+          <div class="h-closing__invite">
+            <p class="h-index" aria-hidden="true">12 / 12</p>
             <p class="eyebrow">Next step</p>
-            <h2 class="t-h3" id="closing-title">Ready to talk about your next stage of growth?</h2>
-            <div class="closing__actions">
-              <a class="btn btn--xl" href="/explore-partnership/"><span>Explore Partnership</span><span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span></a>
-              <a class="link-arrow" href="/are-we-a-fit/">Not sure yet? See if we're a fit <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></a>
+            <h2 class="t-h2" id="closing-title">Ready to talk about your next stage of growth?</h2>
+            <div class="h-closing__actions">
+              <a class="btn btn--xl btn--accent" href="/explore-partnership/"><span>Explore Partnership</span><span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span></a>
+              <a class="link-arrow link-arrow--on-dark" href="/are-we-a-fit/">Not sure yet? See if we're a fit <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></a>
             </div>
           </div>
-          <div class="closing__expect">
+          <div class="h-closing__expect">
             <h3 class="t-label-lg">What to expect</h3>
             <ul class="dot-list" role="list">
               <li><span class="dot" aria-hidden="true"></span>A conversation about your business, not a pitch</li>
