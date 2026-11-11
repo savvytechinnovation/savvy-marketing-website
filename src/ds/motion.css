@@ -1,0 +1,152 @@
+/* Global motion layer (src/ds/motion.js) */
+
+/* Film grain */
+.fx-grain {
+  position: fixed;
+  inset: -50%;
+  z-index: 9990;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: fx-grain 0.9s steps(6) infinite;
+}
+@keyframes fx-grain {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-6%, 4%); }
+  40% { transform: translate(5%, -7%); }
+  60% { transform: translate(-3%, 8%); }
+  80% { transform: translate(7%, 3%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Scroll progress hairline */
+.fx-progress {
+  position: fixed;
+  inset: 0 0 auto;
+  height: 2px;
+  z-index: 9991;
+  pointer-events: none;
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  background: linear-gradient(90deg, var(--primary-base), var(--primary-dark), var(--secondary-base));
+}
+
+/* Curtain (preloader + page transitions) */
+.fx-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  pointer-events: none;
+}
+.fx-curtain__a,
+.fx-curtain__b {
+  position: absolute;
+  inset: 0;
+}
+.fx-curtain__a { background: var(--primary-base); }
+.fx-curtain__b {
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(60% 60% at 50% 45%, rgb(7 146 194 / 0.25), transparent 70%),
+    var(--primary-darker, #141a40);
+}
+.fx-curtain__mark {
+  width: 132px;
+  height: 132px;
+  opacity: 0;
+  transform-style: preserve-3d;
+}
+.fx-curtain__mark svg { width: 100%; height: 100%; overflow: visible; }
+.fx-curtain__mark path {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  filter: drop-shadow(0 0 12px rgb(7 146 194 / 0.9));
+}
+.fx-curtain__count {
+  position: absolute;
+  right: clamp(16px, 4vw, 48px);
+  bottom: clamp(16px, 4vw, 40px);
+  font: 500 clamp(48px, 10vw, 140px) / 1 var(--font);
+  letter-spacing: -0.04em;
+  color: rgb(255 255 255 / 0.12);
+  font-variant-numeric: tabular-nums;
+}
+.fx-curtain__count[hidden] { display: none; }
+
+/* Cursor */
+.has-fx-cursor.fx-cursor-on,
+.has-fx-cursor.fx-cursor-on * { cursor: none; }
+.has-fx-cursor.fx-cursor-on input,
+.has-fx-cursor.fx-cursor-on textarea,
+.has-fx-cursor.fx-cursor-on select,
+.has-fx-cursor.fx-cursor-on [contenteditable] { cursor: text; }
+.fx-cursor__dot,
+.fx-cursor__ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9995;
+  pointer-events: none;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.fx-cursor-on .fx-cursor__dot,
+.fx-cursor-on .fx-cursor__ring { opacity: 1; }
+.fx-cursor__dot {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  background: var(--secondary-base);
+}
+.fx-cursor__dot.is-hidden { opacity: 0 !important; }
+.fx-cursor__ring {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  margin: -18px 0 0 -18px;
+  border: 1.5px solid var(--primary-base);
+  transition: opacity 0.3s, width 0.35s cubic-bezier(.16,1,.3,1), height 0.35s cubic-bezier(.16,1,.3,1), margin 0.35s cubic-bezier(.16,1,.3,1), background-color 0.3s, border-color 0.3s;
+}
+.fx-cursor__ring.is-hover {
+  width: 64px;
+  height: 64px;
+  margin: -32px 0 0 -32px;
+  background: rgb(7 146 194 / 0.12);
+  border-color: transparent;
+  backdrop-filter: blur(2px);
+}
+.fx-cursor__ring.is-label {
+  width: 88px;
+  height: 88px;
+  margin: -44px 0 0 -44px;
+  background: var(--secondary-base);
+  border-color: transparent;
+}
+.fx-cursor__ring.is-text { opacity: 0 !important; }
+.fx-cursor__ring.is-down { scale: 0.85; }
+.fx-cursor__label {
+  font: 600 13px/1 var(--font);
+  letter-spacing: 0.02em;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.is-label .fx-cursor__label { opacity: 1; }
+
+[data-skew] { will-change: transform; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fx-grain { animation: none; }
+  .fx-curtain { display: none; }
+}
+@media print {
+  .fx-grain, .fx-progress, .fx-curtain, .fx-cursor__dot, .fx-cursor__ring { display: none !important; }
+}

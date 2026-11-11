@@ -5,6 +5,7 @@ import Lenis from 'lenis';
 import 'lenis/dist/lenis.css';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { initMotion } from './motion.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -26,6 +27,7 @@ export function initSite({ smooth = true } = {}) {
   initAccordions();
   initTabs();
   initModals();
+  initMotion({ lenis });
   addEventListener('load', () => ScrollTrigger.refresh());
 }
 
