@@ -75,6 +75,7 @@ export function initQuiz(root, hooks = {}) {
   function go(i, dir = 1, { focus = true } = {}) {
     state.step = i;
     persist();
+    hooks.onStep?.(i, dir);
     err.textContent = '';
     const html = renderQuestion(i);
     const old = viewport.firstElementChild;
@@ -84,12 +85,13 @@ export function initQuiz(root, hooks = {}) {
       const fs = viewport.firstElementChild;
       if (focus) $('.q__title', fs).focus({ preventScroll: true });
       // opacity only (never autoAlpha): visibility:hidden would drop keyboard focus mid-transition
-      if (!reduceMotion && dir) gsap.from(fs, { xPercent: 8 * dir, opacity: 0, duration: 0.45, ease: 'expo.out' });
-      if (!reduceMotion && dir) gsap.from($$('.qopt', fs), { y: 10, opacity: 0, duration: 0.4, stagger: 0.035, ease: 'power2.out', delay: 0.05 });
+      // depth transition: the next question arrives from behind the card plane, options cascade toward you
+      if (!reduceMotion && dir) gsap.from(fs, { rotationY: -14 * dir, z: -160, xPercent: 6 * dir, opacity: 0, duration: 0.7, ease: 'expo.out', clearProps: 'transform' });
+      if (!reduceMotion && dir) gsap.from($$('.qopt', fs), { z: -90, rotationX: 18, y: 14, opacity: 0, duration: 0.6, stagger: 0.045, ease: 'expo.out', delay: 0.06, clearProps: 'transform' });
     };
     if (old && !reduceMotion && dir) {
       busy = true;
-      gsap.to(old, { xPercent: -8 * dir, opacity: 0, duration: 0.2, ease: 'power2.in', onComplete: () => {
+      gsap.to(old, { rotationY: 12 * dir, z: -120, xPercent: -6 * dir, opacity: 0, duration: 0.22, ease: 'power2.in', onComplete: () => {
           swap();
           busy = false;
           if (queued) {
@@ -183,14 +185,17 @@ export function initQuiz(root, hooks = {}) {
     resultEl.hidden = false;
     resultEl.innerHTML = resultHtml(r);
     wireResult(r);
-    hooks.onResult?.(r, { ...state.answers });
+    hooks.onResult?.(r, { ...state.answers }, { animate });
     resultEl.focus({ preventScroll: !animate });
     if (animate && !reduceMotion) {
       gsap.from(resultEl.children, { y: 18, autoAlpha: 0, duration: 0.7, stagger: 0.06, ease: 'expo.out' });
       const fill = $('.meter__fill', resultEl);
       const num = $('[data-score]', resultEl);
+      // score: digit scramble, then a fast count that lands exactly on the score
       const o = { v: 0 };
-      gsap.to(o, { v: r.score, duration: 1.4, ease: 'power3.out', delay: 0.2, onUpdate: () => { fill.style.setProperty('--s', o.v / 100); num.textContent = Math.round(o.v); } });
+      const scramble = gsap.to({}, { duration: 0.45, onUpdate: () => (num.textContent = String((Math.random() * 100) | 0).padStart(2, '0')) });
+      gsap.to(o, { v: r.score, duration: 0.8, ease: 'power3.out', delay: 0.45, onStart: () => scramble.kill(), onUpdate: () => { fill.style.setProperty('--s', o.v / 100); num.textContent = Math.round(o.v); }, onComplete: () => (num.textContent = r.score) });
+      gsap.from($('.verdict__title', resultEl), { clipPath: 'inset(0 100% 0 0)', duration: 0.9, ease: 'expo.inOut', delay: 0.15, clearProps: 'clipPath' });
     } else {
       $('.meter__fill', resultEl).style.setProperty('--s', r.score / 100);
     }
@@ -272,6 +277,18 @@ export function initQuiz(root, hooks = {}) {
         </div>
       </form>`
       }
+      <div class="share" data-share>
+        <div class="share__card" data-share-card aria-hidden="true"><img alt="" data-share-img width="600" height="315" /><span class="share__glare"></span></div>
+        <div class="share__body">
+          <p class="t-label-md">Your result card</p>
+          <p class="t-p-sm c-sub">Share it with a partner or your office manager. It shows your score and fit signs, never your answers.</p>
+          <div class="share__btns">
+            <button class="chip" type="button" data-share-native>Share result</button>
+            <button class="chip" type="button" data-share-download>Download card (.png)</button>
+          </div>
+          <p class="t-label-xs c-sub" data-share-status role="status"></p>
+        </div>
+      </div>
       <div class="result-actions">
         <button class="textbtn" type="button" data-edit>Edit my answers</button>
         <button class="textbtn" type="button" data-restart>Start over</button>

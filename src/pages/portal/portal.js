@@ -1,10 +1,11 @@
 // Client portal sign in. There is NO auth backend yet: api/portal-login.js validates the request and answers
 // 503 { error: 'not_configured' }, and this page says so honestly instead of pretending to sign anyone in.
 import { initSite, gsap, reduceMotion } from '../../ds/site.js';
-import { mount3D } from '../../ds/fx3d.js';
 import { validatePortal } from './portal-validation.js';
 import { $, $$, revealHeadings, magnetic } from '../results/shared.js';
+import { mountAurora } from './scene-aurora.js';
 import './portal.css';
+import './portal-r2.css';
 
 initSite();
 revealHeadings();
@@ -16,10 +17,76 @@ const UNAVAILABLE = {
 };
 
 // ---------------------------------------------------------------------------
-// 3D: iridescent orb in the image panel (pointer-reactive, pauses off-screen)
+// Live aurora shader behind the glass panel: keystrokes ripple, focus glows, busy speeds up, errors warm it
 // ---------------------------------------------------------------------------
-mount3D($('[data-ps-3d]'), { scene: 'orb', theme: 'light' });
+let aurora = null;
+mountAurora($('[data-ps-3d]')).then((a) => (aurora = a));
 magnetic($$('.ps__submit'), 0.12);
+
+const measure = document.createElement('canvas').getContext('2d');
+const coords = $('[data-ps-coords]');
+let strokes = 0;
+/** Viewport position of the caret (approximate: end of the typed text) */
+function caretPoint(input) {
+  const r = input.getBoundingClientRect();
+  const cs = getComputedStyle(input);
+  measure.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+  const text = input.type === 'password' ? '•'.repeat(input.value.length) : input.value.slice(0, input.selectionStart ?? input.value.length);
+  const x = Math.min(r.left + parseFloat(cs.paddingLeft) + measure.measureText(text).width, r.right - 12);
+  return [x, r.top + r.height / 2];
+}
+$$('.ps-input').forEach((input) => {
+  input.addEventListener('input', () => {
+    strokes++;
+    const [x, y] = caretPoint(input);
+    aurora?.ripple(x, y, input.value ? 1 : 0.6);
+    coords.textContent = `KEYSTROKES ${String(strokes).padStart(3, '0')} · FIELD ${input.name.toUpperCase()}`;
+  });
+  input.addEventListener('focus', () => {
+    const r = input.getBoundingClientRect();
+    aurora?.focus(r.left + r.width / 2, r.top + r.height / 2, true);
+    input.closest('.ps-field')?.classList.add('is-focus');
+  });
+  input.addEventListener('blur', () => {
+    aurora?.focus(0, 0, false);
+    input.closest('.ps-field')?.classList.remove('is-focus');
+  });
+});
+$('.ps').addEventListener('pointerdown', (e) => {
+  if (!e.target.closest('input, button, a, label')) aurora?.ripple(e.clientX, e.clientY, 1.3);
+});
+
+// Password "strength" meter (UI only: length and character variety; nothing is checked or sent)
+{
+  const meter = $('[data-meter]');
+  const label = $('[data-meter-label]');
+  const pw = $('#ps-password');
+  const LABELS = ['Length & mix', 'Short', 'Fair', 'Good', 'Strong'];
+  const update = () => {
+    const v = pw.value;
+    let n = 0;
+    if (v.length) n = 1;
+    if (v.length >= 8) n++;
+    if (/[a-z]/.test(v) && /[A-Z]/.test(v)) n++;
+    if (/[\d\W_]/.test(v) && v.length >= 10) n++;
+    meter.dataset.level = String(n);
+    label.textContent = LABELS[n];
+  };
+  pw.addEventListener('input', update);
+  update();
+}
+
+// Showcase cards follow the pointer in depth (fine pointers only)
+if (matchMedia('(hover: hover) and (pointer: fine)').matches && !reduceMotion) {
+  const show = $('[data-ps-show]');
+  const px = gsap.quickTo(show, '--px', { duration: 0.8, ease: 'power3' });
+  const py = gsap.quickTo(show, '--py', { duration: 0.8, ease: 'power3' });
+  addEventListener('pointermove', (e) => {
+    px((e.clientX / innerWidth - 0.5) * 2);
+    py((e.clientY / innerHeight - 0.5) * 2);
+  }, { passive: true });
+}
+if (!reduceMotion) gsap.from('.ps-card, .ps-show__label, .ps-show__big', { opacity: 0, y: 40, z: -200, stagger: 0.12, duration: 1.4, ease: 'expo.out', delay: 0.3, clearProps: 'transform' });
 
 // ---------------------------------------------------------------------------
 // Panels: sign in ↔ forgot password ↔ confirmation
@@ -81,6 +148,7 @@ function alertMsg({ title, desc }, kind = 'error') {
   $('[data-alert-desc]').textContent = desc;
   alertBox.classList.toggle('ps-alert--info', kind === 'info');
   alertBox.hidden = false;
+  aurora?.alert();
   if (!reduceMotion) gsap.fromTo(alertBox, { y: -8, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: 'expo.out' });
 }
 
@@ -104,6 +172,7 @@ async function post(payload) {
 }
 
 function busy(btn, on, label) {
+  aurora?.busy(on);
   btn.setAttribute('aria-busy', String(on));
   btn.disabled = on;
   const l = $('.ps__submit-label', btn);

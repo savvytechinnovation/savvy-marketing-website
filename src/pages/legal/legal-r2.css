@@ -1,0 +1,191 @@
+/* Round 2 — legal pages: contour shader title band with grid + document readout, TOC marker and time left,
+ * section index labels, smooth highlight of the section being read. Loaded after legal.css. */
+
+.lg-title {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+}
+.lg-title__gl {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.lg-title__grid {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(20, 26, 64, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(20, 26, 64, 0.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 40%, #000 80%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 40%, #000 80%, transparent);
+}
+.lg-title .lg-wrap {
+  position: relative;
+}
+.lg-doc {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: grid;
+  gap: 6px;
+  min-width: 220px;
+  padding: 14px 16px;
+  border: 1px solid var(--stroke-soft-200);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.82);
+  font-variant-numeric: tabular-nums;
+}
+.lg-doc__row {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  font-size: 13px;
+  line-height: 18px;
+}
+.lg-doc__k {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-sub-400);
+}
+.lg-doc__v {
+  font-weight: 500;
+  color: var(--text-strong-950);
+}
+.lg-doc__v--draft {
+  color: #b45309;
+}
+
+/* TOC marker (glides to the active entry) + time left */
+.lg-toc__marker {
+  position: absolute;
+  top: 0;
+  left: -1px;
+  width: 3px;
+  height: 36px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--primary-base), var(--primary-dark));
+  box-shadow: 0 0 12px rgba(7, 146, 194, 0.55);
+  opacity: 0;
+  pointer-events: none;
+}
+.lg-toc__link.is-active::before {
+  transform: scaleY(0);
+}
+.lg-toc__link {
+  transition: color 0.25s, translate 0.35s var(--ease-out);
+}
+.lg-toc__link.is-active {
+  translate: 4px 0;
+}
+.lg-toc__left {
+  margin: 0;
+  padding-left: var(--sp-4);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-sub-400);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Section index label + current-section highlight */
+.lg-section {
+  position: relative;
+}
+.lg-section::before {
+  content: '';
+  position: absolute;
+  inset: 0 -24px;
+  z-index: -1;
+  border-radius: 20px;
+  background: linear-gradient(90deg, rgba(7, 146, 194, 0.06), rgba(7, 146, 194, 0) 70%);
+  opacity: 0;
+  transition: opacity 0.6s var(--ease-out);
+}
+.lg-section::after {
+  content: '';
+  position: absolute;
+  top: var(--sp-10);
+  bottom: var(--sp-10);
+  left: -24px;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--primary-base), var(--primary-dark));
+  transform-origin: top;
+  scale: 1 0;
+  transition: scale 0.6s var(--ease-out);
+}
+.lg-section.is-current::before {
+  opacity: 1;
+}
+.lg-section.is-current::after {
+  scale: 1 1;
+}
+.lg-content {
+  position: relative;
+  isolation: isolate;
+}
+.lg-sec-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 calc(-1 * var(--sp-2));
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-sub-400);
+  font-variant-numeric: tabular-nums;
+}
+.lg-sec-meta i {
+  flex: 0 0 28px;
+  height: 1px;
+  background: var(--stroke-sub-300);
+}
+.lg-sec-meta__n {
+  color: var(--primary-base);
+}
+.lg-sec-meta__t {
+  margin-left: auto;
+}
+.lg-section__num {
+  font-variant-numeric: tabular-nums;
+  transition: color 0.4s;
+}
+.lg-section.is-current .lg-section__num {
+  color: var(--primary-base);
+}
+
+@media (max-width: 1180px) {
+  .lg-doc {
+    display: none;
+  }
+}
+@media (max-width: 900px) {
+  .lg-section::before {
+    inset: 0 -12px;
+  }
+  .lg-section::after {
+    left: -12px;
+  }
+  .lg-toc__left {
+    display: none;
+  }
+}
+@media print {
+  .lg-title__gl,
+  .lg-title__grid,
+  .lg-doc,
+  .lg-sec-meta,
+  .lg-section::before,
+  .lg-section::after {
+    display: none !important;
+  }
+}

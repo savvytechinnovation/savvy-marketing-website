@@ -24,6 +24,11 @@
           </ol>
           <div class="ep-steps__line" aria-hidden="true"><span data-stepper-fill></span></div>
         </nav>
+        <div class="ep-hud" aria-hidden="true">
+          <span class="ep-hud__row"><span class="ep-hud__k">Journey</span><span class="ep-hud__v">Gate <span data-hud-gate>00 / 04</span></span></span>
+          <span class="ep-hud__row"><span class="ep-hud__k">Route built</span><span class="ep-hud__v" data-hud-built>4%</span></span>
+          <span class="ep-hud__bar"><i></i><i></i><i></i><i></i></span>
+        </div>
         <a class="ep-head__exit t-label-sm" href="/" data-exit><span aria-hidden="true">✕</span> Exit</a>
       </div>
     </header>
@@ -35,6 +40,7 @@
           <!-- 0 · Intro -->
           <section class="ep-view ep-intro" data-view-panel="intro" aria-labelledby="ep-intro-title">
             <div class="ep-intro__copy">
+              <p class="ep-index" aria-hidden="true"><span class="ep-index__n">00</span><span class="ep-index__of">/ 03</span><span class="ep-index__line"></span><span>Route planned · 3 gates · ~4 min</span></p>
               <p class="eyebrow">Explore Partnership</p>
               <h1 class="t-h1" id="ep-intro-title" data-split>Let's see if we're the right partner for your growth.</h1>
               <p class="t-p-lg c-sub">Tell us a little about your business, then pick a time to talk. No pitch: the first call is a diagnosis, and you keep the scorecard either way.</p>
@@ -66,6 +72,7 @@
 
             <!-- 1 · About you -->
             <fieldset class="ep-card ep-step" data-step="1" aria-labelledby="s1-title">
+              <p class="ep-index" aria-hidden="true"><span class="ep-index__n">01</span><span class="ep-index__of">/ 03</span><span class="ep-index__line"></span><span>About you · ~1 min</span></p>
               <p class="eyebrow">Step 1 of 3</p>
               <h1 class="t-h3 ep-step__title" id="s1-title" tabindex="-1">First, a bit about you</h1>
               <div class="ep-fields">
@@ -95,6 +102,7 @@
 
             <!-- 2 · Your business -->
             <fieldset class="ep-card ep-step" data-step="2" aria-labelledby="s2-title" hidden>
+              <p class="ep-index" aria-hidden="true"><span class="ep-index__n">02</span><span class="ep-index__of">/ 03</span><span class="ep-index__line"></span><span>Your business · ~3 min</span></p>
               <p class="eyebrow">Step 2 of 3</p>
               <h1 class="t-h3 ep-step__title" id="s2-title" tabindex="-1">Now, your business</h1>
               <p class="t-p-md c-sub">This lets us show up to the call already knowing the basics.</p>
@@ -165,6 +173,7 @@
 
             <!-- 3 · Pick a time -->
             <fieldset class="ep-card ep-step" data-step="3" aria-labelledby="s3-title" hidden>
+              <p class="ep-index" aria-hidden="true"><span class="ep-index__n">03</span><span class="ep-index__of">/ 03</span><span class="ep-index__line"></span><span>Pick a time · ~1 min</span></p>
               <p class="eyebrow">Step 3 of 3</p>
               <h1 class="t-h3 ep-step__title" id="s3-title" tabindex="-1" data-s3-title>Pick a time that works for you</h1>
               <p class="t-p-md c-sub" data-s3-sub>Your consultation with a Savvy representative. 45–60 minutes.</p>
@@ -239,7 +248,6 @@
 
           <!-- 4 · Confirmation -->
           <section class="ep-view ep-done" data-view-panel="done" aria-labelledby="done-title" hidden tabindex="-1">
-            <div class="ep-done__fx" aria-hidden="true"></div>
             <span class="ep-done__check" aria-hidden="true">✓</span>
             <h1 class="t-h2" id="done-title" data-done-title>You're booked.</h1>
             <div class="ep-card ep-done__when" data-done-when>

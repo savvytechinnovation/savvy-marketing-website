@@ -1,0 +1,421 @@
+/* Round 2 — portal sign-in: dark glass split screen over a live aurora shader (scene-aurora.js),
+ * focus glow, keystroke ripples, UI-only password meter, floating portal preview cards. Loaded after portal.css. */
+
+.page-portal {
+  background: #05071c;
+  color: #fff;
+  --ps-cyan: #5fd3ff;
+  --ps-line: rgba(255, 255, 255, 0.14);
+}
+.page-portal .ps {
+  position: relative;
+  isolation: isolate;
+  padding-left: 0;
+  overflow: clip;
+  background: #05071c;
+}
+.ps__gl {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.page-portal .ps__form-side {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 min(46%, 640px);
+  padding: 196px var(--sp-12) var(--sp-12);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(180deg, rgba(6, 9, 32, 0.8), rgba(6, 9, 32, 0.66));
+  box-shadow: 30px 0 80px -40px rgba(0, 0, 0, 0.6);
+}
+.page-portal .ps__form-side::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(95, 211, 255, 0.6), transparent);
+}
+.ps-index {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+.ps-index span {
+  color: var(--ps-cyan);
+  font-variant-numeric: tabular-nums;
+}
+.ps-index i {
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+}
+.page-portal .eyebrow {
+  color: var(--ps-cyan);
+}
+.page-portal .ps__title {
+  color: #fff;
+}
+.page-portal .ps__sub,
+.page-portal .ps__help {
+  color: rgba(255, 255, 255, 0.68);
+}
+.page-portal .field__label {
+  color: rgba(255, 255, 255, 0.88);
+  transition: color 0.25s;
+}
+.page-portal .ps-field.is-focus .field__label {
+  color: var(--ps-cyan);
+}
+.page-portal .ps-input {
+  border: 1px solid var(--ps-line);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  transition: border-color 0.25s, box-shadow 0.35s, background-color 0.25s;
+}
+.page-portal .ps-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+.page-portal .ps-input:hover {
+  border-color: rgba(255, 255, 255, 0.26);
+}
+.page-portal .ps-input:focus,
+.page-portal .ps-input:focus-visible {
+  outline: none;
+  border-color: var(--ps-cyan);
+  background: rgba(255, 255, 255, 0.09);
+  box-shadow:
+    0 0 0 4px rgba(7, 146, 194, 0.28),
+    0 0 28px rgba(95, 211, 255, 0.35);
+}
+.page-portal .ps-input[aria-invalid='true'] {
+  border-color: #ff6b6b;
+}
+.page-portal .field__error {
+  color: #ff9a9a;
+}
+.page-portal .ps-input:-webkit-autofill {
+  -webkit-text-fill-color: #fff;
+  -webkit-box-shadow: 0 0 0 40px #141a40 inset;
+}
+.page-portal .ps-pass__toggle img {
+  filter: invert(1);
+  opacity: 0.75;
+}
+.page-portal .ps-pass__toggle:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+.page-portal .ps-caps {
+  color: #fbbf24;
+}
+.page-portal .ps-check,
+.page-portal .ps-check span {
+  color: rgba(255, 255, 255, 0.78);
+}
+.page-portal .ps-link,
+.page-portal .ps__help a {
+  color: #fff;
+}
+.page-portal .ps-link:hover {
+  color: var(--ps-cyan);
+}
+.page-portal .ps-divider {
+  color: rgba(255, 255, 255, 0.5);
+}
+.page-portal .ps-divider::before,
+.page-portal .ps-divider::after {
+  background: var(--ps-line);
+}
+.page-portal .ps-google {
+  border-color: var(--ps-line);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  box-shadow: none;
+}
+.page-portal .ps-google:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+}
+.page-portal .ps__rule {
+  background: var(--ps-line);
+}
+.page-portal .ps__legal,
+.page-portal .ps__legal a {
+  color: rgba(255, 255, 255, 0.5);
+}
+.page-portal .ps__legal a:hover {
+  color: #fff;
+}
+.page-portal .ps-alert {
+  border-color: rgba(255, 107, 107, 0.6);
+  background: rgba(239, 68, 68, 0.12);
+  color: #ffd0d0;
+}
+.page-portal .ps-alert--info {
+  border-color: rgba(95, 211, 255, 0.5);
+  background: rgba(7, 146, 194, 0.16);
+  color: #cdf3ff;
+}
+.page-portal .ps__status {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 0 8px rgba(95, 211, 255, 0.08);
+}
+
+/* Password meter (UI only) */
+.ps-meter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: -4px;
+}
+.ps-meter__bars {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  width: 120px;
+}
+.ps-meter__bars i {
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.12);
+  transform-origin: left;
+  transition: background-color 0.35s, box-shadow 0.35s, scale 0.45s var(--ease-out);
+}
+.ps-meter__label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  font-variant-numeric: tabular-nums;
+}
+.ps-meter[data-level='1'] i:nth-child(-n + 1) { background: #ff5527; box-shadow: 0 0 10px rgba(255, 85, 39, 0.6); }
+.ps-meter[data-level='2'] i:nth-child(-n + 2) { background: #f5b13d; box-shadow: 0 0 10px rgba(245, 177, 61, 0.5); }
+.ps-meter[data-level='3'] i:nth-child(-n + 3) { background: var(--ps-cyan); box-shadow: 0 0 10px rgba(95, 211, 255, 0.6); }
+.ps-meter[data-level='4'] i { background: #34d399; box-shadow: 0 0 10px rgba(52, 211, 153, 0.6); }
+.ps-meter[data-level='0'] i { scale: 0.4 1; }
+
+/* Preview side: floating glass cards in depth */
+.page-portal .ps__image {
+  z-index: 1;
+  min-height: 100dvh;
+  background: none;
+  perspective: 1200px;
+}
+.ps-show {
+  --px: 0;
+  --py: 0;
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+.ps-show__label {
+  position: absolute;
+  top: 168px;
+  left: 64px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border: 1px solid var(--ps-line);
+  border-radius: var(--r-full);
+  background: rgba(6, 9, 32, 0.55);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.75);
+}
+.ps-show__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ps-cyan);
+  box-shadow: 0 0 10px var(--ps-cyan);
+}
+.ps-card {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 18px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 40px 60px -30px rgba(0, 0, 0, 0.7);
+  color: #fff;
+  transform: translate3d(calc(var(--px) * var(--d) * -14px), calc(var(--py) * var(--d) * -10px), calc(var(--d) * 30px)) rotateY(calc(var(--px) * -8deg)) rotateX(calc(var(--py) * 6deg));
+  animation: ps-float 7s ease-in-out infinite alternate;
+  animation-delay: calc(var(--d) * -1.7s);
+}
+@keyframes ps-float {
+  from { translate: 0 -8px; }
+  to { translate: 0 8px; }
+}
+.ps-card--report { top: 30%; left: 12%; width: min(320px, 44%); }
+.ps-card--leads { top: 48%; right: 10%; width: min(230px, 34%); }
+.ps-card--jobs { bottom: 14%; left: 24%; width: min(270px, 38%); }
+.ps-card__k {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
+.ps-card__v {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.ps-card__delta {
+  padding: 2px 8px;
+  border-radius: var(--r-full);
+  background: rgba(52, 211, 153, 0.16);
+  color: #6ee7b7;
+  font-size: 12px;
+  font-weight: 500;
+}
+.ps-card__spark {
+  width: 100%;
+  height: 56px;
+  margin-top: 6px;
+  overflow: visible;
+}
+.ps-card__spark path {
+  fill: none;
+  stroke: var(--ps-cyan);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 400;
+  stroke-dashoffset: 400;
+  animation: ps-draw 2.4s 0.8s var(--ease-out) forwards;
+}
+.ps-card__spark .ps-card__area {
+  fill: rgba(95, 211, 255, 0.14);
+  stroke: none;
+  animation: none;
+}
+@keyframes ps-draw {
+  to { stroke-dashoffset: 0; }
+}
+.ps-card__bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 52px;
+  margin-top: 6px;
+}
+.ps-card__bars i {
+  flex: 1;
+  height: calc(var(--h) * 100%);
+  border-radius: 3px;
+  background: linear-gradient(180deg, var(--ps-cyan), rgba(41, 59, 170, 0.8));
+  transform-origin: bottom;
+  animation: ps-grow 1.2s var(--ease-out) both;
+}
+.ps-card__bars i:nth-child(2) { animation-delay: 0.06s; }
+.ps-card__bars i:nth-child(3) { animation-delay: 0.12s; }
+.ps-card__bars i:nth-child(4) { animation-delay: 0.18s; }
+.ps-card__bars i:nth-child(5) { animation-delay: 0.24s; }
+.ps-card__bars i:nth-child(6) { animation-delay: 0.3s; }
+.ps-card__bars i:nth-child(7) { animation-delay: 0.36s; }
+@keyframes ps-grow {
+  from { scale: 1 0; }
+}
+.ps-show__big {
+  position: absolute;
+  right: 48px;
+  bottom: 40px;
+  font-size: clamp(48px, 6vw, 96px);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  text-align: right;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+}
+.ps-show__coords {
+  position: absolute;
+  left: 64px;
+  bottom: 44px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  color: rgba(255, 255, 255, 0.5);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 1180px) {
+  .ps-card--report { left: 8%; }
+  .ps-show__label { left: 32px; }
+  .ps-show__coords { left: 32px; }
+}
+@media (max-width: 900px) {
+  .page-portal .ps {
+    padding-top: 0;
+  }
+  .page-portal .ps__form-side {
+    flex: none;
+    padding: var(--sp-10) var(--sp-6) var(--sp-12);
+    border-right: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 -30px 60px -30px rgba(0, 0, 0, 0.6);
+  }
+  .page-portal .ps__image {
+    min-height: 0;
+    height: 340px;
+    aspect-ratio: auto;
+    max-height: none;
+  }
+  .ps-show__label {
+    top: 104px;
+    left: 24px;
+  }
+  .ps-card--report {
+    top: 150px;
+    left: 24px;
+    width: 58%;
+    padding: 14px 16px;
+  }
+  .ps-card--leads {
+    top: 180px;
+    right: 20px;
+    width: 40%;
+    padding: 14px 16px;
+  }
+  .ps-card--jobs,
+  .ps-show__coords {
+    display: none;
+  }
+  .ps-card__v {
+    font-size: 18px;
+  }
+  .ps-card__spark {
+    height: 34px;
+  }
+  .ps-show__big {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ps-card,
+  .ps-card__bars i {
+    animation: none;
+  }
+  .ps-card__spark path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}

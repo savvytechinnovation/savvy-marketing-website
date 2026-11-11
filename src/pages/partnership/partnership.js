@@ -1,5 +1,4 @@
 import { initSite, gsap, reduceMotion } from '../../ds/site.js';
-import { mount3D } from '../../ds/fx3d.js';
 import { SplitText } from 'gsap/SplitText';
 import {
   INDUSTRIES, STAGES, INVESTMENTS, ROLES, SERVE, GOAL_SUGGESTIONS, CHALLENGES, MARKETING, SOURCES, BEST_TIMES, FORMATS,
@@ -7,7 +6,9 @@ import {
 } from '../../lib/partnership-validation.js';
 import { KEYS, load, save, remove, escapeHtml, postJson, failureMessage } from '../fit-check/store.js';
 import { buildSlots, slotLabel, tzOptions, gcalUrl, icsFile } from './calendar.js';
+import { mountJourney, GATES } from './scene-journey.js';
 import './partnership.css';
+import './partnership-r2.css';
 
 gsap.registerPlugin(SplitText);
 initSite({ smooth: false });
@@ -241,6 +242,7 @@ form.addEventListener('input', (e) => {
     setError(name, errors[name]);
   }
   persist();
+  queueRoute();
 });
 form.addEventListener('change', (e) => {
   const name = e.target.name;
@@ -256,6 +258,7 @@ form.addEventListener('change', (e) => {
   if (name === 'slot' || name === 'format') updateBar();
   syncDependent();
   persist();
+  queueRoute();
 });
 
 function syncDependent() {
@@ -303,11 +306,46 @@ function setStepper(n) {
   $$('[data-wn]').forEach((li) => li.classList.toggle('is-current', Number(li.dataset.wn) === n));
 }
 
+// ---------------------------------------------------------------------------
+// 3D journey: the road is built as required fields get answered; the camera travels per step
+// ---------------------------------------------------------------------------
+let journey = null;
+const journeyReady = mountJourney($('.ep-body__fx')).then((j) => (journey = j));
+const hudGate = $('[data-hud-gate]');
+const hudBuilt = $('[data-hud-built]');
+const hudBars = $$('.ep-hud__bar i');
+const errMax = { 1: 1, 2: 1, 3: 1 };
+let routeRaf = 0;
+function routeProgress() {
+  if (step === 'done') return 1;
+  if (typeof step !== 'number' || step < 1) return 0.04;
+  const from = step === 1 ? 0.05 : GATES[step - 2];
+  const { errors } = validatePartnership(read(), { steps: [step] });
+  const n = Object.keys(errors).filter((k) => FIELD_STEP[k] === step).length;
+  errMax[step] = Math.max(errMax[step], n, 1);
+  return from + (GATES[step - 1] - from) * (1 - n / errMax[step]) * 0.94;
+}
+function syncRoute() {
+  routeRaf = 0;
+  const u = routeProgress();
+  journeyReady.then(() => journey?.build(u));
+  hudBuilt.textContent = `${Math.round(u * 100)}%`;
+  const gate = step === 'done' ? 4 : typeof step === 'number' ? step : 0;
+  hudGate.textContent = `${String(gate).padStart(2, '0')} / 04`;
+  hudBars.forEach((b, k) => b.classList.toggle('is-on', u >= GATES[k] - 0.001));
+}
+const queueRoute = () => (routeRaf ||= requestAnimationFrame(syncRoute));
+function journeyView(name) {
+  journeyReady.then(() => journey?.view(name));
+  queueRoute();
+}
+
 function animateIn(el) {
   if (reduceMotion || !el) return;
   // opacity (not autoAlpha) so the focused step title keeps keyboard focus while it animates in
-  gsap.fromTo(el, { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: 'expo.out', clearProps: 'transform,opacity' });
-  gsap.fromTo($$(':scope > *', el).slice(0, 8), { y: 14, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, stagger: 0.04, ease: 'power2.out', delay: 0.05, clearProps: 'transform,opacity' });
+  // depth: the card rises from below the road plane, tilted back, then settles; its children cascade
+  gsap.fromTo(el, { y: 60, z: -220, rotationX: 14, transformPerspective: 1400, transformOrigin: '50% 100%', opacity: 0 }, { y: 0, z: 0, rotationX: 0, opacity: 1, duration: 0.9, ease: 'expo.out', clearProps: 'transform,opacity' });
+  gsap.fromTo($$(':scope > *', el).slice(0, 8), { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.05, ease: 'power2.out', delay: 0.12, clearProps: 'transform,opacity' });
 }
 
 function showView(name) {
@@ -331,6 +369,7 @@ function goStep(n, { focus = true } = {}) {
   if (n === 3) prepareStep3();
   updateBar();
   persist();
+  journeyView(n);
   const cur = $(`.ep-step[data-step="${n}"]`, form);
   animateIn(cur);
   if (focus) {
@@ -364,10 +403,12 @@ if (draft?.values && (draft.step || 0) >= 1) {
 
 $('[data-back]').addEventListener('click', () => {
   if (step === 1) {
+    step = 0;
     showView('intro');
     setSide('intro');
     setStepper(0);
     animateIn($('.ep-intro'));
+    journeyView('intro');
     return;
   }
   if (noTimes && step === 3) return toggleNoTimes(false);
@@ -421,12 +462,14 @@ function prepareStep3() {
   $('[data-format-group]').hidden = noTimes;
   $('[data-notimes]').hidden = !noTimes;
   if (!form.elements.format.value) setValue('format', 'video');
+  flipDays = true;
   renderCalendar();
   renderReview();
 }
 
 const duration = () => (outcome === 'soft' ? 30 : 60);
 
+let flipDays = true;
 function renderCalendar() {
   const tz = form.elements.timezone.value || 'America/Chicago';
   $('[data-tz-name]').textContent = tzOptions().find((o) => o.value === tz)?.label || tz;
@@ -442,6 +485,8 @@ function renderCalendar() {
       (d) => `<label class="cal__day ${d.slots.length ? '' : 'is-full'}"><input type="radio" name="calday" value="${d.key}" ${d.key === selectedDay ? 'checked' : ''} ${d.slots.length ? '' : 'disabled'} aria-label="${escapeHtml(d.long)}${d.slots.length ? `, ${d.slots.length} times` : ', fully booked'}" /><span>${d.date}</span></label>`,
     )
     .join('');
+  if (flipDays && !reduceMotion) gsap.from('.cal__day span', { rotationX: -100, transformPerspective: 500, transformOrigin: '50% 0%', opacity: 0, duration: 0.7, stagger: { each: 0.035, grid: 'auto', from: 'start' }, ease: 'back.out(1.6)', clearProps: 'transform,opacity' });
+  flipDays = false;
   const day = days.find((d) => d.key === selectedDay);
   $('[data-slots-day]').textContent = day ? day.long : 'Pick a day';
   $('[data-slots]').innerHTML = day
@@ -452,14 +497,16 @@ function renderCalendar() {
 $('[data-cal-grid]').addEventListener('change', (e) => {
   calendarState.day = e.target.value;
   renderCalendar();
-  if (!reduceMotion) gsap.from('[data-slots] .pill', { y: 8, opacity: 0, stagger: 0.04, duration: 0.3, ease: 'power2.out' });
+  if (!reduceMotion) gsap.from('[data-slots] .pill', { rotationY: -70, transformPerspective: 600, transformOrigin: '0% 50%', opacity: 0, stagger: 0.05, duration: 0.5, ease: 'expo.out', clearProps: 'transform,opacity' });
 });
 $('[data-cal-prev]').addEventListener('click', () => {
   calendarState = { offset: Math.max(0, calendarState.offset - 1), day: '' };
+  flipDays = true;
   renderCalendar();
 });
 $('[data-cal-next]').addEventListener('click', () => {
   calendarState = { offset: Math.min(2, calendarState.offset + 1), day: '' };
+  flipDays = true;
   renderCalendar();
 });
 
@@ -608,11 +655,8 @@ function showDone(v) {
   remove(KEYS.draft);
   el.focus({ preventScroll: true });
   scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
-  mount3D($('.ep-done__fx'), { scene: 'rings' }).then((api) => {
-    if (!api) return;
-    const o = { p: 0 };
-    gsap.to(o, { p: 1, duration: reduceMotion ? 0 : 2.2, ease: 'power2.inOut', onUpdate: () => api.setProgress(o.p) });
-  });
+  journeyView('done');
+  journeyReady.then(() => journey?.celebrate());
   if (!reduceMotion) {
     gsap.from('.ep-done__check', { scale: 0, rotation: -90, duration: 0.8, ease: 'back.out(2.5)' });
     animateIn(el);
@@ -657,6 +701,7 @@ function showNotYet() {
   scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
   animateIn(el);
   persist();
+  journeyView('not-yet');
   postJson('/api/partnership', payload()); // best effort: the team sees "not a fit yet" leads in the pipeline
 }
 
@@ -698,7 +743,6 @@ $('[data-ny-sub]').addEventListener('submit', async (e) => {
 // ---------------------------------------------------------------------------
 // Intro motion + 3D background; keyboard: Esc on intro does nothing, Exit keeps the draft
 // ---------------------------------------------------------------------------
-mount3D($('.ep-body__fx'), { scene: 'field', theme: 'light', scrub: false });
 if (!reduceMotion) {
   const run = () => {
     const h = $('#ep-intro-title');
@@ -730,3 +774,4 @@ if (!reduceMotion) {
 setStepper(0);
 setSide('intro');
 syncDependent();
+syncRoute();

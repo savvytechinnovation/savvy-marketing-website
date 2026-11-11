@@ -11,11 +11,13 @@
 
     <!-- Figma: Portal Sign In 🟢 · "1 · Sign in (email + password or Google)" desktop 5683:500 / mobile 5683:574 -->
     <main id="main" class="ps">
+      <div class="ps__gl" data-ps-3d aria-hidden="true"></div>
       <div class="ps__form-side">
         <div class="ps__col">
           <!-- Sign in -->
           <section class="ps__panel" data-panel="signin" aria-labelledby="ps-title">
             <div class="ps__heading">
+              <p class="ps-index" aria-hidden="true" data-hero-item><span>01</span><i></i>Client access · by invitation</p>
               <p class="eyebrow" data-hero-item>Client portal</p>
               <h1 class="ps__title" id="ps-title" data-split>Welcome back</h1>
               <p class="ps__sub" data-hero-item>Sign in to see your reports, leads and results.</p>
@@ -45,6 +47,10 @@
                       <img class="ps-pass__show" src="/ds/icons/portal-eye.svg" alt="" width="20" height="20" />
                       <img class="ps-pass__hide" src="/ds/icons/portal-eye-off.svg" alt="" width="20" height="20" />
                     </button>
+                  </div>
+                  <div class="ps-meter" data-meter aria-hidden="true">
+                    <span class="ps-meter__bars"><i></i><i></i><i></i><i></i></span>
+                    <span class="ps-meter__label" data-meter-label>Length &amp; mix</span>
                   </div>
                   <p class="ps-caps" id="ps-caps" role="status" aria-live="polite"></p>
                   <p class="field__error" id="ps-password-err"></p>
@@ -109,7 +115,27 @@
           <p class="ps__legal"><span>© <span data-year>2026</span> Savvy Post Marketing</span><a href="/privacy/">Privacy Policy</a><a href="/terms/">Terms of Service</a></p>
         </div>
       </div>
-      <div class="ps__image ph" data-ps-3d aria-hidden="true"></div>
+      <div class="ps__image" aria-hidden="true">
+        <div class="ps-show" data-ps-show>
+          <p class="ps-show__label"><span class="ps-show__dot"></span>Portal preview · sample layout</p>
+          <div class="ps-card ps-card--report" style="--d: 1.4">
+            <p class="ps-card__k">Monthly growth report</p>
+            <p class="ps-card__v">[Month YYYY]</p>
+            <svg class="ps-card__spark" viewBox="0 0 200 56" preserveAspectRatio="none"><path d="M0 48 C 20 44, 30 40, 45 42 S 70 30, 90 32 S 120 18, 140 22 S 175 8, 200 6" /><path class="ps-card__area" d="M0 48 C 20 44, 30 40, 45 42 S 70 30, 90 32 S 120 18, 140 22 S 175 8, 200 6 L 200 56 L 0 56 Z" /></svg>
+          </div>
+          <div class="ps-card ps-card--leads" style="--d: 2.2">
+            <p class="ps-card__k">Leads this month</p>
+            <p class="ps-card__v">[000] <span class="ps-card__delta">+[X%]</span></p>
+          </div>
+          <div class="ps-card ps-card--jobs" style="--d: 3">
+            <p class="ps-card__k">Booked jobs</p>
+            <p class="ps-card__v">[000]</p>
+            <span class="ps-card__bars"><i style="--h: .35"></i><i style="--h: .5"></i><i style="--h: .42"></i><i style="--h: .66"></i><i style="--h: .58"></i><i style="--h: .8"></i><i style="--h: .92"></i></span>
+          </div>
+          <p class="ps-show__big">Reports<br />Leads<br />Results</p>
+          <p class="ps-show__coords" data-ps-coords>KEYSTROKES 000 · FIELD —</p>
+        </div>
+      </div>
     </main>
 
     <script type="module" src="/src/pages/portal/portal.js"></script>

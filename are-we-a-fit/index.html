@@ -43,18 +43,35 @@
       </section>
 
       <!-- 02 · 2-minute fit check (interactive assessment) -->
-      <section class="fc section-pad" id="fit-check" aria-labelledby="fc-title">
+      <section class="fc" id="fit-check" aria-labelledby="fc-title" data-fc>
+        <div class="fc__gl" data-fc-gl aria-hidden="true"></div>
+        <div class="fc__grid" aria-hidden="true"></div>
         <div class="fc__row">
-          <div class="fc__intro">
-            <p class="eyebrow" data-reveal>2-minute fit check</p>
-            <h2 class="t-h2" id="fc-title" data-split>See where you stand before you book.</h2>
-            <p class="t-p-lg c-sub" data-reveal>Nine quick questions, scored the same way our team scores the assessment. Your answers stay in this browser unless you ask us to email your results.</p>
-            <ul class="fc__keys t-p-sm c-sub" role="list" data-reveal>
-              <li><kbd>1</kbd>–<kbd>6</kbd> pick an answer</li>
-              <li><kbd>Enter</kbd> continue</li>
-              <li><kbd>Backspace</kbd> go back</li>
-            </ul>
-            <div class="fc__orb" data-quiz-orb aria-hidden="true"></div>
+          <div class="fc__left">
+            <div class="fc__intro">
+              <p class="fc__index" aria-hidden="true"><span>02</span><i></i>Interactive · scored like our assessment</p>
+              <p class="eyebrow" data-reveal>2-minute fit check</p>
+              <h2 class="t-h2" id="fc-title" data-split>See where you stand before you book.</h2>
+              <p class="t-p-lg fc__lead" data-reveal>Nine quick questions, scored the same way our team scores the assessment. Your answers stay in this browser unless you ask us to email your results.</p>
+              <ul class="fc__keys t-p-sm" role="list" data-reveal>
+                <li><kbd>1</kbd>–<kbd>6</kbd> pick an answer</li>
+                <li><kbd>Enter</kbd> continue</li>
+                <li><kbd>Backspace</kbd> go back</li>
+              </ul>
+            </div>
+            <div class="fc__stage" data-fc-stage aria-hidden="true">
+              <span class="fc__flash" data-fc-flash></span>
+              <span class="fc__big" data-fc-big>01</span>
+              <span class="fc__corner fc__corner--tl"></span><span class="fc__corner fc__corner--tr"></span><span class="fc__corner fc__corner--bl"></span><span class="fc__corner fc__corner--br"></span>
+              <div class="hud hud--tl"><span class="hud__k">Fit field</span><span class="hud__v" data-hud-q>Q 01 / 09</span></div>
+              <div class="hud hud--tr"><span class="hud__k">Assembly</span><span class="hud__v"><span data-hud-assembly>0</span>%</span></div>
+              <div class="hud hud--bl">
+                <span class="hud__k">Answers</span>
+                <span class="hud__segs" data-hud-segs><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+              </div>
+              <div class="hud hud--br"><span class="hud__k">Camera</span><span class="hud__v" data-hud-cam>θ 00.0° · φ 00.0°</span></div>
+              <p class="hud__signal" data-hud-signal>Waiting for your first answer</p>
+            </div>
           </div>
 
           <div class="quiz" data-quiz data-reveal>

@@ -4,8 +4,11 @@ import { SplitText } from 'gsap/SplitText';
 import { Flip } from 'gsap/Flip';
 import { initQuiz } from './quiz.js';
 import { KEYS, load, save, postJson, failureMessage } from './store.js';
-import { EMAIL_RE, SIGNS } from '../../lib/fit-check.js';
+import { EMAIL_RE, SIGNS, QUESTIONS, WEIGHTS, fitMatrix } from '../../lib/fit-check.js';
+import { mountFitScene } from './scene-fit.js';
+import { wireShare } from './share-card.js';
 import './fit-check.css';
+import './fit-check-r2.css';
 
 gsap.registerPlugin(SplitText, Flip);
 initSite();
@@ -43,6 +46,9 @@ mm.add('(prefers-reduced-motion: no-preference)', () => {
     // Section choreography: tiers rise with scroll, requirement cards cascade, timeline steps draw in
     gsap.from('.tier', { yPercent: 14, stagger: 0.1, ease: 'none', scrollTrigger: { trigger: '.tiers', start: 'top 95%', end: 'top 55%', scrub: 0.6 } });
     gsap.from('.step', { clipPath: 'inset(0 100% 0 0)', stagger: 0.12, ease: 'none', scrollTrigger: { trigger: '.steps', start: 'top 90%', end: 'top 50%', scrub: 0.6 } });
+    // The fit check stage opens up from a rounded inset as it scrolls in
+    gsap.fromTo('.fc', { clipPath: 'inset(0% 3% 0% 3% round 40px)' }, { clipPath: 'inset(0% 0% 0% 0% round 0px)', ease: 'none', scrollTrigger: { trigger: '.fc', start: 'top bottom', end: 'top 25%', scrub: true } });
+    gsap.from('.fc__stage .hud, .fc__corner', { opacity: 0, y: 8, stagger: 0.05, duration: 0.8, ease: 'expo.out', scrollTrigger: { trigger: '.fc__stage', start: 'top 85%' } });
     gsap.from('.expect__row', { x: -24, opacity: 0, stagger: 0.08, duration: 0.8, ease: 'expo.out', scrollTrigger: { trigger: '.expect', start: 'top 85%' } });
     ScrollTrigger.refresh();
   };
@@ -54,15 +60,11 @@ mm.add('(prefers-reduced-motion: no-preference)', () => {
 // ---------------------------------------------------------------------------
 const heroBg = $('.fit-hero__fx');
 mount3D(heroBg, { scene: 'field', theme: 'light', scrub: true });
-let orb = null;
-const orbReady = mount3D($('[data-quiz-orb]'), { scene: 'orb' }).then((api) => (orb = api));
-const orbTo = (p) => {
-  orbReady.then(() => {
-    if (!orb) return;
-    const o = { v: orb._v ?? 0 };
-    gsap.to(o, { v: p, duration: reduceMotion ? 0 : 1.2, ease: 'power3.out', onUpdate: () => orb.setProgress((orb._v = o.v)) });
-  });
-};
+// Fit check stage: particles assemble into the isologo as the running fit improves (scene-fit.js)
+const fcSection = $('[data-fc]');
+const stageBox = $('[data-fc-stage]');
+let fitScene = null;
+const sceneReady = mountFitScene($('[data-fc-gl]'), stageBox).then((api) => (fitScene = api));
 mount3D($('.fit-closing__fx'), { scene: 'ribbons', theme: 'dark' });
 
 // ---------------------------------------------------------------------------
@@ -186,24 +188,149 @@ ScrollTrigger.create({
 });
 
 // ---------------------------------------------------------------------------
-// 2-minute fit check
+// 2-minute fit check — live 3D signal + HUD
 // ---------------------------------------------------------------------------
+const BLOCKER_LABEL = {
+  defining: 'Foundations first',
+  'no-capacity': 'No capacity yet',
+  cheapest: 'Lowest-cost focus',
+};
+/** Running (partial) fit while answering: points so far, blockers seen so far. UI only — the result uses scoreFitCheck. */
+function liveFit(a) {
+  let pts = 0;
+  const per = QUESTIONS.map((q) => {
+    const v = a[q.id];
+    if (!v) return null;
+    const w = WEIGHTS[q.id] || {};
+    const max = Math.max(...Object.values(w));
+    pts += w[v] ?? 0;
+    return max ? (w[v] ?? 0) / max : 1;
+  });
+  const blockers = [];
+  if (a.proven === 'not-yet' || (a.stage && a.investment && fitMatrix(a.stage, a.investment) === 'not-yet')) blockers.push('defining');
+  if (a.capacity === 'not-yet') blockers.push('no-capacity');
+  if (a.intent === 'cheapest') blockers.push('cheapest');
+  return { pts, per, blockers, answered: per.filter((x) => x !== null).length };
+}
+const hud = {
+  q: $('[data-hud-q]'),
+  asm: $('[data-hud-assembly]'),
+  segs: $$('[data-hud-segs] i'),
+  cam: $('[data-hud-cam]'),
+  sig: $('[data-hud-signal]'),
+  big: $('[data-fc-big]'),
+};
+const asmCounter = { v: 0 };
+function renderLive(answers) {
+  const f = liveFit(answers);
+  hud.segs.forEach((seg, i) => {
+    const v = f.per[i];
+    seg.className = v === null ? '' : v >= 0.75 ? 'is-good' : v >= 0.35 ? 'is-mid' : 'is-low';
+  });
+  gsap.to(asmCounter, { v: f.pts, duration: reduceMotion ? 0 : 0.9, ease: 'power3.out', overwrite: true, onUpdate: () => (hud.asm.textContent = Math.round(asmCounter.v)) });
+  fcSection.classList.toggle('has-blocker', f.blockers.length > 0);
+  hud.sig.textContent = !f.answered
+    ? 'Waiting for your first answer'
+    : f.blockers.length
+      ? `Blocker · ${f.blockers.map((b) => BLOCKER_LABEL[b]).join(' · ')}`
+      : `Signal clean · ${f.answered} of ${QUESTIONS.length} answered`;
+  sceneReady.then(() => fitScene?.set({ assemble: Math.max(0.04, f.pts / 100), block: f.blockers.length ? 1 : 0 }));
+}
+function renderStep(i) {
+  const n = String(i + 1).padStart(2, '0');
+  hud.q.textContent = `Q ${n} / ${String(QUESTIONS.length).padStart(2, '0')}`;
+  if (hud.big.textContent !== n) {
+    if (reduceMotion) hud.big.textContent = n;
+    else gsap.timeline().to(hud.big, { yPercent: -30, opacity: 0, duration: 0.25, ease: 'power2.in' }).add(() => (hud.big.textContent = n)).fromTo(hud.big, { yPercent: 30, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.6, ease: 'expo.out' });
+  }
+  sceneReady.then(() => {
+    fitScene?.step(i);
+    if (reduceMotion && fitScene) {
+      const c = fitScene.camera();
+      hud.cam.textContent = `θ ${(c.theta * 57.2958).toFixed(1)}° · φ ${(c.phi * 57.2958).toFixed(1)}°`;
+    }
+  });
+}
+// camera readout (θ / φ in degrees), throttled to the ticker
+if (!reduceMotion) {
+  let n = 0;
+  gsap.ticker.add(() => {
+    if (!fitScene || ++n % 6) return;
+    const c = fitScene.camera();
+    hud.cam.textContent = `θ ${((c.theta + c.spin) * 57.2958).toFixed(1).padStart(5, '0')}° · φ ${(c.phi * 57.2958).toFixed(1).padStart(4, '0')}°`;
+  });
+}
+
+// Answer cards: depth tilt + glare that follows the pointer (CSS vars → CSS transform; fine pointers only)
+if (matchMedia('(hover: hover) and (pointer: fine)').matches && !reduceMotion) {
+  const vp = $('[data-quiz-viewport]');
+  vp.addEventListener('pointermove', (e) => {
+    const box = e.target.closest('.qopt')?.querySelector('.qopt__box');
+    if (!box) return;
+    const r = box.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width;
+    const y = (e.clientY - r.top) / r.height;
+    box.style.setProperty('--mx', `${(x * 100).toFixed(1)}%`);
+    box.style.setProperty('--my', `${(y * 100).toFixed(1)}%`);
+    box.style.setProperty('--ry', `${((x - 0.5) * 10).toFixed(2)}deg`);
+    box.style.setProperty('--rx', `${(-(y - 0.5) * 10).toFixed(2)}deg`);
+  });
+  vp.addEventListener('pointerout', (e) => {
+    const box = e.target.closest('.qopt')?.querySelector('.qopt__box');
+    if (box && !box.contains(e.relatedTarget)) ['--rx', '--ry'].forEach((p) => box.style.setProperty(p, '0deg'));
+  });
+}
+
+// Result reveal: camera swings to the front, the logo locks in (bloom burst for a strong fit)
+function revealResult(r, animate) {
+  sceneReady.then(() => fitScene?.result(r));
+  fcSection.classList.add('is-result');
+  fcSection.dataset.outcome = r.outcome;
+  hud.q.textContent = 'Result';
+  hud.big.textContent = String(r.score);
+  hud.sig.textContent = r.outcome === 'strong' ? 'Strong fit · logo locked' : r.outcome === 'possible' ? 'Possible fit · a conversation first' : 'Not the right fit yet · foundations first';
+  if (animate && !reduceMotion && r.outcome === 'strong') {
+    const flash = $('[data-fc-flash]');
+    gsap.fromTo(flash, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1.25, duration: 0.35, delay: 0.9, ease: 'power2.out', onComplete: () => gsap.to(flash, { opacity: 0, duration: 1.4, ease: 'power2.out' }) });
+  }
+  const card = $('[data-share-card]');
+  if (card && matchMedia('(hover: hover) and (pointer: fine)').matches && !reduceMotion) {
+    card.addEventListener('pointermove', (e) => {
+      const b = card.getBoundingClientRect();
+      const x = (e.clientX - b.left) / b.width;
+      const y = (e.clientY - b.top) / b.height;
+      card.style.setProperty('--mx', `${x * 100}%`);
+      card.style.setProperty('--my', `${y * 100}%`);
+      card.style.setProperty('--ry', `${(x - 0.5) * 16}deg`);
+      card.style.setProperty('--rx', `${-(y - 0.5) * 16}deg`);
+    });
+    card.addEventListener('pointerleave', () => ['--rx', '--ry'].forEach((p) => card.style.setProperty(p, '0deg')));
+  }
+}
+
 initQuiz($('[data-quiz]'), {
-  onProgress: (p) => !quizResult && orbTo(p * 0.6),
+  onStep: (i) => {
+    fcSection.classList.remove('is-result');
+    renderStep(i);
+  },
   onAnswer: (answers) => {
     quizAnswers = answers;
     quizResult = null;
     updateProfile();
+    renderLive(answers);
   },
-  onResult: (r, answers) => {
+  onResult: (r, answers, { animate } = {}) => {
     quizAnswers = answers;
     quizResult = r;
-    orbTo(r.score / 100);
     updateProfile();
+    renderLive(answers);
+    revealResult(r, animate);
+    wireShare($('[data-quiz-result]'), r);
   },
 });
 // restore answers for the profile even before a result
 quizAnswers = load(KEYS.quiz, {}).answers || quizAnswers;
+if (!quizResult) renderLive(quizAnswers);
 
 // ---------------------------------------------------------------------------
 // Who we work best with: checkable statements + fit signal meter (+ mobile toggle)
