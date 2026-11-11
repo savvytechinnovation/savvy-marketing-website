@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- @include head -->
+    <title>Explore Partnership — Savvy Marketing Partners</title>
+    <meta name="description" content="Tell us about your service business in about 4 minutes, pick a time for a growth consultation and leave with a scorecard of where your growth system stands — yours either way." />
+    <meta property="og:title" content="Explore Partnership — Savvy Marketing Partners" />
+    <meta property="og:description" content="Let's see if we're the right partner for your growth. Share the basics, pick a time, get your scorecard." />
+  </head>
+  <body class="page-ep" data-view="intro">
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- Focused header (no full nav) — Figma "EP A · Focused header" -->
+    <header class="ep-head">
+      <div class="ep-head__row">
+        <a class="ep-head__logo" href="/" aria-label="Savvy Marketing Partners — home"><img src="/brand/logo-gradient.svg" alt="Savvy Marketing Partners" width="126" height="48" /></a>
+        <nav class="ep-steps" aria-label="Progress">
+          <ol role="list">
+            <li data-stepper="1"><span class="ep-steps__n" aria-hidden="true"><span>1</span></span><span class="ep-steps__label">About you</span><span class="sr-only" data-stepper-state></span></li>
+            <li class="ep-steps__sep" aria-hidden="true">—</li>
+            <li data-stepper="2"><span class="ep-steps__n" aria-hidden="true"><span>2</span></span><span class="ep-steps__label">Your business</span><span class="sr-only" data-stepper-state></span></li>
+            <li class="ep-steps__sep" aria-hidden="true">—</li>
+            <li data-stepper="3"><span class="ep-steps__n" aria-hidden="true"><span>3</span></span><span class="ep-steps__label">Pick a time</span><span class="sr-only" data-stepper-state></span></li>
+          </ol>
+          <div class="ep-steps__line" aria-hidden="true"><span data-stepper-fill></span></div>
+        </nav>
+        <a class="ep-head__exit t-label-sm" href="/" data-exit><span aria-hidden="true">✕</span> Exit</a>
+      </div>
+    </header>
+
+    <main id="main" class="ep-body">
+      <div class="ep-body__fx" aria-hidden="true"></div>
+      <div class="ep-grid">
+        <div class="ep-main">
+          <!-- 0 · Intro -->
+          <section class="ep-view ep-intro" data-view-panel="intro" aria-labelledby="ep-intro-title">
+            <div class="ep-intro__copy">
+              <p class="eyebrow">Explore Partnership</p>
+              <h1 class="t-h1" id="ep-intro-title" data-split>Let's see if we're the right partner for your growth.</h1>
+              <p class="t-p-lg c-sub">Tell us a little about your business, then pick a time to talk. No pitch: the first call is a diagnosis, and you keep the scorecard either way.</p>
+            </div>
+            <div class="resume" data-resume hidden>
+              <p class="t-label-lg">Welcome back<span data-resume-name></span>.</p>
+              <p class="t-p-sm c-sub">Your answers are saved. Pick up where you left off, or start fresh.</p>
+              <div class="resume__actions">
+                <button class="btn" type="button" data-resume-go><span>Continue where I left off</span><span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span></button>
+                <button class="textbtn" type="button" data-resume-reset>Start over</button>
+              </div>
+            </div>
+            <ol class="expect-list" role="list">
+              <li><span class="expect-list__n" aria-hidden="true">1</span><span><span class="t-label-lg">Share the basics</span><span class="t-p-sm c-sub">About 4 minutes, saved as you go</span></span></li>
+              <li><span class="expect-list__n" aria-hidden="true">2</span><span><span class="t-label-lg">Pick a time</span><span class="t-p-sm c-sub">30–60 min with a Savvy representative</span></span></li>
+              <li><span class="expect-list__n" aria-hidden="true">3</span><span><span class="t-label-lg">Get your scorecard</span><span class="t-p-sm c-sub">Where your growth system stands today</span></span></li>
+            </ol>
+            <div class="ep-intro__start">
+              <button class="btn btn--l" type="button" data-start><span>Start</span><span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span></button>
+              <p class="t-p-sm c-sub">Takes about 4 minutes</p>
+            </div>
+            <p class="t-p-sm c-muted ep-intro__other">Looking for a job? <a href="/about/">Careers →</a> · Vendor or agency? <a href="/experience/#contact">Contact form →</a></p>
+          </section>
+
+          <!-- Steps 1–3 (one form, autosaved) -->
+          <form class="ep-form" data-ep-form novalidate hidden>
+            <input class="hp" type="text" name="botField" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <p class="sr-only" data-ep-live aria-live="polite"></p>
+
+            <!-- 1 · About you -->
+            <fieldset class="ep-card ep-step" data-step="1" aria-labelledby="s1-title">
+              <p class="eyebrow">Step 1 of 3</p>
+              <h1 class="t-h3 ep-step__title" id="s1-title" tabindex="-1">First, a bit about you</h1>
+              <div class="ep-fields">
+                <div class="field"><label class="field__label" for="f-name">Full name <span class="req">*</span></label><input class="input" id="f-name" name="name" autocomplete="name" required aria-describedby="err-name" /><p class="field__error" id="err-name"></p></div>
+                <div class="field"><label class="field__label" for="f-company">Company name <span class="req">*</span></label><input class="input" id="f-company" name="company" autocomplete="organization" required aria-describedby="err-company" /><p class="field__error" id="err-company"></p></div>
+                <div class="field"><label class="field__label" for="f-email">Business email <span class="req">*</span></label><input class="input" id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="err-email" placeholder="name@company.com" /><p class="field__error" id="err-email"></p></div>
+                <div class="field"><label class="field__label" for="f-phone">Phone <span class="req">*</span></label><input class="input" id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required aria-describedby="hint-phone err-phone" /><p class="field__hint" id="hint-phone">For the call. We only text you if you say so in step 2.</p><p class="field__error" id="err-phone"></p></div>
+                <div class="field field--wide">
+                  <label class="field__label" for="f-website">Company website</label>
+                  <input class="input" id="f-website" name="website" type="text" inputmode="url" autocomplete="url" placeholder="yourcompany.com" aria-describedby="err-website" />
+                  <label class="check"><input type="checkbox" name="noWebsite" data-no-website /><span>We don't have a website yet</span></label>
+                  <p class="field__error" id="err-website"></p>
+                </div>
+              </div>
+              <fieldset class="group" aria-describedby="prefill-note err-industry" data-group="industry">
+                <legend class="field__label">Industry <span class="req">*</span></legend>
+                <p class="prefill t-p-sm" id="prefill-note" data-prefill-note hidden></p>
+                <div class="pillset" data-industries></div>
+                <p class="field__error" id="err-industry"></p>
+              </fieldset>
+              <fieldset class="group" aria-describedby="hint-role" data-group="role">
+                <legend class="field__label">Your role</legend>
+                <p class="field__hint" id="hint-role">Optional — helps us prepare the right conversation.</p>
+                <div class="pillset" data-roles></div>
+              </fieldset>
+            </fieldset>
+
+            <!-- 2 · Your business -->
+            <fieldset class="ep-card ep-step" data-step="2" aria-labelledby="s2-title" hidden>
+              <p class="eyebrow">Step 2 of 3</p>
+              <h1 class="t-h3 ep-step__title" id="s2-title" tabindex="-1">Now, your business</h1>
+              <p class="t-p-md c-sub">This lets us show up to the call already knowing the basics.</p>
+
+              <fieldset class="group" aria-describedby="hint-serve err-serve" data-group="serve">
+                <legend class="field__label">Who do you serve? <span class="req">*</span></legend>
+                <p class="field__hint" id="hint-serve" data-serve-hint hidden>Cleaning companies also see "Short-term rentals".</p>
+                <div class="pillset" data-serve></div>
+                <p class="field__error" id="err-serve"></p>
+              </fieldset>
+
+              <fieldset class="group" aria-describedby="err-stage" data-group="stage">
+                <legend class="field__label">Where is the business today? <span class="req">*</span></legend>
+                <p class="prefill t-p-sm" data-profile-note hidden>Filled in from your fit check. Change it if it's not right.</p>
+                <div class="stage-grid" data-stages></div>
+                <p class="field__error" id="err-stage"></p>
+              </fieldset>
+
+              <div class="field">
+                <label class="field__label" for="f-goals">What do you want to achieve in the next 12–24 months? <span class="req">*</span></label>
+                <textarea class="textarea" id="f-goals" name="goals" rows="3" placeholder="Add a second location in [City] and keep two new trucks busy year-round." aria-describedby="err-goals"></textarea>
+                <div class="suggest" role="group" aria-label="Add a suggestion to your goals" data-goal-suggestions></div>
+                <p class="field__error" id="err-goals"></p>
+              </div>
+
+              <fieldset class="group" aria-describedby="hint-challenges err-challenges" data-group="challenges">
+                <legend class="field__label">What's getting in the way? <span class="req">*</span></legend>
+                <p class="field__hint" id="hint-challenges">Pick all that apply.</p>
+                <div class="pillset" data-challenges></div>
+                <div class="field" data-challenge-other hidden>
+                  <label class="sr-only" for="f-challengeOther">What else is getting in the way?</label>
+                  <input class="input" id="f-challengeOther" name="challengeOther" placeholder="Tell us briefly" aria-describedby="err-challengeOther" />
+                  <p class="field__error" id="err-challengeOther"></p>
+                </div>
+                <p class="field__error" id="err-challenges"></p>
+              </fieldset>
+
+              <fieldset class="group" aria-describedby="hint-marketing" data-group="marketing">
+                <legend class="field__label">What are you doing for marketing today?</legend>
+                <p class="field__hint" id="hint-marketing">Optional. Pick all that apply.</p>
+                <div class="pillset" data-marketing></div>
+                <div class="field">
+                  <label class="field__label" for="f-notes">Anything else about how you handle marketing? (optional)</label>
+                  <textarea class="textarea textarea--sm" id="f-notes" name="marketingNotes" rows="2" placeholder='e.g. "My office manager runs it, we switched agencies twice."'></textarea>
+                </div>
+              </fieldset>
+
+              <div class="iq" data-iq hidden>
+                <p class="eyebrow" data-iq-title>For HVAC companies</p>
+                <div class="iq__row" data-iq-fields></div>
+              </div>
+
+              <fieldset class="group" aria-describedby="hint-investment err-investment" data-group="investment">
+                <legend class="field__label">About how much do you invest in marketing per month? <span class="req">*</span></legend>
+                <p class="field__hint" id="hint-investment">Why we ask: it tells us which options are realistic for you, so we don't waste your time. Ads spend + agencies + tools.</p>
+                <div class="pillset" data-investments></div>
+                <p class="field__error" id="err-investment"></p>
+              </fieldset>
+
+              <div class="field">
+                <label class="field__label" for="f-source">How did you hear about us? (optional)</label>
+                <select class="select" id="f-source" name="source" aria-describedby="hint-source"><option value="">Select…</option></select>
+                <p class="field__hint" id="hint-source" data-source-hint hidden>Filled in from the link you used. Change it if it's not right.</p>
+              </div>
+
+              <label class="check sms"><input type="checkbox" name="smsConsent" /><span>Text me booking confirmations and reminders at <span data-sms-phone>my phone</span>. Message and data rates may apply. Reply STOP to opt out. [Legal text to confirm]</span></label>
+            </fieldset>
+
+            <!-- 3 · Pick a time -->
+            <fieldset class="ep-card ep-step" data-step="3" aria-labelledby="s3-title" hidden>
+              <p class="eyebrow">Step 3 of 3</p>
+              <h1 class="t-h3 ep-step__title" id="s3-title" tabindex="-1" data-s3-title>Pick a time that works for you</h1>
+              <p class="t-p-md c-sub" data-s3-sub>Your consultation with a Savvy representative. 45–60 minutes.</p>
+
+              <div class="soft-res" data-soft-res hidden>
+                <p class="eyebrow">Before the call, these may help</p>
+                <a href="/are-we-a-fit/#resources">Guide: The first growth system for a service business →</a>
+                <a href="/are-we-a-fit/#resources">Video: How we think about marketing investment →</a>
+                <a href="/#growth-title">The Savvy Growth System, in 5 minutes →</a>
+              </div>
+
+              <div class="booking" data-booking>
+                <div class="cal" data-cal>
+                  <div class="cal__head">
+                    <p class="t-label-md" data-cal-month aria-live="polite">Month</p>
+                    <div class="cal__nav">
+                      <button type="button" data-cal-prev aria-label="Earlier dates">‹</button>
+                      <button type="button" data-cal-next aria-label="Later dates">›</button>
+                    </div>
+                  </div>
+                  <fieldset class="cal__days" aria-describedby="err-slot">
+                    <legend class="sr-only">Pick a day</legend>
+                    <div class="cal__dow" aria-hidden="true"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span></div>
+                    <div class="cal__grid" data-cal-grid></div>
+                  </fieldset>
+                  <p class="cal__tz t-label-xs c-sub">Times shown in <span data-tz-name>Central Time (US)</span> · <label class="cal__tzchange"><span class="sr-only">Change time zone</span><select name="timezone" data-tz></select>change</label></p>
+                </div>
+                <fieldset class="slots" aria-describedby="err-slot" data-group="slot">
+                  <legend class="t-label-md" data-slots-day>Pick a day</legend>
+                  <div class="slots__list" data-slots></div>
+                  <p class="field__error" id="err-slot"></p>
+                  <button class="textbtn" type="button" data-no-times>None of these times work?</button>
+                </fieldset>
+              </div>
+
+              <fieldset class="group" aria-describedby="err-format" data-group="format" data-format-group>
+                <legend class="field__label">How do you want to meet?</legend>
+                <div class="pillset" data-formats></div>
+                <p class="field__error" id="err-format"></p>
+              </fieldset>
+
+              <div class="notimes" data-notimes hidden>
+                <h2 class="t-h4">Tell us when you're usually free</h2>
+                <p class="t-p-md c-sub">Your answers are saved. A Savvy representative will reach out within 1 business day to set a time.</p>
+                <fieldset class="group" aria-describedby="err-bestTimes" data-group="bestTimes">
+                  <legend class="field__label">Best times to reach you</legend>
+                  <div class="pillset" data-best-times></div>
+                  <p class="field__error" id="err-bestTimes"></p>
+                </fieldset>
+                <button class="textbtn" type="button" data-back-to-cal>Back to the calendar</button>
+              </div>
+
+              <details class="review" data-review>
+                <summary><span class="t-label-md">Review your answers</span><span class="t-p-sm c-sub">Check everything before you confirm</span></summary>
+                <div class="review__body" data-review-body></div>
+              </details>
+
+              <p class="t-p-sm c-muted">By confirming you agree we can contact you about this enquiry. We never share your details.</p>
+            </fieldset>
+
+            <div class="form-alert" data-ep-alert role="alert" hidden></div>
+            <p class="ep-status t-label-sm" data-ep-status role="status" aria-live="polite"></p>
+
+            <!-- Action bar -->
+            <div class="ep-bar">
+              <button class="ep-bar__back" type="button" data-back>← Back</button>
+              <p class="ep-bar__summary t-label-sm" data-bar-summary aria-live="polite"></p>
+              <p class="ep-bar__saved t-label-xs c-sub" data-saved>Saved as you go <span aria-hidden="true">●</span></p>
+              <button class="btn btn--l" type="submit" data-next><span data-next-label>Continue</span><span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span></button>
+            </div>
+          </form>
+
+          <!-- 4 · Confirmation -->
+          <section class="ep-view ep-done" data-view-panel="done" aria-labelledby="done-title" hidden tabindex="-1">
+            <div class="ep-done__fx" aria-hidden="true"></div>
+            <span class="ep-done__check" aria-hidden="true">✓</span>
+            <h1 class="t-h2" id="done-title" data-done-title>You're booked.</h1>
+            <div class="ep-card ep-done__when" data-done-when>
+              <p class="t-label-xl" data-done-time></p>
+              <p class="t-p-md c-sub" data-done-meta></p>
+              <div class="ep-done__cal">
+                <a class="chip" href="#" data-gcal target="_blank" rel="noopener">+ Google Calendar</a>
+                <a class="chip" href="#" data-ics download="savvy-consultation.ics">+ Outlook / Apple (.ics)</a>
+              </div>
+              <p class="t-p-sm c-muted">Need to reschedule or cancel? Use the link in your confirmation email.</p>
+            </div>
+            <p class="t-p-md" data-done-sent></p>
+            <div class="ep-done__cols">
+              <div>
+                <h2 class="t-label-lg">Helpful to have (all optional)</h2>
+                <ul class="prep" role="list" data-prep>
+                  <li><label class="check"><input type="checkbox" /><span>Roughly how many leads you get per month, and how many become jobs</span></label></li>
+                  <li><label class="check"><input type="checkbox" /><span>Your average job value (a range is fine)</span></label></li>
+                  <li><label class="check"><input type="checkbox" /><span>Who answers the phone and follows up on leads</span></label></li>
+                  <li><label class="check"><input type="checkbox" /><span>Logins for Google Ads / Analytics, if you have them (we'll only look, never change)</span></label></li>
+                </ul>
+              </div>
+              <div>
+                <h2 class="t-label-lg">What happens next</h2>
+                <ol class="next-tl" role="list" data-next-tl></ol>
+              </div>
+            </div>
+          </section>
+
+          <!-- Not a fit yet -->
+          <section class="ep-view ep-notyet" data-view-panel="not-yet" aria-labelledby="ny-title" hidden tabindex="-1">
+            <p class="eyebrow" data-ny-eyebrow>Thanks for sharing</p>
+            <h1 class="t-h2" id="ny-title">We don't think a partnership is the best use of your money yet.</h1>
+            <p class="t-p-lg c-sub">Our partnerships work best for companies that already have steady customers and a marketing budget to build on. From your answers, a few foundations would help you more right now, and they're free.</p>
+            <ul class="ny-res" role="list">
+              <li><a href="/are-we-a-fit/#resources"><span><span class="t-label-md">Guide · The first growth system for a service business</span><span class="t-p-sm c-sub">What to set up before spending more on ads. 12 min read.</span></span><span aria-hidden="true">→</span></a></li>
+              <li><a href="/are-we-a-fit/#resources"><span><span class="t-label-md">Video · Getting your first 50 reviews</span><span class="t-p-sm c-sub">A simple routine your techs can follow. 8 min.</span></span><span aria-hidden="true">→</span></a></li>
+              <li><a href="/are-we-a-fit/#resources"><span><span class="t-label-md">Checklist · Are you ready to scale?</span><span class="t-p-sm c-sub">Know when to come back. 5 min.</span></span><span aria-hidden="true">→</span></a></li>
+            </ul>
+            <form class="ep-card ny-sub" data-ny-sub novalidate>
+              <label class="t-label-md" for="ny-email" data-ny-sub-label>Get one practical idea for service companies each month</label>
+              <div class="ny-sub__row">
+                <input class="input" id="ny-email" name="email" type="email" autocomplete="email" aria-describedby="ny-err" />
+                <input class="hp" type="text" name="botField" tabindex="-1" autocomplete="off" aria-hidden="true" />
+                <button class="btn" type="submit"><span>Subscribe</span><span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span></button>
+              </div>
+              <p class="field__error" id="ny-err" role="alert"></p>
+              <p class="t-label-sm" data-ny-sub-status role="status"></p>
+            </form>
+            <div class="ep-card ny-review">
+              <p class="t-label-md">Think we got this wrong?</p>
+              <p class="t-p-sm c-sub">Tell us more and a person on our team will review it and reply within 2 business days.</p>
+              <button class="textbtn" type="button" data-request-review>I think we're ready → request a review</button>
+              <div class="form-alert" data-ny-alert role="alert" hidden></div>
+              <p class="t-label-sm" data-ny-status role="status"></p>
+            </div>
+          </section>
+        </div>
+
+        <!-- Side (sticky) — content changes with the view -->
+        <aside class="ep-side" aria-label="About this step">
+          <div class="ep-side__panel" data-side="intro">
+            <figure class="side-card side-card--founder">
+              <p class="eyebrow">A note from our founder</p>
+              <blockquote class="t-p-md">"We only take on partners we believe we can help. This first conversation is how we find out — honestly, for both of us. If we're not the right fit yet, we'll tell you and point you to what will help."</blockquote>
+              <figcaption class="t-label-sm c-sub">— [Founder name], Founder, Savvy Post</figcaption>
+            </figure>
+            <figure class="side-card">
+              <blockquote class="t-p-md">"[Quote about the consultation: they understood our business before suggesting anything, and we left with a clear plan even before signing.]"</blockquote>
+              <figcaption class="who-cap"><span class="ph who-cap__avatar" aria-hidden="true"></span><span><span class="t-label-sm">[Name], Owner</span><span class="t-p-sm c-sub">[Company] · HVAC · [City]</span></span></figcaption>
+            </figure>
+            <div class="side-card">
+              <p class="eyebrow">Who this is for</p>
+              <ul class="ticks" role="list">
+                <li>Established HVAC, plumbing, electrical, roofing and cleaning companies</li>
+                <li>Already investing in marketing</li>
+                <li>Ready to add crews, vehicles or markets</li>
+              </ul>
+            </div>
+          </div>
+          <div class="ep-side__panel" data-side="form" hidden>
+            <div class="side-card">
+              <p class="eyebrow">What happens next</p>
+              <ol class="wn" role="list">
+                <li data-wn="1"><span class="t-label-md">About you</span><span class="t-p-sm c-sub">1 min</span></li>
+                <li data-wn="2"><span class="t-label-md">Your business</span><span class="t-p-sm c-sub">About 3 min</span></li>
+                <li data-wn="3"><span class="t-label-md">Pick a time</span><span class="t-p-sm c-sub">A 30–60 min call with a Savvy representative</span></li>
+                <li data-wn="4"><span class="t-label-md">You leave with a scorecard</span><span class="t-p-sm c-sub">Presented on the call, emailed after. Yours either way.</span></li>
+              </ol>
+            </div>
+            <div class="side-card side-card--saved">
+              <p class="t-label-md"><span class="dot-live" aria-hidden="true"></span> Your answers are saved as you go</p>
+              <p class="t-p-sm c-sub">Close the page anytime; we'll email you a link to pick up where you left off.</p>
+            </div>
+            <figure class="side-card">
+              <blockquote class="t-p-md">"[Quote about the consultation: they understood our business before suggesting anything, and we left with a clear plan even before signing.]"</blockquote>
+              <figcaption class="who-cap"><span class="ph who-cap__avatar" aria-hidden="true"></span><span><span class="t-label-sm">[Name], Owner</span><span class="t-p-sm c-sub">[Company] · HVAC · [City]</span></span></figcaption>
+            </figure>
+          </div>
+          <div class="ep-side__panel" data-side="call" hidden>
+            <div class="side-card">
+              <p class="eyebrow">Your call</p>
+              <p class="t-label-xl">Growth consultation</p>
+              <dl class="call-dl">
+                <div><dt class="t-p-sm c-sub">Length</dt><dd class="t-label-md" data-call-length>45–60 min</dd></div>
+                <div><dt class="t-p-sm c-sub">With</dt><dd class="t-label-md">A Savvy representative</dd></div>
+                <div><dt class="t-p-sm c-sub">Format</dt><dd class="t-label-md">Video or phone, your choice</dd></div>
+              </dl>
+              <p class="eyebrow">What we'll review</p>
+              <ul class="bullets t-p-sm" role="list">
+                <li>Your answers from the assessment</li>
+                <li>How leads come in and get followed up</li>
+                <li>Where growth is leaking, and what to fix first</li>
+              </ul>
+              <p class="t-p-sm c-sub">You leave with a scorecard: presented on the call, emailed after.</p>
+            </div>
+          </div>
+          <div class="ep-side__panel" data-side="done" hidden>
+            <div class="side-card">
+              <p class="eyebrow">While you wait</p>
+              <div class="ph side-video" aria-hidden="true"><span class="side-video__play">▶ Case study video</span></div>
+              <p class="t-label-lg" data-case-title>How an HVAC company in [City] kept 4 new trucks busy</p>
+              <p class="t-p-sm c-sub" data-case-note>Picked for HVAC companies like yours. 6 min.</p>
+            </div>
+          </div>
+          <div class="ep-side__panel" data-side="not-yet" hidden>
+            <figure class="side-card side-card--founder">
+              <blockquote class="t-p-md">"Saying 'not yet' is part of being a good partner. Come back when you're ready; your answers will be here."</blockquote>
+              <figcaption class="t-label-sm c-sub">— [Founder name]</figcaption>
+            </figure>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <script type="module" src="/src/pages/partnership/partnership.js"></script>
+  </body>
+</html>
