@@ -1,0 +1,198 @@
+/* 404 — Figma "404 Page 🟢" Concept 3 · Desktop 1440 (5481:589) + Mobile 393 (5481:790) */
+
+.nf-hero {
+  padding: 240px var(--sp-24) var(--sp-32);
+}
+
+.nf-hero__row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-20);
+  max-width: 1248px;
+  margin-inline: auto;
+}
+
+.nf-hero__copy {
+  display: flex;
+  flex: 0 0 600px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-6);
+}
+
+.nf-hero__copy .t-h1 {
+  font-size: clamp(40px, 5.2vw, 56px);
+}
+
+.nf-hero__actions {
+  padding: 6px 0 0 6px;
+}
+
+.nf-hero__image {
+  position: relative;
+  display: grid;
+  flex: 1;
+  place-items: center;
+  height: 480px;
+  overflow: hidden;
+  border-radius: var(--r-24);
+  isolation: isolate;
+  cursor: crosshair;
+}
+
+.nf-hero__3d {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.nf-hero__code {
+  position: relative;
+  z-index: 0;
+  font-size: clamp(120px, 16vw, 220px);
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--bg-soft-200);
+  user-select: none;
+}
+
+/* Routes */
+.nf-routes {
+  padding: var(--sp-32) var(--sp-24);
+}
+
+.nf-routes__row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-20);
+  max-width: 1248px;
+  margin-inline: auto;
+}
+
+.nf-routes__intro {
+  display: flex;
+  flex: 0 0 377px;
+  flex-direction: column;
+  gap: var(--sp-5);
+}
+
+.nf-search {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.nf-list {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+}
+
+.nf-list li[hidden] {
+  display: none;
+}
+
+.nf-route {
+  display: grid;
+  grid-template-columns: 260px 1fr 20px;
+  align-items: center;
+  gap: var(--sp-6);
+  padding: 21px 0;
+  border-bottom: 1px solid var(--stroke-soft-200);
+  transition: padding 0.35s var(--ease-out), background-color 0.3s;
+}
+
+.nf-list li:first-child .nf-route {
+  border-top: 1px solid var(--stroke-soft-200);
+}
+
+.nf-route__name {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+.nf-route__desc {
+  color: var(--text-sub-600);
+}
+
+.nf-route img {
+  transition: translate 0.35s var(--ease-out);
+}
+
+.nf-route:hover,
+.nf-route:focus-visible {
+  padding-inline: var(--sp-3);
+  background: var(--bg-weak-10);
+}
+
+.nf-route:hover img,
+.nf-route:focus-visible img {
+  translate: 4px 0;
+}
+
+@media (max-width: 1100px) {
+  .nf-hero__copy {
+    flex-basis: 50%;
+  }
+  .nf-routes__row {
+    flex-direction: column;
+    gap: var(--sp-8);
+  }
+  .nf-routes__intro {
+    flex-basis: auto;
+    width: 100%;
+  }
+  .nf-list {
+    width: 100%;
+  }
+}
+
+@media (max-width: 900px) {
+  .nf-hero {
+    padding: 188px 20px 36px;
+  }
+  .nf-hero__row {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: var(--sp-6);
+  }
+  .nf-hero__copy {
+    flex-basis: auto;
+  }
+  .nf-hero__copy .t-h1 {
+    font-size: 40px;
+    line-height: 48px;
+  }
+  .nf-hero__image {
+    flex: 0 0 auto;
+    height: 233px;
+    border-radius: var(--r-16);
+  }
+  .nf-hero__actions,
+  .nf-hero__actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .nf-routes {
+    padding: 36px 20px;
+  }
+  .nf-route {
+    grid-template-columns: 1fr 20px;
+    gap: 0 var(--sp-4);
+    padding: 16px 0;
+  }
+  .nf-route__name {
+    font-size: 18px;
+    line-height: 24px;
+  }
+  .nf-route__desc {
+    grid-column: 1;
+  }
+  .nf-route img {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+}
