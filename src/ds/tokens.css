@@ -1,0 +1,91 @@
+/*
+ * Savvy design system tokens — from the Figma file "Savvy - Design System"
+ * (variables on the Home low-fi page). Names mirror the Figma variables.
+ */
+:root {
+  /* Text */
+  --text-strong-950: #030712;
+  --text-sub-600: #4b5563;
+  --text-sub-400: #9ca3af;
+  --text-disabled-300: #d1d5db;
+  --text-white-0: #f9fafb;
+
+  /* Icons */
+  --icon-strong-950: #030712;
+  --icon-sub-600: #4b5563;
+  --icon-sub-400: #9ca3af;
+  --icon-white-0: #f9fafb;
+
+  /* Backgrounds */
+  --bg-white-0: #ffffff;
+  --bg-weak-10: #f9fafb;
+  --bg-weak-50: #f1f5f9;
+  --bg-soft-200: #e2e8f0;
+  --bg-sub-300: #cbd5e1;
+  --bg-strong-800: #1e293b;
+  --white-10: rgba(255, 255, 255, 0.1);
+
+  /* Strokes */
+  --stroke-soft-200: #e5e5e5;
+  --stroke-sub-300: #d4d4d4;
+
+  /* Brand */
+  --primary-base: #0792c2;
+  --primary-700: #0d6d91; /* Light Blue/700 — primary button sweep */
+  --primary-dark: #293baa;
+  --primary-darker: #141a40;
+  --primary-alpha-5: rgba(7, 146, 194, 0.05);
+  --primary-alpha-16: rgba(7, 146, 194, 0.16);
+  --secondary-base: #ff5527;
+  --secondary-alpha-16: rgba(255, 85, 39, 0.16);
+  --accent-700: #c61208; /* Accent/700 — accent button sweep */
+  --grey-300: #d1d5db;
+
+  /* Status (derived for UI feedback) */
+  --success-base: #1fa774;
+  --error-base: #e5372a;
+  --warning-base: #f59e0b;
+
+  /* Typography — Satoshi (Fontshare) */
+  --font: 'Satoshi', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  /* Spacing (Figma spacing scale) */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 28px;
+  --sp-10: 32px;
+  --sp-12: 40px;
+  --sp-20: 48px;
+  --sp-24: 56px;
+  --sp-32: 64px;
+  --sp-40: 72px;
+  --sp-56: 128px;
+  --sp-64: 256px;
+
+  /* Radius */
+  --r-10: 10px;
+  --r-12: 12px;
+  --r-16: 16px;
+  --r-20: 20px;
+  --r-24: 24px;
+  --r-full: 999px;
+
+  /* Shadows */
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --ring-primary: 0 0 0 2px var(--bg-white-0), 0 0 0 4px var(--primary-base), 0 0 0 8px var(--primary-alpha-16);
+  --ring-accent: 0 0 0 2px var(--bg-white-0), 0 0 0 4px var(--secondary-base), 0 0 0 8px var(--secondary-alpha-16);
+
+  /* Layout */
+  --page-max: 1440px;
+  --gutter: clamp(20px, 5vw, 72px);
+
+  /* Motion */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}

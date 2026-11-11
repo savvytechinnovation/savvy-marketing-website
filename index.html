@@ -1,294 +1,284 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Savvy Marketing Partners — Growth marketing that's impossible to ignore</title>
-    <meta name="description" content="Savvy Marketing Partners is a growth marketing agency: strategy, content, performance media, branding and web — one team, measurable results." />
+    <!-- @include head -->
+    <title>Savvy Marketing Partners — Marketing systems for established service businesses</title>
+    <meta name="description" content="We help established HVAC, plumbing, electrical, roofing and cleaning companies generate demand, convert more customers and see exactly what drives revenue." />
     <meta property="og:title" content="Savvy Marketing Partners" />
-    <meta property="og:description" content="Growth marketing that's impossible to ignore." />
-    <meta property="og:image" content="/brand/logo-gradient.svg" />
-    <meta name="theme-color" content="#0b0d24" />
-    <link rel="icon" type="image/svg+xml" href="/brand/isologo-gradient.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <script>document.documentElement.classList.add('js');</script>
+    <meta property="og:description" content="Build the marketing system your next stage of growth needs." />
   </head>
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-
-    <!-- Loader -->
-    <div class="loader" aria-hidden="true">
-      <div class="loader__inner">
-        <img src="/brand/isologo-white.svg" width="178" height="179" alt="" class="loader__icon" />
-        <span class="loader__count"><span data-loader-count>0</span>%</span>
-      </div>
-      <div class="loader__panel loader__panel--top"></div>
-      <div class="loader__panel loader__panel--bottom"></div>
-    </div>
-
-    <canvas class="webgl" aria-hidden="true"></canvas>
-    <div class="cursor" aria-hidden="true"><span class="cursor__label"></span></div>
-    <div class="scroll-progress" aria-hidden="true"></div>
-
-    <!-- Header -->
-    <header class="nav">
-      <a href="/" class="nav__logo" aria-label="Savvy Marketing Partners — Home">
-        <img src="/brand/logo-white.svg" width="636" height="179" alt="Savvy Marketing Partners" />
-      </a>
-      <nav class="nav__links" aria-label="Main">
-        <a href="#work" data-scramble>Work</a>
-        <a href="#services" data-scramble>Services</a>
-        <a href="#process" data-scramble>Process</a>
-        <a href="/about/" data-scramble>About</a>
-      </nav>
-      <a href="#contact" class="btn btn--ghost nav__cta" data-magnetic>Let's talk</a>
-      <button class="nav__burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu">
-        <span></span><span></span>
-      </button>
-    </header>
-
-    <!-- Fullscreen menu (mobile) -->
-    <div class="menu" id="menu" hidden>
-      <nav aria-label="Mobile">
-        <ul>
-          <li><a href="#work">Work</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#process">Process</a></li>
-          <li><a href="/about/">About</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
-      <p class="menu__foot">Growth marketing · Strategy · Content · Performance · Brand · Web</p>
-    </div>
+  <body class="page-home">
+    <!-- @include header -->
 
     <main id="main">
-      <!-- HERO -->
-      <section class="hero" data-theme="dark" aria-labelledby="hero-title">
-        <p class="badge"><span class="badge__dot"></span>Booking new projects for Q1</p>
-        <h1 class="hero__title" id="hero-title">
-          <span class="line"><span>We make brands</span></span>
-          <span class="line"><span>impossible</span></span>
-          <span class="line"><span>to <em class="grad-text" data-rotator data-words="ignore.,forget.,scroll past.,outgrow.">ignore.</em></span></span>
-        </h1>
-        <div class="hero__bottom">
-          <p class="hero__sub">Savvy is a growth marketing partner. Strategy, content, media and design — one team obsessed with your numbers.</p>
-          <div class="hero__actions">
-            <a href="#contact" class="btn btn--primary" data-magnetic>Start a project</a>
-            <a href="#work" class="btn btn--link" data-magnetic>See our work <span aria-hidden="true">↓</span></a>
+      <!-- 01 · Hero -->
+      <section class="home-hero" aria-labelledby="hero-title">
+        <div class="home-hero__row">
+          <div class="home-hero__copy">
+            <p class="t-label-sm c-sub" data-hero-item>For established service businesses</p>
+            <h1 class="t-h1" id="hero-title" data-split>Build the marketing system your next stage of growth needs.</h1>
+            <p class="t-p-lg c-sub" data-hero-item>We help established HVAC, plumbing, electrical, roofing and cleaning companies generate demand, convert more customers and see exactly what drives revenue.</p>
+            <div class="home-hero__actions" data-hero-item>
+              <a class="btn" href="/explore-partnership/"><span>Explore Partnership</span><span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span></a>
+              <a class="link-arrow" href="/are-we-a-fit/">Are we a fit? <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></a>
+            </div>
           </div>
-        </div>
-        <p class="hero__hint" aria-hidden="true">Move · Click the orb</p>
-      </section>
-
-      <!-- MARQUEE -->
-      <section class="marquee" aria-label="What we do">
-        <div class="marquee__row" aria-hidden="true">
-          <span>Growth strategy</span><i></i><span>Paid media</span><i></i><span>Social content</span><i></i><span>SEO</span><i></i><span>Branding</span><i></i><span>Web &amp; landing pages</span><i></i>
-          <span>Growth strategy</span><i></i><span>Paid media</span><i></i><span>Social content</span><i></i><span>SEO</span><i></i><span>Branding</span><i></i><span>Web &amp; landing pages</span><i></i>
-        </div>
-        <p class="sr-only">Growth strategy, paid media, social content, SEO, branding, web and landing pages.</p>
-      </section>
-
-      <!-- INTRO / MANIFESTO -->
-      <section class="intro" data-theme="dark">
-        <p class="eyebrow">Who we are</p>
-        <p class="intro__text" data-reveal-words>
-          Marketing works best when your agency acts like part of your team. We pair sharp strategy with bold creative and
-          relentless optimisation, so every campaign earns attention — and every dollar earns its place.
-        </p>
-        <div class="stats">
-          <div class="stat"><strong data-count="120" data-suffix="+">120+</strong><span>Brands grown</span></div>
-          <div class="stat"><strong data-count="3.4" data-decimals="1" data-suffix="x">3.4x</strong><span>Average ROAS</span></div>
-          <div class="stat"><strong data-count="98" data-suffix="%">98%</strong><span>Client retention</span></div>
-          <div class="stat"><strong data-count="45" data-suffix="M">45M</strong><span>Impressions / month</span></div>
+          <div class="home-hero__media ph" data-tilt aria-hidden="true"></div>
         </div>
       </section>
 
-      <!-- SERVICES -->
-      <section class="services" id="services" data-theme="dark" aria-labelledby="services-title">
-        <div class="section-head">
-          <p class="eyebrow">Services</p>
-          <h2 id="services-title" data-split>Everything you need<br />to grow, under one roof.</h2>
-        </div>
-        <ul class="service-list">
-          <li class="service" data-palette="1">
-            <button class="service__row" type="button" aria-expanded="false">
-              <span class="service__num">01</span><span class="service__name">Strategy &amp; Growth</span><span class="service__tags">Audits · Positioning · Funnels</span><span class="service__icon" aria-hidden="true"></span>
-            </button>
-            <div class="service__body"><p>We map your market, audience and funnel, then build a growth plan with clear KPIs, budgets and a testing roadmap.</p></div>
-          </li>
-          <li class="service" data-palette="2">
-            <button class="service__row" type="button" aria-expanded="false">
-              <span class="service__num">02</span><span class="service__name">Content &amp; Social</span><span class="service__tags">Short-form · Creators · Community</span><span class="service__icon" aria-hidden="true"></span>
-            </button>
-            <div class="service__body"><p>Scroll-stopping content produced at speed: short-form video, design, copy and community management across every platform.</p></div>
-          </li>
-          <li class="service" data-palette="3">
-            <button class="service__row" type="button" aria-expanded="false">
-              <span class="service__num">03</span><span class="service__name">Performance Media</span><span class="service__tags">Meta · Google · TikTok · SEO</span><span class="service__icon" aria-hidden="true"></span>
-            </button>
-            <div class="service__body"><p>Paid campaigns and SEO engineered for return: creative testing, tracking you can trust and weekly optimisation.</p></div>
-          </li>
-          <li class="service" data-palette="4">
-            <button class="service__row" type="button" aria-expanded="false">
-              <span class="service__num">04</span><span class="service__name">Branding</span><span class="service__tags">Identity · Voice · Guidelines</span><span class="service__icon" aria-hidden="true"></span>
-            </button>
-            <div class="service__body"><p>Identities with a point of view: naming, logo systems, visual language and the voice that ties it all together.</p></div>
-          </li>
-          <li class="service" data-palette="5">
-            <button class="service__row" type="button" aria-expanded="false">
-              <span class="service__num">05</span><span class="service__name">Web &amp; Landing Pages</span><span class="service__tags">Design · Dev · CRO</span><span class="service__icon" aria-hidden="true"></span>
-            </button>
-            <div class="service__body"><p>Fast, conversion-focused websites and landing pages — designed, built and continuously A/B tested.</p></div>
-          </li>
+      <!-- 02 · Trust strip -->
+      <section class="trust" aria-label="Industries we specialize in">
+        <p class="t-label-sm c-sub">Specialized in five service industries · 10+ years in marketing</p>
+        <ul class="trust__marks" role="list" data-reveal-stagger="0.06">
+          <li data-reveal><span class="trust__icon" aria-hidden="true"></span>HVAC</li>
+          <li data-reveal><span class="trust__icon" aria-hidden="true"></span>Plumbing</li>
+          <li data-reveal><span class="trust__icon" aria-hidden="true"></span>Electrical</li>
+          <li data-reveal><span class="trust__icon" aria-hidden="true"></span>Roofing</li>
+          <li data-reveal><span class="trust__icon" aria-hidden="true"></span>Cleaning</li>
         </ul>
       </section>
 
-      <!-- WORK (horizontal) -->
-      <section class="work" id="work" data-theme="dark" aria-labelledby="work-title">
-        <div class="work__pin">
-          <div class="section-head work__head">
-            <p class="eyebrow">Selected work</p>
-            <h2 id="work-title" data-split>Results that<br />speak louder.</h2>
-            <p class="work__hint" aria-hidden="true">Scroll →</p>
-          </div>
-          <div class="work__track">
-            <article class="case" data-cursor="View">
-              <div class="case__art art art--1" aria-hidden="true"><span>N</span></div>
-              <div class="case__meta"><p class="case__tag">E-commerce · Paid social</p><h3>Nova Skincare</h3><p class="case__result"><strong>+212%</strong> online revenue in 6 months</p></div>
-            </article>
-            <article class="case" data-cursor="View">
-              <div class="case__art art art--2" aria-hidden="true"><span>P</span></div>
-              <div class="case__meta"><p class="case__tag">B2B SaaS · SEO + content</p><h3>Pulse Analytics</h3><p class="case__result"><strong>4.1x</strong> qualified demo requests</p></div>
-            </article>
-            <article class="case" data-cursor="View">
-              <div class="case__art art art--3" aria-hidden="true"><span>H</span></div>
-              <div class="case__meta"><p class="case__tag">Hospitality · Brand + web</p><h3>Harbor &amp; Co.</h3><p class="case__result"><strong>-38%</strong> cost per booking</p></div>
-            </article>
-            <article class="case" data-cursor="View">
-              <div class="case__art art art--4" aria-hidden="true"><span>V</span></div>
-              <div class="case__meta"><p class="case__tag">Fitness · Creators</p><h3>Volt Studio</h3><p class="case__result"><strong>1.2M</strong> organic views at launch</p></div>
-            </article>
-            <a class="case case--cta" href="#contact" data-cursor="Talk">
-              <span>Your brand<br />could be next</span><span class="case__arrow" aria-hidden="true">→</span>
-            </a>
-          </div>
+      <!-- 03 · The problem / How we compare -->
+      <section class="compare section" aria-labelledby="compare-title">
+        <div class="section-heading">
+          <p class="eyebrow" data-reveal>Sound familiar?</p>
+          <h2 class="t-h3" id="compare-title" data-split>More marketing hasn't meant more predictable growth.</h2>
+          <p class="t-p-lg c-sub" data-reveal>Most established service businesses are not short on tactics. They are short on a system that connects them to booked jobs and revenue.</p>
         </div>
+        <div class="compare__wrap" data-reveal>
+          <table class="compare__table">
+            <caption class="sr-only">Savvy Marketing Partners compared with other providers</caption>
+            <thead>
+              <tr>
+                <td class="compare__corner"></td>
+                <th scope="col" class="compare__savvy">Savvy Marketing Partners</th>
+                <th scope="col" class="compare__others">Others</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Turnover Cleaning</th><td class="compare__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td><td><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td></tr>
+              <tr><th scope="row">Guest-Ready Reset</th><td class="compare__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td><td>Limited</td></tr>
+              <tr><th scope="row">Linens &amp; Restocking</th><td class="compare__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td><td>Sometimes</td></tr>
+              <tr><th scope="row">Property Inspections</th><td class="compare__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td><td><span class="sr-only">Not included</span></td></tr>
+              <tr><th scope="row">Photo &amp; Property Reporting</th><td class="compare__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td><td><span class="sr-only">Not included</span></td></tr>
+              <tr><th scope="row">Maintenance Coordination</th><td class="compare__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td><td><span class="sr-only">Not included</span></td></tr>
+              <tr><th scope="row">On-the-Ground Support</th><td class="compare__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td><td>Limited</td></tr>
+              <tr><th scope="row">Guest Experience Support</th><td class="compare__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td><td><span class="sr-only">Not included</span></td></tr>
+              <tr><th scope="row">Multi-Property Support</th><td class="compare__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td><td>Limited</td></tr>
+              <tr><th scope="row">Owner Keeps Operational Control</th><td class="compare__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td><td><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td></tr>
+              <tr><th scope="row">Flexible Service Selection</th><td class="compare__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td><td><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td></tr>
+              <tr><th scope="row">Listing / Revenue Management</th><td class="compare__savvy"><img src="/ds/icons/check-circle.svg" alt="Included" width="24" height="24" /></td><td><span class="sr-only">Not included</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="compare__closing t-h5" data-reveal>You manage the business. We help take care of what happens at the property.</p>
       </section>
 
-      <!-- PROCESS (light theme, stacked cards) -->
-      <section class="process" id="process" data-theme="light" aria-labelledby="process-title">
-        <div class="section-head">
-          <p class="eyebrow">How we work</p>
-          <h2 id="process-title" data-split>A simple process.<br />Serious results.</h2>
+      <!-- 04 · Growth System preview -->
+      <section class="growth section bg-weak" aria-labelledby="growth-title">
+        <div class="section-heading">
+          <p class="eyebrow" data-reveal>The Savvy Post Growth System</p>
+          <h2 class="t-h3" id="growth-title" data-split>One connected system, not a menu of services.</h2>
+          <p class="t-p-md c-sub" data-reveal>Seven stages that turn strategy into a system you can measure, improve and scale.</p>
         </div>
-        <ol class="steps">
-          <li class="step"><span class="step__num">01</span><div><h3>Discover</h3><p>Workshops, audits and data deep-dives to understand where growth will really come from.</p></div></li>
-          <li class="step"><span class="step__num">02</span><div><h3>Strategise</h3><p>A focused plan: audiences, channels, messaging, budget split and the KPIs we'll be judged on.</p></div></li>
-          <li class="step"><span class="step__num">03</span><div><h3>Create &amp; launch</h3><p>Creative, campaigns and pages shipped in weeks, not months — with tracking from day one.</p></div></li>
-          <li class="step"><span class="step__num">04</span><div><h3>Optimise &amp; scale</h3><p>Weekly testing and transparent reporting. What works gets more budget; what doesn't gets cut.</p></div></li>
+        <ol class="growth__loop" role="list" data-loop>
+          <li class="stage"><span class="stage__icon ph" aria-hidden="true"></span><span class="t-label-md">Strategy</span><span class="t-p-sm c-sub">Understand the business and market</span></li>
+          <li class="stage__arrow" aria-hidden="true"><img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></li>
+          <li class="stage"><span class="stage__icon ph" aria-hidden="true"></span><span class="t-label-md">Build</span><span class="t-p-sm c-sub">Set up site, tracking and CRM</span></li>
+          <li class="stage__arrow" aria-hidden="true"><img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></li>
+          <li class="stage"><span class="stage__icon ph" aria-hidden="true"></span><span class="t-label-md">Generate</span><span class="t-p-sm c-sub">Create demand in the right channels</span></li>
+          <li class="stage__arrow" aria-hidden="true"><img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></li>
+          <li class="stage"><span class="stage__icon ph" aria-hidden="true"></span><span class="t-label-md">Convert</span><span class="t-p-sm c-sub">Turn attention into booked jobs</span></li>
+          <li class="stage__arrow" aria-hidden="true"><img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></li>
+          <li class="stage"><span class="stage__icon ph" aria-hidden="true"></span><span class="t-label-md">Measure</span><span class="t-p-sm c-sub">Track the journey to revenue</span></li>
+          <li class="stage__arrow" aria-hidden="true"><img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></li>
+          <li class="stage"><span class="stage__icon ph" aria-hidden="true"></span><span class="t-label-md">Optimize</span><span class="t-p-sm c-sub">Improve what the data shows</span></li>
+          <li class="stage__arrow" aria-hidden="true"><img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></li>
+          <li class="stage"><span class="stage__icon ph" aria-hidden="true"></span><span class="t-label-md">Grow</span><span class="t-p-sm c-sub">Scale what works</span></li>
         </ol>
+        <a class="btn" href="/growth-system/" data-reveal><span>Explore Growth System</span><span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span></a>
       </section>
 
-      <!-- TESTIMONIAL -->
-      <section class="quote" data-theme="dark">
-        <blockquote>
-          <p data-split-quote>“Savvy feels like an in-house team that happens to be world-class at marketing. Our pipeline has never been healthier.”</p>
-          <footer><strong>Laura Méndez</strong> — Head of Growth, Pulse Analytics</footer>
-        </blockquote>
-      </section>
-
-      <!-- CONTACT -->
-      <section class="contact" id="contact" data-theme="dark" aria-labelledby="contact-title">
-        <div class="contact__intro">
-          <p class="eyebrow">Let's talk</p>
-          <h2 id="contact-title" data-split>Ready to be<br /><span class="grad-text">impossible to ignore?</span></h2>
-          <p class="contact__lead">Tell us about your brand and goals. We reply within one business day with next steps — no sales script.</p>
-          <div class="contact__logo-space" aria-hidden="true"></div>
+      <!-- 05 · Who it's for -->
+      <section class="fit section bg-weak" aria-labelledby="fit-title">
+        <div class="section-heading">
+          <p class="eyebrow" data-reveal>Who we work with</p>
+          <h2 class="t-h3" id="fit-title" data-split>Built for businesses that have proven their model.</h2>
+          <p class="t-p-lg c-sub" data-reveal>We care more about maturity than size. The right partner already has customers, a team and a service that works.</p>
         </div>
+        <div class="fit__cols">
+          <div class="fit__card fit__card--good" data-reveal>
+            <h3 class="t-label-xl">A good fit if you are…</h3>
+            <ul class="fit__list" role="list">
+              <li><span class="fit__item"><span class="dot" aria-hidden="true"></span>Established, with a proven service and customers</span><span class="t-p-sm c-sub">You already invest in marketing and want it to work as one system.</span></li>
+              <li><span class="fit__item"><span class="dot" aria-hidden="true"></span>Growing, adding crews, vehicles or service areas</span><span class="t-p-sm c-sub">You need demand dependable enough to justify new investments.</span></li>
+              <li><span class="fit__item"><span class="dot" aria-hidden="true"></span>Multi-location, or preparing to expand</span><span class="t-p-sm c-sub">You want local strategies, not one plan copied between markets.</span></li>
+            </ul>
+          </div>
+          <div class="fit__card fit__card--not" data-reveal>
+            <h3 class="t-label-xl">Not the right fit yet if…</h3>
+            <ul class="dot-list" role="list">
+              <li><span class="dot dot--soft" aria-hidden="true"></span>You are still defining what you sell or who you serve</li>
+              <li><span class="dot dot--soft" aria-hidden="true"></span>You cannot take on more work right now</li>
+              <li><span class="dot dot--soft" aria-hidden="true"></span>You are looking for the cheapest option or one-off tasks</li>
+            </ul>
+          </div>
+        </div>
+        <a class="btn" href="/are-we-a-fit/" data-reveal><span>Take The Fit Check</span><span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span></a>
+      </section>
 
-        <form class="form" id="contact-form" novalidate>
-          <div class="form__grid">
-            <div class="field">
-              <label for="f-name">Name <span aria-hidden="true">*</span></label>
-              <input id="f-name" name="name" type="text" autocomplete="name" required maxlength="100" aria-describedby="e-name" />
-              <p class="field__error" id="e-name" aria-live="polite"></p>
-            </div>
-            <div class="field">
-              <label for="f-email">Work email <span aria-hidden="true">*</span></label>
-              <input id="f-email" name="email" type="email" autocomplete="email" required maxlength="150" aria-describedby="e-email" />
-              <p class="field__error" id="e-email" aria-live="polite"></p>
-            </div>
-            <div class="field">
-              <label for="f-company">Company</label>
-              <input id="f-company" name="company" type="text" autocomplete="organization" maxlength="120" />
-            </div>
-            <div class="field">
-              <label for="f-website">Website</label>
-              <input id="f-website" name="website" type="url" inputmode="url" placeholder="https://" maxlength="200" aria-describedby="e-website" />
-              <p class="field__error" id="e-website" aria-live="polite"></p>
+      <!-- 06 · Industries -->
+      <section class="industries section" aria-labelledby="industries-title">
+        <div class="industries__heading">
+          <p class="eyebrow" data-reveal>Industries</p>
+          <h2 class="t-h3" id="industries-title" data-split>We don't market industries we don't understand.</h2>
+        </div>
+        <ul class="filmstrip" role="list">
+          <li class="film" style="--h: 340px"><a href="/industries/hvac/" class="film__link"><span class="ph film__media" aria-hidden="true"></span><span class="t-p-sm c-sub film__kicker">Photo</span><span class="film__label"><span>HVAC</span><span class="film__arrow" aria-hidden="true">→</span></span></a></li>
+          <li class="film" style="--h: 400px"><a href="/industries/plumbing/" class="film__link"><span class="ph film__media" aria-hidden="true"></span><span class="t-p-sm c-sub film__kicker">Photo</span><span class="film__label"><span>Plumbing</span><span class="film__arrow" aria-hidden="true">→</span></span></a></li>
+          <li class="film" style="--h: 440px"><a href="/industries/electrical/" class="film__link"><span class="ph film__media" aria-hidden="true"></span><span class="t-p-sm c-sub film__kicker">Photo</span><span class="film__label"><span>Electrical</span><span class="film__arrow" aria-hidden="true">→</span></span></a></li>
+          <li class="film" style="--h: 400px"><a href="/industries/roofing/" class="film__link"><span class="ph film__media" aria-hidden="true"></span><span class="t-p-sm c-sub film__kicker">Photo</span><span class="film__label"><span>Roofing</span><span class="film__arrow" aria-hidden="true">→</span></span></a></li>
+          <li class="film" style="--h: 340px"><a href="/industries/cleaning/" class="film__link"><span class="ph film__media" aria-hidden="true"></span><span class="t-p-sm c-sub film__kicker">Photo</span><span class="film__label"><span>Cleaning</span><span class="film__arrow" aria-hidden="true">→</span></span></a></li>
+        </ul>
+      </section>
+
+      <!-- 07 · How we measure -->
+      <section class="measure section" aria-labelledby="measure-title">
+        <div class="measure__row">
+          <div class="measure__heading">
+            <p class="eyebrow" data-reveal>Measurement</p>
+            <h2 class="t-h3" id="measure-title" data-split>We measure the journey, not just the campaign.</h2>
+            <p class="t-p-lg c-sub" data-reveal>A campaign can create a lead and still fail to create revenue. We show you every step, and where opportunities are lost.</p>
+          </div>
+          <ol class="funnel" role="list" data-funnel>
+            <li style="--w: 760px"><span class="t-label-md">Traffic</span><span class="t-p-sm c-sub">Where did they come from?</span></li>
+            <li style="--w: 690px"><span class="t-label-md">Lead</span><span class="t-p-sm c-sub">Did they call or submit a form?</span></li>
+            <li style="--w: 620px"><span class="t-label-md">Qualified lead</span><span class="t-p-sm c-sub">Were they a fit?</span></li>
+            <li style="--w: 550px"><span class="t-label-md">Appointment</span><span class="t-p-sm c-sub">Was a visit booked?</span></li>
+            <li style="--w: 480px"><span class="t-label-md">Estimate</span><span class="t-p-sm c-sub">Was a quote sent and followed up?</span></li>
+            <li style="--w: 410px"><span class="t-label-md">Customer</span><span class="t-p-sm c-sub">Did they hire you?</span></li>
+            <li style="--w: 340px"><span class="t-label-md">Revenue</span><span class="t-p-sm c-sub">What was the job worth?</span></li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- 08 · Proof — data only -->
+      <section class="proof section" aria-labelledby="proof-title">
+        <div class="proof__heading">
+          <div class="proof__title">
+            <p class="eyebrow proof__eyebrow" data-reveal>Proof · Measured results</p>
+            <h2 class="t-h2" id="proof-title" data-split>Numbers from systems we built and measured.</h2>
+          </div>
+          <div class="proof__note" data-reveal>
+            <p class="t-p-md">Every figure links to how it was measured: period, sample and source.</p>
+            <a class="link-arrow link-arrow--on-dark" href="/results/">How we measure <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></a>
+          </div>
+        </div>
+        <ul class="metrics" role="list" data-reveal-stagger="0.08">
+          <li class="metric" data-reveal><p class="metric__value">[X%]</p><p class="t-label-md">More booked jobs from the same lead volume</p><p class="t-p-sm metric__meta">Cleaning · 6 months · verified</p></li>
+          <li class="metric" data-reveal><p class="metric__value">[X%]</p><p class="t-label-md">Leads followed up within 5 minutes</p><p class="t-p-sm metric__meta">Cleaning · 90 days · CRM data</p></li>
+          <li class="metric" data-reveal><p class="metric__value">[$X]</p><p class="t-label-md">Revenue attributed to tracked campaigns</p><p class="t-p-sm metric__meta">Cleaning · 12 months · verified</p></li>
+          <li class="metric" data-reveal><p class="metric__value">[X]</p><p class="t-label-md">Markets launched on the same system</p><p class="t-p-sm metric__meta">Across partners · to date</p></li>
+        </ul>
+      </section>
+
+      <!-- 08 · Proof — testimonials -->
+      <section class="quotes section bg-weak" aria-labelledby="quotes-title">
+        <div class="quotes__row">
+          <figure class="quote-featured" data-reveal aria-live="polite">
+            <p class="eyebrow" id="quotes-title">Proof · In their words</p>
+            <blockquote class="quote-featured__text t-h3" data-quote-text>"Sample quote: replace with a real, named testimonial about working with Savvy Post, two or three lines long."</blockquote>
+            <figcaption class="quote-author">
+              <span class="quote-author__avatar ph" aria-hidden="true"></span>
+              <span><span class="t-label-lg" data-quote-name>[Client name]</span><span class="t-p-sm c-sub" data-quote-role>[Role · Company · Industry]</span></span>
+            </figcaption>
+          </figure>
+          <ul class="quote-list" role="list" data-reveal-stagger="0.08">
+            <li data-reveal><button class="quote-card" type="button" data-quote='{"text":"\"Sample quote: replace with a real, named testimonial.\"","name":"[Client name]","role":"[Industry]"}'><span class="t-p-md">"Sample quote: replace with a real, named testimonial."</span><span class="quote-card__author"><span class="dot dot--soft" aria-hidden="true"></span><span class="t-p-sm c-sub">[Client name] · [Industry]</span></span></button></li>
+            <li data-reveal><button class="quote-card" type="button" data-quote='{"text":"\"Sample quote: replace with a real, named testimonial.\"","name":"[Client name]","role":"[Industry]"}'><span class="t-p-md">"Sample quote: replace with a real, named testimonial."</span><span class="quote-card__author"><span class="dot dot--soft" aria-hidden="true"></span><span class="t-p-sm c-sub">[Client name] · [Industry]</span></span></button></li>
+            <li data-reveal><button class="quote-card" type="button" data-quote='{"text":"\"Sample quote: replace with a real, named testimonial.\"","name":"[Client name]","role":"[Industry]"}'><span class="t-p-md">"Sample quote: replace with a real, named testimonial."</span><span class="quote-card__author"><span class="dot dot--soft" aria-hidden="true"></span><span class="t-p-sm c-sub">[Client name] · [Industry]</span></span></button></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 09 · How it starts -->
+      <section class="starts section bg-weak" aria-labelledby="starts-title">
+        <div class="section-heading section-heading--tight">
+          <p class="eyebrow" data-reveal>How it starts</p>
+          <h2 class="t-h2" id="starts-title" data-split>A low-pressure way to start.</h2>
+          <p class="t-p-lg c-sub" data-reveal>No long pitch. A short assessment, a real conversation and a first plan you can evaluate.</p>
+        </div>
+        <div class="timeline" data-timeline>
+          <div class="timeline__track" aria-hidden="true">
+            <span class="timeline__node">1</span><span class="timeline__line"><span class="timeline__fill"></span></span>
+            <span class="timeline__node">2</span><span class="timeline__line"><span class="timeline__fill"></span></span>
+            <span class="timeline__node">3</span>
+          </div>
+          <ol class="timeline__steps" role="list">
+            <li class="timeline__step" data-step="0"><h3 class="t-label-xl"><span class="sr-only">Step 1: </span>Share where you are</h3><p class="t-p-md c-sub">A short assessment about your business, goals and current marketing, so we start with context.</p><p class="t-p-sm c-muted">About 5 minutes</p></li>
+            <li class="timeline__step" data-step="1"><h3 class="t-label-xl"><span class="sr-only">Step 2: </span>Talk it through</h3><p class="t-p-md c-sub">A 30-minute conversation with our team about your market, challenges and next stage.</p><p class="t-p-sm c-muted">30 minutes</p></li>
+            <li class="timeline__step" data-step="2"><h3 class="t-label-xl"><span class="sr-only">Step 3: </span>Get a first plan</h3><p class="t-p-md c-sub">If there is a fit, we outline the first priorities and how we would measure progress.</p><p class="t-p-sm c-muted">Within a few days</p></li>
+          </ol>
+          <div class="timeline__controls" aria-label="Steps">
+            <button class="timeline__btn" type="button" data-prev aria-label="Previous step"><img src="/ds/icons/alt-arrow-right.svg" alt="" width="16" height="16" /></button>
+            <span class="timeline__count t-label-sm" aria-live="polite"><span data-current>1</span> / 3</span>
+            <button class="timeline__btn" type="button" data-next aria-label="Next step"><img src="/ds/icons/alt-arrow-right.svg" alt="" width="16" height="16" /></button>
+          </div>
+        </div>
+        <a class="btn btn--xl" href="/explore-partnership/" data-reveal><span>Explore Partnership</span><span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span></a>
+      </section>
+
+      <!-- 10 · Latest resources -->
+      <section class="resources section" aria-labelledby="resources-title">
+        <div class="resources__heading">
+          <div class="resources__title">
+            <p class="eyebrow" data-reveal>Insights</p>
+            <h2 class="t-h2" id="resources-title" data-split>Latest insights for service businesses</h2>
+          </div>
+          <a class="link-arrow" href="/resources/" data-reveal>View all resources <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></a>
+        </div>
+        <div class="resources__row">
+          <article class="post-featured" data-reveal>
+            <a href="/resources/how-to-connect-marketing-to-booked-jobs/" class="post-featured__link">
+              <span class="ph post-featured__media" aria-hidden="true"></span>
+              <span class="t-label-xs c-muted">Guide · All industries · 6 min read</span>
+              <h3 class="t-h4">How to connect your marketing to booked jobs</h3>
+              <p class="t-p-md c-sub">A practical look at the systems between a lead and a paid invoice.</p>
+            </a>
+          </article>
+          <ul class="post-list" role="list" data-reveal-stagger="0.08">
+            <li data-reveal><a class="post-row" href="/resources/why-shoulder-seasons-are-a-marketing-problem/"><span class="ph post-row__thumb" aria-hidden="true"></span><span class="post-row__copy"><span class="t-label-xs c-muted">Guide · All industries</span><span class="t-label-lg">Why shoulder seasons are a marketing problem</span><span class="t-p-sm c-muted">6 min read</span></span></a></li>
+            <li data-reveal><a class="post-row" href="/resources/what-we-learned-tracking-leads-to-revenue/"><span class="ph post-row__thumb" aria-hidden="true"></span><span class="post-row__copy"><span class="t-label-xs c-muted">Breakdown · HVAC</span><span class="t-label-lg">What we learned tracking leads to revenue</span><span class="t-p-sm c-muted">5 min read</span></span></a></li>
+            <li data-reveal><a class="post-row" href="/resources/missed-calls-hidden-cost-of-paid-demand/"><span class="ph post-row__thumb" aria-hidden="true"></span><span class="post-row__copy"><span class="t-label-xs c-muted">Findings · Cleaning</span><span class="t-label-lg">Missed calls: the hidden cost of paid demand</span><span class="t-p-sm c-muted">7 min read</span></span></a></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 11 · Closing CTA -->
+      <section class="closing" aria-labelledby="closing-title">
+        <div class="closing__card" data-reveal>
+          <div class="closing__invite">
+            <p class="eyebrow">Next step</p>
+            <h2 class="t-h3" id="closing-title">Ready to talk about your next stage of growth?</h2>
+            <div class="closing__actions">
+              <a class="btn btn--xl" href="/explore-partnership/"><span>Explore Partnership</span><span class="btn__icon"><img src="/ds/icons/arrow-up-right.svg" alt="" width="20" height="20" /></span></a>
+              <a class="link-arrow" href="/are-we-a-fit/">Not sure yet? See if we're a fit <img src="/ds/icons/arrow-right.svg" alt="" width="16" height="16" /></a>
             </div>
           </div>
-
-          <fieldset class="chips" aria-describedby="e-services">
-            <legend>What do you need? <span class="legend__hint">Pick any</span></legend>
-            <label class="chip"><input type="checkbox" name="services" value="Strategy & Growth" /><span>Strategy &amp; Growth</span></label>
-            <label class="chip"><input type="checkbox" name="services" value="Content & Social" /><span>Content &amp; Social</span></label>
-            <label class="chip"><input type="checkbox" name="services" value="Performance Media" /><span>Performance Media</span></label>
-            <label class="chip"><input type="checkbox" name="services" value="Branding" /><span>Branding</span></label>
-            <label class="chip"><input type="checkbox" name="services" value="Web & Landing Pages" /><span>Web &amp; Landing Pages</span></label>
-            <p class="field__error" id="e-services" aria-live="polite"></p>
-          </fieldset>
-
-          <fieldset class="chips chips--radio">
-            <legend>Monthly budget</legend>
-            <label class="chip"><input type="radio" name="budget" value="< $5k" /><span>&lt; $5k</span></label>
-            <label class="chip"><input type="radio" name="budget" value="$5k – $15k" /><span>$5k – $15k</span></label>
-            <label class="chip"><input type="radio" name="budget" value="$15k – $50k" /><span>$15k – $50k</span></label>
-            <label class="chip"><input type="radio" name="budget" value="$50k+" /><span>$50k+</span></label>
-          </fieldset>
-
-          <div class="field">
-            <label for="f-message">Tell us about the project <span aria-hidden="true">*</span></label>
-            <textarea id="f-message" name="message" rows="4" required minlength="20" maxlength="3000" aria-describedby="e-message"></textarea>
-            <p class="field__error" id="e-message" aria-live="polite"></p>
+          <div class="closing__expect">
+            <h3 class="t-label-lg">What to expect</h3>
+            <ul class="dot-list" role="list">
+              <li><span class="dot" aria-hidden="true"></span>A conversation about your business, not a pitch</li>
+              <li><span class="dot" aria-hidden="true"></span>Honest feedback on fit and priorities</li>
+              <li><span class="dot" aria-hidden="true"></span>A clear next step if it makes sense</li>
+            </ul>
           </div>
-
-          <!-- Honeypot: hidden from people, bots tend to fill it -->
-          <div class="hp" aria-hidden="true">
-            <label for="f-bot">Leave this empty</label>
-            <input id="f-bot" name="botField" type="text" tabindex="-1" autocomplete="off" />
-          </div>
-
-          <label class="consent">
-            <input type="checkbox" name="consent" required aria-describedby="e-consent" />
-            <span>I agree to be contacted by Savvy Marketing Partners about this enquiry.</span>
-          </label>
-          <p class="field__error" id="e-consent" aria-live="polite"></p>
-
-          <div class="form__footer">
-            <button class="btn btn--primary form__submit" type="submit" data-magnetic>
-              <span class="form__submit-label">Send message</span><span class="form__spinner" aria-hidden="true"></span>
-            </button>
-            <p class="form__status" role="status" aria-live="polite"></p>
-          </div>
-        </form>
+        </div>
       </section>
     </main>
 
-    <footer class="footer">
-      <div class="footer__top">
-        <img src="/brand/logo-white.svg" width="636" height="179" alt="Savvy Marketing Partners" class="footer__logo" />
-        <nav class="footer__links" aria-label="Footer">
-          <a href="#work">Work</a><a href="#services">Services</a><a href="#process">Process</a><a href="/about/">About</a><a href="#contact">Contact</a>
-        </nav>
-        <button class="footer__top-btn" type="button" data-to-top data-magnetic>Back to top ↑</button>
-      </div>
-      <p class="footer__copy">© <span data-year></span> Savvy Marketing Partners. All rights reserved.</p>
-    </footer>
-
-    <script type="module" src="/src/home/main.js"></script>
+    <!-- @include footer -->
+    <script type="module" src="/src/pages/home/home.js"></script>
   </body>
 </html>
